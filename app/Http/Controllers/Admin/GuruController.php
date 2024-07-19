@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Guru;
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\Posyandu;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
