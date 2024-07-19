@@ -15,14 +15,14 @@ const props = defineProps({
         type: Object,
         default:()=>({})
     },
-    posyandus: {
+    kelas: {
         type: Object,
         default:()=>({})
     },
 })
 const Form = useForm({
     name:'',
-    posyandus_id:'',
+    kelas_id:'',
     jabatan:'',
     alamat:'',
     username:'',
@@ -72,12 +72,12 @@ function submit() {
 
                             </div>
                             <div class="col-span-full sm:col-span-3">
-                                <label for="posyandus_id" class="text-sm">Posyandu</label>
-                                <select name="posyandus_id" id="posyandus_id" v-model="Form.posyandus_id" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
+                                <label for="kelas_id" class="text-sm">Posyandu</label>
+                                <select name="kelas_id" id="kelas_id" v-model="Form.kelas_id" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
                                     <option value="">-----</option>
-                                    <option v-for="pos in posyandus" :value="pos.id" >{{pos.nama}}</option>
+                                    <option v-for="pos in kelas" :value="pos.id" >{{pos.nama}}</option>
                                 </select>
-                                <InputError :message="Form.errors.posyandus_id"/>
+                                <InputError :message="Form.errors.kelas_id"/>
 
                             </div>
                             <div class="col-span-full sm:col-span-3">
