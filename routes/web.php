@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -53,4 +54,23 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
             Route::delete('/hapus-data/kelas', 'destroy')->name('destroy');
         });
     });
+
+    //
+    Route::group(['prefix' => 'guru', 'as' => "Guru."], function () {
+        Route::controller(GuruController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data-guru', 'create')->name('create');
+            Route::get('/edit-data-guru', 'edit')->middleware(['auth', 'password.confirm'])->name('edit');
+            Route::post('/store-data-guru', 'store')->name('store');
+            Route::put('/update-data-guru', 'update')->name('update');
+            Route::delete('/hapus-data-guru', 'destroy')->name('destroy');
+
+            // reset password
+
+            Route::get('/reset-password-guru', 'resetpassword')->middleware(['auth', 'password.confirm'])->name('reset.password');
+            Route::post('/reset-password-guru', 'resetpasswordUpdate')->name('reset.password');
+        });
+    });
+
 });
+

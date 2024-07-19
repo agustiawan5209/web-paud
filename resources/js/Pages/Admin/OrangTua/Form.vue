@@ -47,7 +47,7 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
                         <p class="font-medium">Data Informasi Orang Tua</p>
-                        <p class="text-xs">Tambahkan data puru/staff dari puskesmas</p>
+                        <p class="text-xs">Tambahkan data Guru </p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">

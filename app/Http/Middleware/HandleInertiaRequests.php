@@ -41,7 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
                 'role' => auth()->hasUser() ? auth()->user()->getRoleNames()->toArray() : [],
             ],
-            'message'=> fn () => $request->session()->get('messages'),
+            'message'=> fn () => $request->session()->get('message'),
         ];
     }
 }

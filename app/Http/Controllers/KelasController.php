@@ -51,7 +51,7 @@ class KelasController extends Controller
     {
         $kelas = Kelas::create($request->all());
 
-        return redirect()->route('Kelas.index')->with('messages', 'Data Berhasil Di Tambah!!');
+        return redirect()->route('Kelas.index')->with('message', 'Data Berhasil Di Tambah!!');
     }
 
     /**
@@ -81,7 +81,7 @@ class KelasController extends Controller
     {
         $kelas = Kelas::find($request->slug)->update($request->all());
 
-        return redirect()->route('Kelas.index')->with('messages', 'Data Berhasil Di ubah!!');
+        return redirect()->route('Kelas.index')->with('message', 'Data Berhasil Di ubah!!');
     }
 
     /**
@@ -91,6 +91,6 @@ class KelasController extends Controller
     {
         $kelas = Kelas::find(Request::input('slug'))->delete();
 
-        return redirect()->route('Kelas.index')->with('messages', 'Data Berhasil Di Hapus!!');
+        return redirect()->route('Kelas.index')->with('message', 'Data Berhasil Di Hapus!!');
     }
 }

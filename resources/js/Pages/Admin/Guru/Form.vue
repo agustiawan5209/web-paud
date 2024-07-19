@@ -22,8 +22,6 @@ const props = defineProps({
 })
 const Form = useForm({
     name:'',
-    kelas_id:'',
-    jabatan:'',
     alamat:'',
     username:'',
     email:'',
@@ -56,7 +54,7 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
                         <p class="font-medium">Data Informasi Guru</p>
-                        <p class="text-xs">Tambahkan data puru/staff dari puskesmas</p>
+                        <p class="text-xs">Tambahkan data Guru </p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -71,24 +69,7 @@ function submit() {
                                 <InputError :message="Form.errors.no_telpon"/>
 
                             </div>
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="kelas_id" class="text-sm">Kelas</label>
-                                <select name="kelas_id" id="kelas_id" v-model="Form.kelas_id" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
-                                    <option value="">-----</option>
-                                    <option v-for="pos in kelas" :value="pos.id" >{{pos.nama}}</option>
-                                </select>
-                                <InputError :message="Form.errors.kelas_id"/>
 
-                            </div>
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="jabatan" class="text-sm">Jabatan</label>
-                                <select name="jabatan" id="jabatan" v-model="Form.jabatan" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
-                                    <option value="">-----</option>
-                                    <option v-for="jab in jabatan" :value="jab.name" >{{jab.name}}</option>
-                                </select>
-                                <InputError :message="Form.errors.jabatan"/>
-
-                            </div>
                             <div class="col-span-full">
                                 <label for="alamat" class="text-sm">Alamat</label>
                                 <TextInput id="alamat" type="text" v-model="Form.alamat" placeholder="" class="w-full text-gray-900"  />

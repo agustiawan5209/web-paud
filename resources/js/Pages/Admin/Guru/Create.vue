@@ -67,7 +67,7 @@ function isObject(variabel) {
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
                         <p class="font-medium">Data Informasi Guru</p>
-                        <p class="text-xs">Tambahkan data puru/staff dari puskesmas</p>
+                        <p class="text-xs">Tambahkan data Guru </p>
                     </div>
                     <fieldset class="grid grid-cols-6 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <template v-for="(item, index) in colums" :key="index">

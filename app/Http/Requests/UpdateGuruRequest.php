@@ -11,7 +11,7 @@ class UpdateGuruRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateGuruRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'slug' => 'required|integer|exists:gurus,id',
+            'name' => '|required|string|max:255',
+            'no_telpon' => '|required|string|max:255',
+            'alamat' => '|required|string',
         ];
     }
 }

@@ -26,7 +26,11 @@ class GuruController extends Controller
     {
         $tableName = 'gurus'; // Ganti dengan nama tabel yang Anda inginkan
         // dd(Guru::with(['posyandus']));
-        $columns=DB::getSchemaBuilder()->getColumnListing($tableName);
+        // $columns=DB::getSchemaBuilder()->getColumnListing($tableName);
+        $columns[] = 'id';
+        $columns[] = 'nama';
+        $columns[] = 'nomor_telepon';
+        $columns[] = 'alamat';
         // dd($columns);
         return Inertia::render('Admin/Guru/Index', [
             'search' =>  Request::input('search'),
@@ -48,10 +52,10 @@ class GuruController extends Controller
      */
     public function create()
     {
-        $columns_pegawai = DB::getSchemaBuilder()->getColumnListing('gurus');
+        $columns_guru = DB::getSchemaBuilder()->getColumnListing('gurus');
         $columns_user = DB::getSchemaBuilder()->getColumnListing('users');
         $columns_hide = ['remember_token', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'id', 'name'];
-        $colums = array_diff(array_merge($columns_pegawai, $columns_user), $columns_hide);
+        $colums = array_diff(array_merge($columns_guru, $columns_user), $columns_hide);
         $colums['2'] =  [
             'name' => 'jabatan',
             'value' => Role::whereNot('name', 'Guru')->get(),
@@ -110,7 +114,7 @@ class GuruController extends Controller
             'slug'=> 'required|exists:gurus,id',
         ]);
         return Inertia::render('Admin/Guru/Show', [
-            'pegawai' => $guru->find(Request::input('slug')),
+            'guru' => $guru->find(Request::input('slug')),
         ]);
     }
 
@@ -123,7 +127,7 @@ class GuruController extends Controller
             'slug'=> 'required|exists:gurus,id',
         ]);
         return Inertia::render('Admin/Guru/Edit', [
-            'pegawai' => $guru->with(['user'])->find(Request::input('slug')),
+            'guru' => $guru->with(['user'])->find(Request::input('slug')),
             'jabatan' => Role::whereNot('name', 'Orang Tua')->get(),
 
         ]);
@@ -135,9 +139,9 @@ class GuruController extends Controller
     public function update(UpdateGuruRequest $request, Guru $guru)
     {
 
-        $pegawai = Guru::find(Request::input('slug'));
+        $guru = Guru::find(Request::input('slug'));
 
-        $user = User::find($pegawai->user_id);
+        $user = User::find($guru->user_id);
         $user->update([
             'name' => $request->name,
             // 'username' => $request->username,
@@ -146,10 +150,8 @@ class GuruController extends Controller
             // 'remember_token' => Str::random(60),
             'phone' => $request->no_telpon,
         ]);
-        // Remove a role
-        $user->removeRole($pegawai->jabatan);
 
-        $pegawai->update([
+        $guru->update([
             'nama' => $request->name,
             'alamat' => $request->alamat,
         ]);
