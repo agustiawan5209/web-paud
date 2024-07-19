@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,3 +37,21 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Admin
+
+Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
+ // Router Kelas
+ Route::group(['prefix' => 'kelas', 'as' => "kelas."], function () {
+    Route::controller(KelasController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/tambah-data/kelas', 'create')->name('create');
+        Route::get('/edit-data/kelas', 'edit')->name('edit');
+        Route::get('/detail-data/kelas', 'show')->name('show');
+        Route::post('/store-data/kelas', 'store')->name('store');
+        Route::put('/update-data/kelas', 'update')->name('update');
+        Route::delete('/hapus-data/kelas', 'destroy')->name('destroy');
+    });
+});
+});
+
