@@ -5,7 +5,7 @@ import { defineProps } from "vue";
 
 const props = defineProps({
     pengguna: Number,
-    balita: Number,
+    siswa: Number,
 });
 </script>
 
@@ -18,8 +18,8 @@ const props = defineProps({
         <div class="grid grid-cols-2 md:grid-cols-2">
           <div class="w-full h-full  px-4">
             <card-stats
-              statSubtitle="Jumlah Data Bayi/Balita"
-              :statTitle="balita"
+              statSubtitle="Jumlah Data Bayi/Siswa"
+              :statTitle="siswa"
               statArrow="up"
               statPercent="3.48"
               statPercentColor="text-emerald-500"

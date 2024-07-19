@@ -41,7 +41,7 @@ export default {
         }
     }),
     async mounted() {
-        axios.get(route('api.balita.getBerat', { id: this.id }))
+        axios.get(route('api.siswa.getBerat', { id: this.id }))
             .then((response) => {
                 if (response.status == 200) {
                     this.chartData = {
