@@ -1,0 +1,60 @@
+<script setup>
+import { ref } from 'vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
+import NavLink from '@/Components/NavLink.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import Sidebar from '@/Components/Sidebar/Sidebar.vue';
+
+const Page = usePage().props.auth;
+const Roles = Page.role;
+function roleToCheck(role) {
+    if (Array.isArray(Roles)) {
+        return Roles.includes(role)
+    } else {
+        return false;
+    }
+}
+
+const isDropdownOpen = ref(false)
+const toggleDropdown = () => {
+    isDropdownOpen.value = !isDropdownOpen.value
+}
+const isDropdownLaporanOpen = ref(false)
+const toggleDropdownLaporan = () => {
+    isDropdownLaporanOpen.value = !isDropdownLaporanOpen.value
+}
+</script>
+<template>
+    <ul class="mt-6  overflow-hidden" >
+        <li >
+            <NavLink :href="route('dashboard')" :active="route().current('dashboard')" :icon="['fas', 'home']">
+
+                <span class="-mr-1 font-medium">Dashboard</span>
+            </NavLink>
+        </li>
+
+    </ul>
+    <div class="-mx-6 flex items-center justify-between border-t px-6 pt-4">
+        <NavLink :href="route('logout')" method="post" as="button" :icon="['fas', 'right-from-bracket']">
+            <span class="group-hover:text-gray-700 capitalize">Logout</span>
+        </NavLink>
+    </div>
+</template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to
+
+/* .fade-leave-active in <2.1.8 */
+    {
+    opacity: 0;
+}
+</style>
