@@ -72,4 +72,46 @@ import { Link } from '@inertiajs/vue3';
             <slot />
         </main>
     </section>
+
+    <footer class=" divide-y bg-white border-t shadow-2xl">
+        <div class="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
+            <div class="lg:w-1/3">
+                <a rel="noopener noreferrer" href="#" class="flex justify-center space-x-3 lg:justify-start">
+                    <ApplicationLogo class="w-10 object-cover"/>
+                    <span class="self-center text-2xl font-semibold" >UPT Puskesmas Karassing</span>
+                </a>
+            </div>
+            <div class="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-2">
+                <div class="space-y-3">
+                    <h3 class="tracking-wide uppercase font-semibold">Jadwal Pelayanan Puskesmas</h3>
+                    <ul class="space-y-5">
+                        <li>
+                            <a rel="noopener noreferrer" href="#">Senin-Kamis : 07.30-15.00 WIB</a>
+                        </li>
+                        <li>
+                            <a rel="noopener noreferrer" href="#">Jumat : 07.30-15.30 WIB</a>
+                        </li>
+                        <li>
+                            <a rel="noopener noreferrer" href="#">Unit Pelayanan Bersalin 24 Jam</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="uppercase">Hubungi Kami</h3>
+                    <ul class="space-y-1">
+                        <li class="flex gap-4">
+                            <font-awesome-icon :icon="['fas', 'location-dot']"/>
+                            <span v-if="Puskesmas != null">{{ Puskesmas.alamat }}</span>
+                            <span v-else>Ds. Karassing, Kec. Hero Lange-Lange</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <font-awesome-icon :icon="['fas', 'phone']"/>
+                            <span>+62 85255814561</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="py-6 text-sm text-center bg-primary">UPT Puskesmas Karassing© {{ Year }}. All rights reserved.</div>
+    </footer>
 </template>

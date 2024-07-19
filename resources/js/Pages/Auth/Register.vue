@@ -24,7 +24,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <section class="min-h-96 w-full flex justify-center items-center">
+        <section class="min-h-96 w-full flex justify-center items-center my-3">
             <fwb-card>
                 <form @submit.prevent="submit" class="p-5">
                     <div>
