@@ -86,7 +86,7 @@ function submit() {
 
                             </div>
                             <div class="col-span-full sm:col-span-3">
-                                <label for="kelas_id" class="text-sm">Posyandu</label>
+                                <label for="kelas_id" class="text-sm">Kelas</label>
                                 <select name="kelas_id" id="kelas_id" v-model="Form.kelas_id" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
                                     <option value="">-----</option>
                                     <option v-for="pos in kelas" :value="pos.id" >{{pos.nama}}</option>

@@ -35,6 +35,12 @@ const toggleDropdownLaporan = () => {
                 <span class="-mr-1 font-medium">Dashboard</span>
             </NavLink>
         </li>
+        <li >
+            <NavLink :href="route('Kelas.index')" :active="route().current('Kelas.index')" :icon="['fas', 'user']">
+
+                <span class="-mr-1 font-medium">Kelas</span>
+            </NavLink>
+        </li>
 
     </ul>
     <div class="-mx-6 flex items-center justify-between border-t px-6 pt-4">

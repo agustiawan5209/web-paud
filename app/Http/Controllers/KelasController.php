@@ -41,7 +41,7 @@ class KelasController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Kelas/Form', []);
+        return Inertia::render('Admin/Kelas/Form', []);
     }
 
     /**
@@ -59,7 +59,7 @@ class KelasController extends Controller
      */
     public function show(Kelas $kelas)
     {
-        return Inertia::render('Kelas/Form', [
+        return Inertia::render('Admin/Kelas/Form', [
             'kelas'=> $kelas->find(Request::input('slug')),
         ]);
     }
@@ -69,7 +69,7 @@ class KelasController extends Controller
      */
     public function edit(Kelas $kelas)
     {
-        return Inertia::render('Kelas/Edit', [
+        return Inertia::render('Admin/Kelas/Edit', [
             'kelas'=> $kelas->find(Request::input('slug')),
         ]);
     }

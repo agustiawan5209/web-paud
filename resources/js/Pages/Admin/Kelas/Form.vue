@@ -16,7 +16,7 @@ const props = defineProps({
 })
 const Form = useForm({
     nama: '',
-    alamat: '',
+    kode: '',
 })
 
 function submit() {
@@ -31,11 +31,11 @@ function submit() {
 
 <template>
 
-    <Head title="Posyandu" />
+    <Head title="Kelas" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Tambah Posyandu</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Tambah Kelas</h2>
         </template>
 
         <div class="py-4 relative box-content">
@@ -43,24 +43,25 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Data Informasi Posyandu</p>
+                        <p class="font-medium">Data Informasi Kelas</p>
                         <p class="text-xs">Tambahkan data</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full sm:col-span-3">
-                                <label for="nama" class="text-sm">Nama Posyandu</label>
+                                <label for="kode" class="text-sm">kode Kelas</label>
+                                <TextInput id="kode" type="text" placeholder="..............." v-model="Form.kode"
+                                    class="w-full text-gray-900" />
+                                <InputError :message="Form.errors.kode" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="nama" class="text-sm">Nama Kelas</label>
                                 <TextInput id="nama" type="text" placeholder="..............." v-model="Form.nama"
                                     class="w-full text-gray-900" />
                                 <InputError :message="Form.errors.nama" />
                             </div>
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="alamat" class="text-sm">Alamat Posyandu</label>
-                                <TextInput id="alamat" type="text" placeholder="..............." v-model="Form.alamat"
-                                    class="w-full text-gray-900" />
-                                <InputError :message="Form.errors.alamat" />
 
-                            </div>
                         </div>
                         <PrimaryButton type="submit" class="col-span-full mt-20 text-center z-[100]">Simpan
                         </PrimaryButton>

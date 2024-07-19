@@ -24,19 +24,19 @@ const props = defineProps({
 
 <template>
 
-    <Head title="Posyandu" />
+    <Head title="Kelas" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Detail Posyandu</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Detail Kelas</h2>
         </template>
 
         <div class="md:py-4 relative box-content">
             <section class=" py-2 px-0 md:px-6  md:py-6 bg-gray-100 text-gray-900">
                 <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1 px-3 md:px-0">
-                        <p class="font-medium">Detail Informasi Posyandu</p>
-                        <p class="text-xs">Detail data Posyandu dari puskesmas</p>
+                        <p class="font-medium">Detail Informasi Kelas</p>
+                        <p class="text-xs">Detail data Kelas dari puskesmas</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">

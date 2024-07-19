@@ -36,22 +36,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Admin
 
 Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
- // Router Kelas
- Route::group(['prefix' => 'kelas', 'as' => "kelas."], function () {
-    Route::controller(KelasController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/tambah-data/kelas', 'create')->name('create');
-        Route::get('/edit-data/kelas', 'edit')->name('edit');
-        Route::get('/detail-data/kelas', 'show')->name('show');
-        Route::post('/store-data/kelas', 'store')->name('store');
-        Route::put('/update-data/kelas', 'update')->name('update');
-        Route::delete('/hapus-data/kelas', 'destroy')->name('destroy');
+    // Router Kelas
+    Route::group(['prefix' => 'kelas', 'as' => "Kelas."], function () {
+        Route::controller(KelasController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data/kelas', 'create')->name('create');
+            Route::get('/edit-data/kelas', 'edit')->name('edit');
+            Route::get('/detail-data/kelas', 'show')->name('show');
+            Route::post('/store-data/kelas', 'store')->name('store');
+            Route::put('/update-data/kelas', 'update')->name('update');
+            Route::delete('/hapus-data/kelas', 'destroy')->name('destroy');
+        });
     });
 });
-});
-
