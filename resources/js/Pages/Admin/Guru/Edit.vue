@@ -11,19 +11,33 @@ import TextInput from '@/Components/TextInput.vue';
 import { ref, defineProps } from 'vue';
 
 const props = defineProps({
-
+    jabatan: {
+        type: Object,
+        default:()=>({})
+    },
+    puru: {
+        type: Object,
+        default:()=>({})
+    },
+    posyandus: {
+        type: Object,
+        default:()=>({})
+    },
 })
 const Form = useForm({
-    name:'',
-    alamat:'',
-    no_telpon:'',
-    username:'',
-    email:'',
-    password:'',
+    slug: props.puru.id,
+    posyandus_id:props.puru.posyandus_id,
+    name:props.puru.user.name,
+    jabatan:props.puru.jabatan,
+    alamat:props.puru.alamat,
+    username:props.puru.user.username,
+    email:props.puru.user.email,
+    password:props.puru.user.password,
+    no_telpon:props.puru.no_telpon,
 })
 
 function submit() {
-    Form.post(route('OrangTua.store'), {
+    Form.put(route('Guru.update'), {
         onError: (err) => {
             console.log(err)
         }
@@ -35,19 +49,19 @@ function submit() {
 
 <template>
 
-    <Head title="Orang Tua" />
+    <Head title="Guru" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Tambah Orang Tua</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Edit Guru</h2>
         </template>
 
         <div class="py-4 relative box-content">
             <section class="p-6 bg-gray-100 text-gray-900">
                 <form @submit.prevent="submit()" novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Data Informasi Orang Tua</p>
-                        <p class="text-xs">Tambahkan data puru/staff dari puskesmas</p>
+                        <p class="font-medium">Data Informasi Guru</p>
+                        <p class="text-xs">Edit data puru/staff dari puskesmas</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -62,33 +76,29 @@ function submit() {
                                 <InputError :message="Form.errors.no_telpon"/>
 
                             </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="jabatan" class="text-sm">Jabatan</label>
+                                <select name="jabatan" id="jabatan" v-model="Form.jabatan" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
+                                    <option value="">-----</option>
+                                    <option v-for="jab in jabatan" :value="jab.name" >{{jab.name}}</option>
+                                </select>
+                                <InputError :message="Form.errors.jabatan"/>
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="posyandus_id" class="text-sm">Posyandu</label>
+                                <select name="posyandus_id" id="posyandus_id" v-model="Form.posyandus_id" class="border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm w-full text-gray-900">
+                                    <option value="">-----</option>
+                                    <option v-for="pos in posyandus" :value="pos.id" >{{pos.nama}}</option>
+                                </select>
+                                <InputError :message="Form.errors.posyandus_id"/>
+
+                            </div>
                             <div class="col-span-full">
                                 <label for="alamat" class="text-sm">Alamat</label>
-                                <TextInput id="alamat" type="text" v-model="Form.alamat" placeholder="alamat..." class="w-full text-gray-900"  />
+                                <TextInput id="alamat" type="text" v-model="Form.alamat" placeholder="" class="w-full text-gray-900"  />
                                 <InputError :message="Form.errors.alamat"/>
 
-                            </div>
-
-                            <div class="space-y-2 col-span-full">
-                                <p class="font-medium">Data Pengguna</p>
-                                <p class="text-xs">Digunakan Untuk Masuk/Login Ke dalam Sistem</p>
-                            </div>
-                            <div class="col-span-full sm:col-span-2">
-                                <label for="username" class="text-sm">username</label>
-                                <TextInput id="username" type="text" v-model="Form.username" placeholder="@username" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.username"/>
-
-                            </div>
-                            <div class="col-span-full sm:col-span-2">
-                                <label for="state" class="text-sm">Password</label>
-                                <TextInput id="state" type="text" placeholder="" v-model="Form.password" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.password"/>
-
-                            </div>
-                            <div class="col-span-full sm:col-span-2">
-                                <label for="email" class="text-sm">Email</label>
-                                <TextInput id="email" type="email" placeholder="" v-model="Form.email" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.email"/>
                             </div>
                         </div>
                         <PrimaryButton type="submit" class="col-span-full text-center">Simpan</PrimaryButton>
