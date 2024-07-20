@@ -36,6 +36,12 @@ const toggleDropdownLaporan = () => {
             </NavLink>
         </li>
         <li >
+            <NavLink :href="route('TahunAjar.index')" :active="route().current('TahunAjar.index')" :icon="['fas', 'user']">
+
+                <span class="-mr-1 font-medium">Tahun Ajaran</span>
+            </NavLink>
+        </li>
+        <li >
             <NavLink :href="route('Kelas.index')" :active="route().current('Kelas.index')" :icon="['fas', 'user']">
 
                 <span class="-mr-1 font-medium">Kelas</span>

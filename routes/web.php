@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\OrangTuaController;
+use App\Http\Controllers\TahunAjaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,18 @@ require __DIR__ . '/auth.php';
 // Admin
 
 Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
+    // Router Tahun Ajar
+    Route::group(['prefix' => 'tahun-ajar', 'as' => "TahunAjar."], function () {
+        Route::controller(TahunAjaranController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data/tahun-ajar', 'create')->name('create');
+            Route::get('/edit-data/tahun-ajar', 'edit')->name('edit');
+            Route::get('/detail-data/tahun-ajar', 'show')->name('show');
+            Route::post('/store-data/tahun-ajar', 'store')->name('store');
+            Route::put('/update-data/tahun-ajar', 'update')->name('update');
+            Route::delete('/hapus-data/tahun-ajar', 'destroy')->name('destroy');
+        });
+    });
     // Router Kelas
     Route::group(['prefix' => 'kelas', 'as' => "Kelas."], function () {
         Route::controller(KelasController::class)->group(function () {

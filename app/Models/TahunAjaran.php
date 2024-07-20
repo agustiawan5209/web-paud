@@ -14,4 +14,15 @@ class TahunAjaran extends Model
     protected $fillable = [
         'tahun',
     ];
+
+
+    //  FIlter Data User
+    public function scopeFilter($query, $filter)
+    {
+        $query->when($filter['search'] ?? null, function ($query, $search) {
+            $query->where('tahun', 'like', '%' . $search . '%');
+        })->when($filter['order'] ?? null, function ($query, $order) {
+            $query->orderBy('id', $order);
+        });
+    }
 }

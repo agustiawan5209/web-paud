@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\TahunAjaran;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreTahunAjaranRequest;
 use App\Http\Requests\UpdateTahunAjaranRequest;
-use Illuminate\Support\Facades\Request;
-use Inertia\Inertia;
 
 class TahunAjaranController extends Controller
 {
@@ -15,7 +17,21 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        return Inertia::render(['Admin/TahunAjar/Index']);
+        $tableName = 'tahun_ajars'; // Ganti dengan nama tabel yang Anda inginkan
+        $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+
+        return Inertia::render('Admin/TahunAjar/Index', [
+            'search' =>  Request::input('search'),
+            'table_colums' => array_values(array_diff($columns, ['remember_token', 'posyandus_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
+            'data' => TahunAjaran::filter(Request::only('search', 'order'))
+                ->paginate(10),
+            'can' => [
+                'add' => Auth::user()->can('add guru'),
+                'edit' => Auth::user()->can('edit guru'),
+                'show' => Auth::user()->can('show guru'),
+                'delete' => Auth::user()->can('delete guru'),
+            ]
+        ]);
     }
 
     /**
@@ -33,7 +49,7 @@ class TahunAjaranController extends Controller
     {
         TahunAjaran::create($request->all());
 
-        return redirect()->route('TahunAjar.index')->with('message','Data Berhasil Di Tambah');
+        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Tambah');
     }
 
     /**
@@ -59,7 +75,7 @@ class TahunAjaranController extends Controller
     {
         TahunAjaran::find($request->slug)->update($request->all());
 
-        return redirect()->route('TahunAjar.index')->with('message','Data Berhasil Di Tambah');
+        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Tambah');
     }
 
     /**
@@ -69,6 +85,6 @@ class TahunAjaranController extends Controller
     {
         TahunAjaran::find(Request::input('slug'))->delete();
 
-        return redirect()->route('TahunAjar.index')->with('message','Data Berhasil Di Tambah');
+        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Tambah');
     }
 }
