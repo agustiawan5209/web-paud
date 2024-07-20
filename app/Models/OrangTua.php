@@ -20,7 +20,7 @@ class OrangTua extends Model
 
     public function siswa()
     {
-        return $this->hasMany(Siswa::class, 'org_tua_id', 'id'); // Asumsikan tabel 'anak'
+        return $this->hasMany(Siswa::class, 'org_tua_id', 'id'); // Asumsikan tabel 'siswa'
     }
     public function user()
     {
@@ -39,6 +39,7 @@ class OrangTua extends Model
     {
         return new Attribute(
             get: fn () => $this->siswa()->count(),
+            set: fn () => 0
         );
     }
 

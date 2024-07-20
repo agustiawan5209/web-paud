@@ -9,7 +9,6 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Modal from '@/Components/Modal.vue';
-import FormAnak from '@/Pages/Anak/Form.vue';
 import { ref, defineProps, watch, onMounted } from 'vue';
 
 const page = usePage();
@@ -94,7 +93,7 @@ console.log(props.can)
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Form Tambah Bayi/Siswa</p>
+                        <p class="font-medium">Form Tambah Siswa</p>
                         <p class="text-xs">. Nama Orang Tua = {{ orangTua.nama }}</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
@@ -199,10 +198,10 @@ console.log(props.can)
                             <caption class="py-2 border-b" >
                                 <div class="relative max-w-full flex ">
                                     <PrimaryButton type="button" @click="OpenModal()" v-if="can.add"
-                                        class="w-[20%] !text-xs whitespace-nowrap capitalize">Tambah Data Bayi/Siswa
+                                        class="w-[20%] !text-xs whitespace-nowrap capitalize">Tambah Data Siswa
                                     </PrimaryButton>
 
-                                    <span class="text-lg w-full text-center">Data Bayi/Siswa</span>
+                                    <span class="text-lg w-full text-center">Data Siswa</span>
                                 </div>
                             </caption>
                             <thead>

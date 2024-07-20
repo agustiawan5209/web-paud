@@ -9,7 +9,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Modal from '@/Components/Modal.vue';
-import FormAnak from '@/Pages/Anak/Form.vue';
+
 import { ref, defineProps, watch, onMounted } from 'vue';
 import ChartBeratBadan from '@/Components/Chart/ChartBeratBadan.vue';
 import ChartTinggiBadan from '@/Components/Chart/ChartTinggiBadan.vue';
@@ -25,50 +25,17 @@ const props = defineProps({
 })
 
 const dataSiswa = Object.keys(props.siswa)
-const Filter = dataSiswa.filter(function (param) {
-    return !/id/g.test(param) && !/orang_tua/g.test(param)
-})
-function parseDate(tgl) {
-    const today = new Date(tgl);
 
-    const options = {
-        weekday: 'long',  // full weekday name (Senin, Selasa, etc.)
-        year: 'numeric',  // numeric year (2024)
-        month: 'long',    // full month name (April)
-        day: 'numeric',   // numeric day (22)
-    };
-
-    const formatter = new Intl.DateTimeFormat('id-ID', options);
-    const formattedDate = formatter.format(today);
-    return formattedDate;
-}
-
-function ObjectSliceKey() {
-    if (props.siswa.riwayat_imunisasis.length > 0) {
-        const parent = props.siswa.riwayat_imunisasis[0].data_imunisasi;
-
-        return Object.keys(parent);
-    } else {
-        return {};
-    }
-}
-const columsReplace = (element) => {
-
-    return element.replace(/_|\b_id\b/g, ' ');
-};
-
-
-const ChartValue = ref(false)
 
 </script>
 
 <template>
 
-    <Head title="Bayi/Siswa" />
+    <Head title="Siswa" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Show Bayi/Siswa</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Show Siswa</h2>
         </template>
 
         <div class="md:py-4 relative box-content">
@@ -78,8 +45,8 @@ const ChartValue = ref(false)
 
                 <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1 px-3 md:px-0">
-                        <p class="font-medium">Detail Informasi Bayi/Siswa</p>
-                        <p class="text-xs">Detail data Bayi/Siswa dari </p>
+                        <p class="font-medium">Detail Informasi Siswa</p>
+                        <p class="text-xs">Detail data Siswa dari </p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -97,13 +64,6 @@ const ChartValue = ref(false)
                                         <col>
                                     </colgroup>
                                     <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">Nomor Induk Kependudukan
-                                            (NIK) -
-                                            Bayi/Siswa</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ siswa.nik }} </td>
-                                    </tr>
-                                    <tr class="">
                                         <td class="text-sm border-b py-2 font-bold capitalize">Nama</td>
                                         <td>:</td>
                                         <td class="text-sm border-b text-gray-600"> {{ siswa.nama }} </td>
@@ -119,11 +79,6 @@ const ChartValue = ref(false)
                                         <td class="text-sm border-b text-gray-600"> {{ siswa.tgl_lahir }} </td>
                                     </tr>
                                     <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">Usia</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ siswa.hitung_usia }} </td>
-                                    </tr>
-                                    <tr class="">
                                         <td class="text-sm border-b py-2 font-bold capitalize">Jenis Kelamin</td>
                                         <td>:</td>
                                         <td class="text-sm border-b text-gray-600"> {{ siswa.jenkel }} </td>
@@ -133,88 +88,6 @@ const ChartValue = ref(false)
                                         <td>:</td>
                                         <td class="text-sm border-b text-gray-600"> {{ siswa.nama_orang_tua }} </td>
                                     </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50"
-                        v-if="siswa.riwayat_imunisasis.length > 0">
-                        <PrimaryButton type="button" class="whitespace-nowrap col-span-full md:col-span-1"
-                            @click="ChartValue = !ChartValue">Tampilkan Grafik Bayi/Siswa
-                        </PrimaryButton>
-                        <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3" v-if="ChartValue">
-                            <div class="col-span-full sm:col-span-3  border bg-white">
-                                <ul class="flex flex-col space-y-20">
-                                    <li class="flex gap-3 py-2 border-b">
-                                        <span class="text-xs font-semibold pl-3">Pertumbuhan Berat Badan
-                                            Bayi/Siswa</span>
-                                    </li>
-                                </ul>
-                                <ChartBeratBadan :id="siswa.id" />
-                            </div>
-                            <div class="col-span-full sm:col-span-3  border bg-white">
-                                <ul class="flex flex-col space-y-20">
-                                    <li class="flex gap-3 py-2 border-b">
-                                        <span class="text-xs font-semibold pl-3">Pertumbuhan Tinggi Badan
-                                            Bayi/Siswa</span>
-                                    </li>
-                                </ul>
-                                <ChartTinggiBadan :id="siswa.id" />
-                            </div>
-                            <div class="col-span-full sm:col-span-3  border bg-white">
-                                <ul class="flex flex-col space-y-20">
-                                    <li class="flex gap-3 py-2 border-b">
-                                        <span class="text-xs font-semibold pl-3">Pertumbuhan Lingkar Kepala
-                                            Bayi/Siswa</span>
-                                    </li>
-                                </ul>
-                                <ChartLingkarKepala :id="siswa.id" />
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="grid grid-cols-3 gap-6 p-2 rounded-md shadow-sm bg-gray-50">
-                        <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full overflow-x-auto ">
-                                <ul class="flex flex-col space-y-20">
-                                    <li class="flex gap-3 py-2 border-b">
-                                        <span class="text-lg">Riwayat Imunisasi</span>
-                                    </li>
-                                </ul>
-
-                                <table class="w-max table text-xs " v-if="siswa.riwayat_imunisasis.length > 0">
-
-                                    <thead>
-                                        <tr>
-                                            <th class="border whitespace-nowrap">Tanggal Imunisasi</th>
-                                            <th class="border whitespace-nowrap p-2"
-                                                v-for="(item, key) in ObjectSliceKey()">{{
-                                                    columsReplace(item) }}</th>
-                                            <th class="border">Catatan Imunisasi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody v-for="(riwayat, key) in siswa.riwayat_imunisasis">
-                                        <tr>
-                                            <td class="whitespace-wrap border p-2">{{ parseDate(riwayat.tanggal) }}</td>
-                                            <td class="whitespace-nowrap border p-2"
-                                                v-for="(item, key) in riwayat.data_imunisasi">
-                                                {{ item }}
-                                            </td>
-                                            <td class="text-xs px-1 border w-96 leading-4 tracking-wide"
-                                                v-html="riwayat.catatan"></td>
-
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                                <table class="w-full table text-xs text-center" v-else>
-
-                                    <thead>
-                                        <tr>
-                                            <th class="border whitespace-nowrap text-center p-3">Data Riwayat Imunisasi
-                                                Masih
-                                                Kosong</th>
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>

@@ -27,11 +27,11 @@ class OrangTuaController extends Controller
     {
         $tableName = 'orang_tuas'; // Ganti dengan nama tabel yang Anda inginkan
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
-        $columns[] = 'jumlah_anak';
+        $columns[] = 'jumlah_siswa';
 
         // dd(OrangTua::with(['siswa'])->find(1));
 
-        return Inertia::render('OrangTua/Index', [
+        return Inertia::render('Admin/OrangTua/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'posyandus_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => OrangTua::filter(Request::only('search', 'order'))->with(['siswa','user'])
@@ -52,7 +52,7 @@ class OrangTuaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('OrangTua/Form',[
+        return Inertia::render('Admin/OrangTua/Form',[
             'can'=>[
                 'add'=> Auth::user()->can('add siswa'),
             ]
@@ -72,19 +72,17 @@ class OrangTuaController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone' => $request->no_telpon,
+
             'remember_token' => Str::random(60),
         ]);
         $role = Role::findByName('Orang Tua');
         if ($role) {
             $user->assignRole($role); // Assign 'user' role to the user
             $user->givePermissionTo([
-                'show riwayat',
-                'add siswa',
-                'edit siswa',
-                'delete siswa',
+                'show nilai',
+                'show kegiatan',
                 'show siswa',
-                'show sertifikat',
-                'cetak sertifikat',
             ]);
         }
 
@@ -112,7 +110,7 @@ class OrangTuaController extends Controller
         Request::validate([
             'slug'=> 'required|exists:orang_tuas,id',
         ]);
-        return Inertia::render('OrangTua/Show', [
+        return Inertia::render('Admin/OrangTua/Show', [
             'orangTua' => $orangTua->with(['siswa', 'user'])->find(Request::input('slug')),
             'can'=>[
                 'add'=> Auth::user()->can('add siswa'),
@@ -130,7 +128,7 @@ class OrangTuaController extends Controller
         Request::validate([
             'slug'=> 'required|exists:orang_tuas,id',
         ]);
-        return Inertia::render('OrangTua/Edit', ['orangTua' => $orangTua->with(['siswa', 'user'])->find(Request::input('slug'))]);
+        return Inertia::render('Admin/OrangTua/Edit', ['orangTua' => $orangTua->with(['siswa', 'user'])->find(Request::input('slug'))]);
     }
 
     /**
@@ -171,7 +169,7 @@ class OrangTuaController extends Controller
         $data = $orangTua->nama;
         $user = $orangTua->user->id;
         if($orangTua->siswa->count() > 0){
-            $data = 'Data Dihapus Dengan '. $orangTua->siswa->count() .' Data Balita';
+            $data = 'Data Dihapus Dengan '. $orangTua->siswa->count() .' Data Siswa';
         }
         User::find($user)->delete();
         // $orangTua->delete();
@@ -188,7 +186,7 @@ class OrangTuaController extends Controller
     public function resetpassword(OrangTua $orangTua)
     {
 
-        return Inertia::render('OrangTua/UpdatePassword', [
+        return Inertia::render('Admin/OrangTua/UpdatePassword', [
             'user' => User::find(Request::input('slug')),
         ]);
     }

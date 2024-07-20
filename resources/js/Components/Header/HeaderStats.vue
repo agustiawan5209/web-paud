@@ -18,7 +18,7 @@ const props = defineProps({
         <div class="grid grid-cols-2 md:grid-cols-2">
           <div class="w-full h-full  px-4">
             <card-stats
-              statSubtitle="Jumlah Data Bayi/Siswa"
+              statSubtitle="Jumlah Data Siswa"
               :statTitle="siswa"
               statArrow="up"
               statPercent="3.48"

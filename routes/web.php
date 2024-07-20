@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\GuruController;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Admin\OrangTuaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,5 +74,38 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
         });
     });
 
-});
+    // Router Orang Tua
+    Route::group(['prefix' => 'orang-tua', 'as' => "OrangTua.",], function () {
+        Route::controller(OrangTuaController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data-orangtua', 'create')->name('create');
+            Route::get('/ubah-data-orangtua', 'edit')->name('edit');
+            Route::get('/detail-data-orangtua', 'show')->name('show');
+            Route::post('/store-data-orangtua', 'store')->name('store');
+            Route::put('/update-data-orangtua', 'update')->name('update');
+            Route::delete('/hapus-data-orangtua', 'destroy')->name('destroy');
 
+            // reset password
+
+            Route::get('/reset-password-orang-tua', 'resetpassword')->middleware(['auth', 'password.confirm'])->name('reset.password');
+            Route::post('/reset-password-orang-tua', 'resetpasswordUpdate')->name('reset.password');
+        });
+    });
+
+    Route::group(['prefix' => 'siswa', 'as' => "Siswa."], function () {
+        Route::controller(SiswaController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data-siswa', 'create')->name('create');
+            Route::get('/detail-data-siswa', 'show')->name('show');
+            Route::get('/edit-data-siswa', 'edit')->middleware(['auth', 'password.confirm'])->name('edit');
+            Route::post('/store-data-siswa', 'store')->name('store');
+            Route::put('/update-data-siswa', 'update')->name('update');
+            Route::delete('/hapus-data-siswa', 'destroy')->name('destroy');
+
+            // reset password
+
+            Route::get('/reset-password-siswa', 'resetpassword')->middleware(['auth', 'password.confirm'])->name('reset.password');
+            Route::post('/reset-password-siswa', 'resetpasswordUpdate')->name('reset.password');
+        });
+    });
+});

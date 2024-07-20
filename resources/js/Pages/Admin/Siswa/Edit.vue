@@ -10,7 +10,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { ref, defineProps, watch, onMounted } from 'vue';
 import axios from 'axios';
-import FormAnak from '../Anak/Form.vue';
 
 const props = defineProps({
     orangTua: {
@@ -131,7 +130,7 @@ onMounted(() => {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Data Edit Bayi/Siswa</p>
+                        <p class="font-medium">Data Edit Siswa</p>
                         <p class="text-xs">Edit Data Siswa dengan Memilih Nama Orang Tua</p>
                     </div>
                     <div class=" bg-gray-100" v-if="can.add">
@@ -158,7 +157,7 @@ onMounted(() => {
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full sm:col-span-3">
-                                <label for="nik" class="text-sm">Nomor Induk Kependudukan (NIK) - Bayi/Siswa</label>
+                                <label for="nik" class="text-sm">Nomor Induk Kependudukan (NIK) - Siswa</label>
                                 <TextInput id="nik" type="text" placeholder="Nomor Induk Kependudukan (NIK)" v-model="Form.nik"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.nik" />

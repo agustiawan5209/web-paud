@@ -22,7 +22,7 @@ class UpdateSiswaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => 'required|integer|exists:balitas,id',
+            'slug' => 'required|integer|exists:siswas,id',
             'nama' => 'required|string|max:50',
             'tempat_lahir' => 'required|string|max:50',
             'tgl_lahir' => 'required|date',

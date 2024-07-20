@@ -22,7 +22,7 @@ class SiswaController extends Controller
         $tableName = 'siswas'; // Ganti dengan nama tabel yang Anda inginkan
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
 
-        return Inertia::render('Siswa/Index', [
+        return Inertia::render('Admin/Siswa/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => Siswa::filter(Request::only('search', 'order'))
@@ -39,7 +39,7 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Siswa/Form", [
+        return Inertia::render("Admin/Siswa/Form", [
             'siswa' => Siswa::where('org_tua_id', '=', Request::input('orang_tua'))->get(),
             'orangTua'=> Auth::user()->orangtua,
             'can'=>[
@@ -62,7 +62,7 @@ class SiswaController extends Controller
     public function store(StoreSiswaRequest $request)
     {
         Siswa::create($request->all());
-        return redirect()->back()->with('message', 'Data Siswa Berhasil Di tambah!!');
+        return redirect()->route('Siswa.index')->with('message', 'Data Siswa Berhasil Di tambah!!');
     }
 
     /**
@@ -73,8 +73,8 @@ class SiswaController extends Controller
         Request::validate([
             'slug'=> 'required|exists:siswas,id',
         ]);
-        return Inertia::render("Siswa/Show", [
-            'siswa' => Siswa::with(['orangTua','riwayatImunisasis'])->find(Request::input('slug')),
+        return Inertia::render("Admin/Siswa/Show", [
+            'siswa' => Siswa::with(['orangTua'])->find(Request::input('slug')),
             'orangTua'=> OrangTua::all(),
         ]);
     }
@@ -87,7 +87,7 @@ class SiswaController extends Controller
         Request::validate([
             'slug'=> 'required|exists:siswas,id',
         ]);
-        return Inertia::render("Siswa/Edit", [
+        return Inertia::render("Admin/Siswa/Edit", [
             'siswa' => Siswa::find(Request::input('slug')),
             'orangTua'=> OrangTua::all(),
             'can'=>[

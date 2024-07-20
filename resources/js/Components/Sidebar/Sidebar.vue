@@ -47,6 +47,21 @@ const toggleDropdownLaporan = () => {
                 <span class="-mr-1 font-medium">Guru</span>
             </NavLink>
         </li>
+        <li >
+            <NavLink :href="route('Siswa.index')"
+                    :active="route().current('Siswa.index') || route().current('Siswa.create') || route().current('Siswa.edit') || route().current('Siswa.show')"
+                    :icon="['fas', 'person-breastfeeding']">
+                    <span class="group-hover:text-gray-700 capitalize">Data Siswa</span>
+                </NavLink>
+        </li>
+        <li >
+            <NavLink :href="route('OrangTua.index')"
+            :active="route().current('OrangTua.index') || route().current('OrangTua.create') || route().current('OrangTua.edit') || route().current('OrangTua.show')"
+            :icon="['fas', 'users-line']">
+
+            <span class="group-hover:text-gray-700 capitalize">Orang Tua</span>
+        </NavLink>
+        </li>
 
     </ul>
     <div class="-mx-6 flex items-center justify-between border-t px-6 pt-4">
