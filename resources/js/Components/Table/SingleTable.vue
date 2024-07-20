@@ -14,7 +14,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 import {
-    FwbA,
+    FwbSpinner,
     FwbTable,
     FwbTableBody,
     FwbTableCell,
@@ -229,7 +229,7 @@ function editUpdate() {
     FormCreate.put(route(props.path + ".update"), {
         preserveState: true,
         preserveScroll: true,
-        onFinish: () => {
+        onSuccess: () => {
             swal({
                 icon: "info",
                 title: 'Berhasil',
@@ -239,6 +239,21 @@ function editUpdate() {
             });
             EditForm.value = false;
             FormCreate.reset()
+        },
+        onError: (err) => {
+            var txt = "<ul>"
+            Object.keys(err).forEach((item, val) => {
+                txt += `<li>${err[item]}</li>`
+            });
+            txt += "</ul>";
+            console.log(txt)
+            swal({
+                title: "Peringatan",
+                icon: "error",
+                html: txt,
+                showCloseButton: true,
+                showCancelButton: true,
+            });
         }
     })
 }
@@ -292,7 +307,6 @@ function editUpdate() {
                             <input type="text" v-model="FormCreate[item]" :id="item"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 :placeholder="whiteSpaceAdd(item)" required />
-                            <InputError :message="FormCreate[item].errors" />
                         </div>
                         <div v-else-if="item == 'tahun_ajaran'">
                             <label for="countries"
@@ -306,10 +320,22 @@ function editUpdate() {
                         </div>
                     </template>
                     <hr class="border-2 my-5">
-                    <PrimaryButton v-if="EditForm" type="submit" class="w-full text-center !bg-blue-500">Edit Data
+                    <PrimaryButton v-if="EditForm" type="submit" class="w-full text-center !bg-blue-500">
+                        <span v-if="FormCreate.processing" class="flex justify-center">
+                            <fwb-spinner color="blue" size="6" />
+                        </span>
+                        <span v-else class="flex justify-center">
+                            Edit Data
+                        </span>
+
                     </PrimaryButton>
                     <PrimaryButton v-else type="submit" class="w-full text-center !bg-green-500">
-                        Tambah Data
+                        <span v-if="FormCreate.processing" class="flex justify-center">
+                            <fwb-spinner color="blue" size="6" />
+                        </span>
+                        <span v-else class="flex justify-center">
+                            Tambah Data
+                        </span>
                     </PrimaryButton>
 
                 </form>
@@ -370,10 +396,18 @@ function editUpdate() {
                                     class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase">Aksi
                                 </th>
                             </fwb-table-head>
-                            <fwb-table-body class="bg-white divide-y " v-if="TableData.data.length > 0">
+                            <fwb-table-body  v-if="Form.processing">
+                                <tr>
+                                    <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center ">
+                                        <div class="flex justify-center">
+                                            <fwb-spinner color="blue" size="8" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </fwb-table-body>
+                            <fwb-table-body class="bg-white divide-y " v-else-if="TableData.data.length > 0">
                                 <fwb-table-row v-for="(item, index) in TableData.data" :key="item.id"
-                                    class="text-gray-700 dark:text-gray-400"
-                                    :class="{ 'opacity-75 blur-sm': Form.processing }">
+                                    class="text-gray-700 dark:text-gray-400">
                                     <fwb-table-cell
                                         class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
                                         v-for="col in tableColums">

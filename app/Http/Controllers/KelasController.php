@@ -73,9 +73,7 @@ class KelasController extends Controller
      */
     public function edit(Kelas $kelas)
     {
-        return Inertia::render('Admin/Kelas/Edit', [
-            'kelas'=> $kelas->find(Request::input('slug')),
-        ]);
+        return response()->json($kelas->find(Request::input('slug')), 200);
     }
 
     /**
@@ -83,7 +81,7 @@ class KelasController extends Controller
      */
     public function update(UpdateKelasRequest $request, Kelas $kelas)
     {
-        $kelas = Kelas::find($request->slug)->update($request->all());
+        $kelas = Kelas::find($request->id)->update($request->all());
 
         return redirect()->route('Kelas.index')->with('message', 'Data Berhasil Di ubah!!');
     }

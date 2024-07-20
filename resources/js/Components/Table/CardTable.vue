@@ -7,13 +7,13 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
 import {
-  FwbA,
-  FwbTable,
-  FwbTableBody,
-  FwbTableCell,
-  FwbTableHead,
-  FwbTableHeadCell,
-  FwbTableRow,
+    FwbSpinner,
+    FwbTable,
+    FwbTableBody,
+    FwbTableCell,
+    FwbTableHead,
+    FwbTableHeadCell,
+    FwbTableRow,
 } from 'flowbite-vue'
 const swal = inject('$swal')
 
@@ -236,26 +236,37 @@ function truncateText(text) {
                                 <col>
                             </colgroup>
                             <fwb-table-head
-                            class="text-xs md:text-base font-semibold tracking-wide text-left uppercase border-b border-gray-700  ">
-                            <fwb-table-head-cell scope="col" v-for="item in columsReplace"
-                                class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize">
-                                <span v-if="item == 'id' || item == 'slug'" class="w-10">
-                                    No.
-                                </span>
-                                <span v-else>{{ item }}</span>
-                            </fwb-table-head-cell>
-                            <th scope="col" v-if="cekAksi()"
-                                class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase">Aksi
-                            </th>
-                        </fwb-table-head>
-                            <fwb-table-body class="bg-white divide-y " v-if="TableData.data.length > 0">
+                                class="text-xs md:text-base font-semibold tracking-wide text-left uppercase border-b border-gray-700  ">
+                                <fwb-table-head-cell scope="col" v-for="item in columsReplace"
+                                    class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize">
+                                    <span v-if="item == 'id' || item == 'slug'" class="w-10">
+                                        No.
+                                    </span>
+                                    <span v-else>{{ item }}</span>
+                                </fwb-table-head-cell>
+                                <th scope="col" v-if="cekAksi()"
+                                    class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase">Aksi
+                                </th>
+                            </fwb-table-head>
+                            <fwb-table-body  v-if="Form.processing">
+                                <tr>
+                                    <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center ">
+                                        <div class="flex justify-center">
+                                            <fwb-spinner color="blue" size="8" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </fwb-table-body>
+                            <fwb-table-body class="bg-white divide-y " v-else-if="TableData.data.length > 0">
                                 <fwb-table-row v-for="(item, index) in TableData.data" :key="item.id"
                                     class="text-gray-700 dark:text-gray-400"
                                     :class="{ 'opacity-75 blur-sm': Form.processing }">
-                                    <fwb-table-cell class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
-                                        v-for="col in tableColums">
 
-                                        <span v-if="col == 'id' || col == 'slug'">
+                                    <fwb-table-cell
+                                    class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
+                                    v-for="col in tableColums">
+
+                                    <span v-if="col == 'id' || col == 'slug'">
                                             {{ (TableData.current_page - 1) * TableData.per_page + index + 1 }}
                                         </span>
                                         <span v-else-if="col == 'deskripsi' || col == 'keterangan'">
@@ -284,7 +295,8 @@ function truncateText(text) {
                                         <span v-else :class="col == 'tanggal' ? 'whitespace-nowrap' : ''">{{ item[col]
                                             }}</span>
                                     </fwb-table-cell>
-                                    <fwb-table-cell class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border relative"
+                                    <fwb-table-cell
+                                        class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border relative"
                                         v-if="cekAksi()">
                                         <!-- Settings dropdownTable -->
                                         <div class="ml-3 relative z-50">
@@ -340,12 +352,12 @@ function truncateText(text) {
                                 </fwb-table-row>
 
                             </fwb-table-body>
-                            <tbody v-else>
+                            <fwb-table-body  v-else>
                                 <tr>
                                     <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center">Data Kosong
                                     </td>
                                 </tr>
-                            </tbody>
+                            </fwb-table-body>
                         </fwb-table>
                     </div>
                     <div class="py-1 px-4 ">

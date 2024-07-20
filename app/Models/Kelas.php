@@ -16,7 +16,7 @@ class Kelas extends Model
     public function scopeFilter($query, $filter)
     {
         $query->when($filter['search'] ?? null, function ($query, $search) {
-            $query->where('nama', 'like', '%' . $search . '%')
+            $query->where('keterangan', 'like', '%' . $search . '%')
                 ->orWhere('kode', 'like', '%' . $search . '%');
         })->when($filter['order'] ?? null, function ($query, $order) {
             $query->orderBy('id', $order);
