@@ -17,7 +17,7 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        $tableName = 'tahun_ajars'; // Ganti dengan nama tabel yang Anda inginkan
+        $tableName = 'tahun_ajarans'; // Ganti dengan nama tabel yang Anda inginkan
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
 
         return Inertia::render('Admin/TahunAjar/Index', [
@@ -73,9 +73,9 @@ class TahunAjaranController extends Controller
      */
     public function update(UpdateTahunAjaranRequest $request, TahunAjaran $tahunAjaran)
     {
-        TahunAjaran::find($request->slug)->update($request->all());
+        TahunAjaran::find($request->id)->update($request->all());
 
-        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Tambah');
+        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Ubah');
     }
 
     /**
@@ -85,6 +85,6 @@ class TahunAjaranController extends Controller
     {
         TahunAjaran::find(Request::input('slug'))->delete();
 
-        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Tambah');
+        return redirect()->route('TahunAjar.index')->with('message', 'Data Berhasil Di Hapus');
     }
 }

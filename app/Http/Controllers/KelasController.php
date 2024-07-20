@@ -29,7 +29,7 @@ class KelasController extends Controller
             'can' => [
                 'add' => Auth::user()->can('add kelas'),
                 'edit' => Auth::user()->can('edit kelas'),
-                'show' => Auth::user()->can('show kelas'),
+                'show' => false,
                 'delete' => Auth::user()->can('delete kelas'),
                 'reset' => Auth::user()->can('reset kelas'),
             ]

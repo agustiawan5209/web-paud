@@ -151,23 +151,36 @@ function truncateText(text) {
 
 <template>
     <Modal :show="VarDeleteModal">
-        <div class="flex flex-col max-w-full gap-2 p-6 rounded-md shadow-md bg-gray-50 text-gray-800">
-            <h2 class="flex items-center gap-2 text-xl font-semibold leading-tight tracking-wide">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                    class="w-6 h-6 fill-current shrink-0 text-violet-600">
+        <div id="alert-additional-content-4"
+            class="p-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
+            role="alert">
+            <div class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
                     <path
-                        d="M451.671,348.569,408,267.945V184c0-83.813-68.187-152-152-152S104,100.187,104,184v83.945L60.329,348.568A24,24,0,0,0,81.432,384h86.944c-.241,2.636-.376,5.3-.376,8a88,88,0,0,0,176,0c0-2.7-.135-5.364-.376-8h86.944a24,24,0,0,0,21.1-35.431ZM312,392a56,56,0,1,1-111.418-8H311.418A55.85,55.85,0,0,1,312,392ZM94.863,352,136,276.055V184a120,120,0,0,1,240,0v92.055L417.137,352Z">
-                    </path>
-                    <rect width="32" height="136" x="240" y="112"></rect>
-                    <rect width="32" height="32" x="240" y="280"></rect>
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
-                <span>Apakah anda yakin ingin menghapus {{ DeleteForm.title }}</span>
-            </h2>
-            <!-- <p class="flex-1 text-gray-600">Mauris et lorem at elit tristique dignissim et ullamcorper elit. In sed feugiat mi. Etiam ut lacinia dui.</p> -->
-            <div class="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
-                <button class="px-6 py-2 rounded-sm" @click="VarDeleteModal = false">Tidak</button>
-                <button class="px-6 py-2 rounded-sm shadow-sm bg-violet-600 text-gray-50"
-                    @click="deleteItem()">Ya</button>
+                <span class="sr-only">Info</span>
+                <h3 class="text-lg font-medium">Apakah anda yakin ingin menghapus {{ DeleteForm.title }}</h3>
+            </div>
+            <div class="mt-2 mb-4 text-sm">
+                Mengklik iya akan menyebabkan data terhapus permanen
+            </div>
+            <div class="flex">
+                <button type="button" @click="VarDeleteModal = false"
+                    class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
+                    <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 14">
+                        <path
+                            d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+                    </svg>
+                    Tidak
+                </button>
+                <button type="button" @click="deleteItem()"
+                    class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"
+                    data-dismiss-target="#alert-additional-content-4" aria-label="Close">
+                    Ya
+                </button>
             </div>
         </div>
     </Modal>

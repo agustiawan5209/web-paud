@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ChartJenisImunisasi from '@/Components/Chart/ChartJenisImunisasi.vue';
-import CardTable from '@/Components/Table/CardTable.vue';
+import SingleTable from '@/Components/Table/SingleTable.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 
@@ -42,17 +42,17 @@ const crud = ref({
 
 <template>
 
-    <Head title="Guru" />
+    <Head title="TahunAjar" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Guru</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data TahunAjar</h2>
         </template>
 
         <div class="py-4 relative box-content">
-            <CardTable @update:search="search = $event" @update:order="order" :slug="null" path="Guru" :TableData="data" :tableColums="table_colums" :crud="crud" >
+            <SingleTable @update:search="search = $event" @update:order="order" :slug="null" path="TahunAjar" :TableData="data" :tableColums="table_colums" :crud="crud" >
 
-            </CardTable>
+            </SingleTable>
         </div>
     </AuthenticatedLayout>
 </template>
