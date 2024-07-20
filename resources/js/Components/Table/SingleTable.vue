@@ -179,6 +179,9 @@ function storeUpdate() {
                 timer: 2000
             });
             FormCreate.reset()
+        },
+        onerror: (err)=>{
+            console.log(err)
         }
     })
 }
