@@ -69,6 +69,10 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    relasi: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 
 const Form = useForm({
@@ -102,6 +106,9 @@ const columsReplace = props.tableColums.map(element => {
 });
 
 
+function whiteSpaceAdd(element) {
+    return element.replace(/_|\b_id\b/g, ' ');
+}
 // Modal Delete
 const VarDeleteModal = ref(false);
 const DeleteForm = useForm({
@@ -148,11 +155,13 @@ function truncateText(text) {
     var text = '';
     var paragraph = ''
     for (var i = 0; i < paragraphs.length; i++) {
-        if (i < 100) {
+        if (i < 50) {
             text += paragraphs[i]
         }
     }
-    text += '........'
+    if(paragraphs.length>50){
+        text += '........'
+    }
     return text;
 }
 
@@ -167,6 +176,7 @@ const FormCreate = useForm(tabelkolom);
 
 
 function storeUpdate() {
+    console.log(FormCreate)
     FormCreate.post(route(props.path + ".store"), {
         preserveState: true,
         preserveScroll: true,
@@ -180,8 +190,20 @@ function storeUpdate() {
             });
             FormCreate.reset()
         },
-        onerror: (err)=>{
-            console.log(err)
+        onError: (err) => {
+            var txt = "<ul>"
+            Object.keys(err).forEach((item, val) => {
+                txt += `<li>${err[item]}</li>`
+            });
+            txt += "</ul>";
+            console.log(txt)
+            swal({
+                title: "Peringatan",
+                icon: "error",
+                html: txt,
+                showCloseButton: true,
+                showCancelButton: true,
+            });
         }
     })
 }
@@ -260,22 +282,33 @@ function editUpdate() {
     <div class="flex flex-col w-full">
         <div class="grid grid-cols-1  md:grid-cols-12 gap-2">
             <div class="md:col-span-4 p-1.5 border rounded-lg">
-                <form class="relative my-5">
+                <form @submit.prevent="EditForm ? editUpdate() : storeUpdate()" class="relative my-5">
                     <template v-for="(item, index) in tableColums">
-                        <div v-if="item != 'id'">
+                        <div v-if="item != 'id' && item != 'tahun_ajaran'" class="mt-3">
                             <label :for="item"
-                                class=" capitalize block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ item
+                                class=" capitalize block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                    whiteSpaceAdd(item)
                                 }}</label>
                             <input type="text" v-model="FormCreate[item]" :id="item"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                :placeholder="item" required />
+                                :placeholder="whiteSpaceAdd(item)" required />
+                            <InputError :message="FormCreate[item].errors" />
+                        </div>
+                        <div v-else-if="item == 'tahun_ajaran'">
+                            <label for="countries"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                    whiteSpaceAdd(item) }}</label>
+                            <select id="countries" v-model="FormCreate[item]"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">---Pilih---</option>
+                                <option v-for="col in relasi.tahun_ajarans" :value="col.tahun">{{ col.tahun }}</option>
+                            </select>
                         </div>
                     </template>
                     <hr class="border-2 my-5">
-                    <PrimaryButton v-if="EditForm" @click="editUpdate()" type="submit"
-                        class="w-full text-center !bg-blue-500">Edit Data
+                    <PrimaryButton v-if="EditForm" type="submit" class="w-full text-center !bg-blue-500">Edit Data
                     </PrimaryButton>
-                    <PrimaryButton v-else @click="storeUpdate()" type="submit" class="w-full text-center !bg-green-500">
+                    <PrimaryButton v-else type="submit" class="w-full text-center !bg-green-500">
                         Tambah Data
                     </PrimaryButton>
 

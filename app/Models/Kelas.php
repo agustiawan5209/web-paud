@@ -10,7 +10,7 @@ class Kelas extends Model
     use HasFactory;
     protected $table = "kelas";
 
-    protected $fillable = ['kode','nama'];
+    protected $fillable = ['kode','keterangan', 'tahun_ajaran'];
 
 
     public function scopeFilter($query, $filter)

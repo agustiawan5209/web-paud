@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
             $table->string('kode', 20);
-            $table->string('nama', 100);
+            $table->string('keterangan', 100);
+            $table->string('tahun_ajaran', 100);
+            $table->foreign('tahun_ajaran')->references('tahun')->on('tahun_ajarans')->onUpdate('cascade');
             $table->timestamps();
         });
     }

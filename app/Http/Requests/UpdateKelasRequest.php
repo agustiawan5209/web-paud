@@ -22,8 +22,10 @@ class UpdateKelasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kode'=> 'required|unique:kelas,kode',
-            'nama'=> 'required|string|max:50',
+            'kode'=> 'sometimes|required|unique:kelas,kode',
+            'keterangan'=> 'required|string|max:50',
+            'tahun_ajaran'=> 'required|exists:tahun_ajarans,tahun',
+
         ];
     }
 }

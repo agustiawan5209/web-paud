@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
+use App\Models\TahunAjaran;
 
 class KelasController extends Controller
 {
@@ -32,7 +33,10 @@ class KelasController extends Controller
                 'show' => false,
                 'delete' => Auth::user()->can('delete kelas'),
                 'reset' => Auth::user()->can('reset kelas'),
-            ]
+            ],
+            'relasi'=> [
+                'tahun_ajarans'=> TahunAjaran::all(),
+            ],
         ]);
     }
 
