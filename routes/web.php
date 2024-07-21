@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\OrangTuaController;
+use App\Http\Controllers\KelasSiswaController;
 use App\Http\Controllers\TahunAjaranController;
 
 /*
@@ -105,6 +106,7 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
         });
     });
 
+    // Siswa
     Route::group(['prefix' => 'siswa', 'as' => "Siswa."], function () {
         Route::controller(SiswaController::class)->group(function () {
             Route::get('/', 'index')->name('index');
@@ -119,6 +121,17 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
 
             Route::get('/reset-password-siswa', 'resetpassword')->middleware(['auth', 'password.confirm'])->name('reset.password');
             Route::post('/reset-password-siswa', 'resetpasswordUpdate')->name('reset.password');
+        });
+    });
+    Route::group(['prefix' => 'kelas-siswa', 'as' => "Kelas-Siswa."], function () {
+        Route::controller(KelasSiswaController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data-kelas-siswa', 'create')->name('create');
+            Route::get('/detail-data-kelas-siswa', 'show')->name('show');
+            Route::get('/edit-data-kelas-siswa', 'edit')->name('edit');
+            Route::post('/store-data-kelas-siswa', 'store')->name('store');
+            Route::put('/update-data-kelas-siswa', 'update')->name('update');
+            Route::delete('/hapus-data-kelas-siswa', 'destroy')->name('destroy');
         });
     });
 });

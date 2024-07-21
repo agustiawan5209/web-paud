@@ -26,7 +26,6 @@ class KelasSiswaController extends Controller
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => KelasSiswa::filter(Request::only('search', 'order'))
-            ->with(['orangTua'])
             ->paginate(10),
             'can'=>[
                 'add'=> Auth::user()->can('add Siswa'),

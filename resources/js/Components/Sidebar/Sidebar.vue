@@ -28,45 +28,54 @@ const toggleDropdownLaporan = () => {
 }
 </script>
 <template>
-    <ul class="mt-6  overflow-hidden" >
-        <li >
+    <ul class="mt-6  overflow-hidden">
+        <li>
             <NavLink :href="route('dashboard')" :active="route().current('dashboard')" :icon="['fas', 'home']">
 
                 <span class="-mr-1 font-medium">Dashboard</span>
             </NavLink>
         </li>
-        <li >
-            <NavLink :href="route('TahunAjar.index')" :active="route().current('TahunAjar.index')" :icon="['fas', 'user']">
+        <li>
+            <NavLink :href="route('TahunAjar.index')" :active="route().current('TahunAjar.index')"
+                :icon="['fas', 'user']">
 
                 <span class="-mr-1 font-medium">Tahun Ajaran</span>
             </NavLink>
         </li>
-        <li >
+        <li>
             <NavLink :href="route('Kelas.index')" :active="route().current('Kelas.index')" :icon="['fas', 'user']">
 
                 <span class="-mr-1 font-medium">Kelas</span>
             </NavLink>
         </li>
-        <li >
+        <li>
             <NavLink :href="route('Guru.index')" :active="route().current('Guru.index')" :icon="['fas', 'users']">
 
                 <span class="-mr-1 font-medium">Guru</span>
             </NavLink>
         </li>
-        <li >
+        <li>
             <NavLink :href="route('Siswa.index')"
-                    :active="route().current('Siswa.index') || route().current('Siswa.create') || route().current('Siswa.edit') || route().current('Siswa.show')"
-                    :icon="['fas', 'person-breastfeeding']">
-                    <span class="group-hover:text-gray-700 capitalize">Data Siswa</span>
-                </NavLink>
+                :active="route().current('Siswa.index') || route().current('Siswa.create') || route().current('Siswa.edit') || route().current('Siswa.show')"
+                :icon="['fas', 'person-breastfeeding']">
+                <span class="group-hover:text-gray-700 capitalize">Data Siswa</span>
+            </NavLink>
         </li>
-        <li >
+        <li>
             <NavLink :href="route('OrangTua.index')"
-            :active="route().current('OrangTua.index') || route().current('OrangTua.create') || route().current('OrangTua.edit') || route().current('OrangTua.show')"
-            :icon="['fas', 'users-line']">
+                :active="route().current('OrangTua.index') || route().current('OrangTua.create') || route().current('OrangTua.edit') || route().current('OrangTua.show')"
+                :icon="['fas', 'users-line']">
 
-            <span class="group-hover:text-gray-700 capitalize">Orang Tua</span>
-        </NavLink>
+                <span class="group-hover:text-gray-700 capitalize">Orang Tua</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink :href="route('Kelas-Siswa.index')"
+                :active="route().current('Kelas-Siswa.index') || route().current('Kelas-Siswa.create') || route().current('Kelas-Siswa.edit') || route().current('Kelas-Siswa.show')"
+                :icon="['fas', 'users-line']">
+
+                <span class="group-hover:text-gray-700 capitalize">Kelas Siswa</span>
+            </NavLink>
         </li>
 
     </ul>
