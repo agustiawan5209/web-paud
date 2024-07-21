@@ -6,6 +6,7 @@ import dropdownTable from '@/Components/dropdownTable.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
+import FormCreate from './Form.vue'
 import {
     FwbSpinner,
     FwbTable,
@@ -147,54 +148,23 @@ function truncateText(text) {
     text += '........'
     return text;
 }
-console.log(props.path)
+const AddForm = ref(true);
 </script>
 
 <template>
-    <Modal :show="VarDeleteModal">
-        <div id="alert-additional-content-4"
-            class="p-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
-            role="alert">
-            <div class="flex items-center">
-                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-lg font-medium">Apakah anda yakin ingin menghapus {{ DeleteForm.title }}</h3>
-            </div>
-            <div class="mt-2 mb-4 text-sm">
-                Mengklik iya akan menyebabkan data terhapus permanen
-            </div>
-            <div class="flex">
-                <button type="button" @click="VarDeleteModal = false"
-                    class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
-                    <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 20 14">
-                        <path
-                            d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                    </svg>
-                    Tidak
-                </button>
-                <button type="button" @click="deleteItem()"
-                    class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"
-                    data-dismiss-target="#alert-additional-content-4" aria-label="Close">
-                    Ya
-                </button>
-            </div>
-        </div>
-    </Modal>
     <div class="flex flex-col w-full">
         <div class="-m-1.5">
             <div class="p-1.5 min-w-full">
                 <div
                     class="border divide-y divide-gray-200 max-w-7xl mb-8 overflow-hidden rounded-lg shadow-xs bg-white">
+                    <FormCreate v-show="AddForm" :path="path" :TableData="TableData" :tableColums="tableColums" />
+
                     <div class="py-3 px-4" v-if="crud.tambah">
                         <div class="relative max-w-xs">
-                            <Link :href="route(props.path + '.create')">
-                            <PrimaryButton type="button">Tambah Data</PrimaryButton>
-                            </Link>
+                            <PrimaryButton type="button" @click="AddForm =! AddForm">
+                                <span v-if="AddForm">Tutup</span>
+                                <span v-else>Tambah Data</span>
+                            </PrimaryButton>
                         </div>
                     </div>
                     <div class="py-3 px-4 flex justify-between">
@@ -249,7 +219,7 @@ console.log(props.path)
                                     class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase">Aksi
                                 </th>
                             </fwb-table-head>
-                            <fwb-table-body  v-if="Form.processing">
+                            <fwb-table-body v-if="Form.processing">
                                 <tr>
                                     <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center ">
                                         <div class="flex justify-center">
@@ -264,10 +234,10 @@ console.log(props.path)
                                     :class="{ 'opacity-75 blur-sm': Form.processing }">
 
                                     <fwb-table-cell
-                                    class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
-                                    v-for="col in tableColums">
+                                        class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
+                                        v-for="col in tableColums">
 
-                                    <span v-if="col == 'id' || col == 'slug'">
+                                        <span v-if="col == 'id' || col == 'slug'">
                                             {{ (TableData.current_page - 1) * TableData.per_page + index + 1 }}
                                         </span>
                                         <span v-else-if="col == 'deskripsi' || col == 'keterangan'">
@@ -353,7 +323,7 @@ console.log(props.path)
                                 </fwb-table-row>
 
                             </fwb-table-body>
-                            <fwb-table-body  v-else>
+                            <fwb-table-body v-else>
                                 <tr>
                                     <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center">Data Kosong
                                     </td>
@@ -379,4 +349,38 @@ console.log(props.path)
             </div>
         </div>
     </div>
+    <Modal :show="VarDeleteModal">
+        <div id="alert-additional-content-4"
+            class="p-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
+            role="alert">
+            <div class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-lg font-medium">Apakah anda yakin ingin menghapus {{ DeleteForm.title }}</h3>
+            </div>
+            <div class="mt-2 mb-4 text-sm">
+                Mengklik iya akan menyebabkan data terhapus permanen
+            </div>
+            <div class="flex">
+                <button type="button" @click="VarDeleteModal = false"
+                    class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
+                    <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 14">
+                        <path
+                            d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+                    </svg>
+                    Tidak
+                </button>
+                <button type="button" @click="deleteItem()"
+                    class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"
+                    data-dismiss-target="#alert-additional-content-4" aria-label="Close">
+                    Ya
+                </button>
+            </div>
+        </div>
+    </Modal>
 </template>

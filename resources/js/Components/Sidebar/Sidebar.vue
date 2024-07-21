@@ -70,8 +70,8 @@ const toggleDropdownLaporan = () => {
             </NavLink>
         </li>
         <li>
-            <NavLink :href="route('Kelas-Siswa.index')"
-                :active="route().current('Kelas-Siswa.index') || route().current('Kelas-Siswa.create') || route().current('Kelas-Siswa.edit') || route().current('Kelas-Siswa.show')"
+            <NavLink :href="route('KelasSiswa.index')"
+                :active="route().current('KelasSiswa.index') || route().current('KelasSiswa.create') || route().current('KelasSiswa.edit') || route().current('KelasSiswa.show')"
                 :icon="['fas', 'users-line']">
 
                 <span class="group-hover:text-gray-700 capitalize">Kelas Siswa</span>

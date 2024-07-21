@@ -22,14 +22,19 @@ class KelasSiswaController extends Controller
         $tableName = 'kelas_siswas'; // Ganti dengan nama tabel yang Anda inginkan
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
 
-        return Inertia::render('Admin/Siswa/Index', [
+        return Inertia::render('Admin/KelasSiswa/Index', [
             'search' =>  Request::input('search'),
-            'table_colums' => array_values(array_diff($columns, ['remember_token', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
+            'table_colums' => array_values(array_diff($columns, ['remember_token','kelas_id','siswa_id', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => KelasSiswa::filter(Request::only('search', 'order'))
             ->paginate(10),
             'can'=>[
-                'add'=> Auth::user()->can('add Siswa'),
-            ]
+                'add'=> Auth::user()->can('add siswa'),
+                'add' => Auth::user()->can('add kelas'),
+                'edit' => Auth::user()->can('edit kelas'),
+                'show' => false,
+                'delete' => Auth::user()->can('delete kelas'),
+            ],
+
         ]);
     }
 
@@ -57,7 +62,7 @@ class KelasSiswaController extends Controller
             'kelas' => $kelas,
             'siswa' => $siswa,
         ]);
-        return redirect()->route('Kelas-Siswa.index')->with('message', 'Data Kelas Siswa Berhasil Di Tambah!!');
+        return redirect()->route('KelasSiswa.index')->with('message', 'Data Kelas Siswa Berhasil Di Tambah!!');
     }
 
     /**
@@ -95,7 +100,7 @@ class KelasSiswaController extends Controller
             'kelas' => $kelas,
             'siswa' => $siswa,
         ]);
-        return redirect()->route('Kelas-Siswa.index')->with('message', 'Data Kelas Siswa Berhasil Di Ubah!!');
+        return redirect()->route('KelasSiswa.index')->with('message', 'Data Kelas Siswa Berhasil Di Ubah!!');
     }
 
     /**
@@ -104,6 +109,6 @@ class KelasSiswaController extends Controller
     public function destroy(KelasSiswa $kelasSiswa)
     {
         KelasSiswa::find(Request::input('slug'))->delete();
-        return redirect()->route('Kelas-Siswa.index')->with('message', 'Data Kelas Siswa Berhasil Di Hapus!!');
+        return redirect()->route('KelasSiswa.index')->with('message', 'Data Kelas Siswa Berhasil Di Hapus!!');
     }
 }

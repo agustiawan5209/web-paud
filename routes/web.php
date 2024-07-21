@@ -123,7 +123,7 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
             Route::post('/reset-password-siswa', 'resetpasswordUpdate')->name('reset.password');
         });
     });
-    Route::group(['prefix' => 'kelas-siswa', 'as' => "Kelas-Siswa."], function () {
+    Route::group(['prefix' => 'kelas-siswa', 'as' => "KelasSiswa."], function () {
         Route::controller(KelasSiswaController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/tambah-data-kelas-siswa', 'create')->name('create');
