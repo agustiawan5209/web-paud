@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiKelasSiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiModelController;
@@ -23,4 +24,10 @@ Route::get('get-user', [ApiModelController::class, 'getUser'])->name('api.user.g
 Route::get('get-orangtua', [ApiModelController::class, 'getOrgTua'])->name('api.orangtua.getOrgTua');
 Route::get('get-anak', [ApiModelController::class, 'getSiswa'])->name('api.siswa.getSiswa');
 Route::get('get-data-siswa', [ApiModelController::class, 'geDatatSiswa'])->name('api.siswa.getDataSiswa');
+
+// Kelas SIswa
+Route::get('get-siswa/{id}', [ApiKelasSiswaController::class, 'getSiswaID'])->name('api.siswa.byID');
+Route::get('get-kelas/{id}', [ApiKelasSiswaController::class, 'getKelasID'])->name('api.kelas.byID');
+Route::get('get-siswa', [ApiKelasSiswaController::class, 'getSiswa'])->name('api.siswa.bySearch');
+Route::get('get-kelas', [ApiKelasSiswaController::class, 'getKelas'])->name('api.kelas.bySearch');
 

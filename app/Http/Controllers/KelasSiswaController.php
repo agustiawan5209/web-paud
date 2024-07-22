@@ -20,7 +20,11 @@ class KelasSiswaController extends Controller
     public function index()
     {
         $tableName = 'kelas_siswas'; // Ganti dengan nama tabel yang Anda inginkan
-        $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+        // $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+        $columns[]='id';
+        $columns[]='nama_kelas';
+        $columns[]='nama_siswa';
+
 
         return Inertia::render('Admin/KelasSiswa/Index', [
             'search' =>  Request::input('search'),
@@ -55,7 +59,7 @@ class KelasSiswaController extends Controller
     public function store(StoreKelasSiswaRequest $request)
     {
         $kelas = Kelas::find($request->kelas_id);
-        $siswa = Siswa::find($request->siswa);
+        $siswa = Siswa::find($request->siswa_id);
         KelasSiswa::create([
             'kelas_id' => $request->kelas_id,
             'siswa_id' => $request->siswa_id,

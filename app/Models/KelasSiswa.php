@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,26 @@ class KelasSiswa extends Model
         'kelas'=>'json',
         'siswa'=>'json',
     ];
+
+    protected $appends = [
+        'nama_kelas',
+        'nama_siswa',
+    ];
+
+    public function namaKelas():Attribute
+    {
+        return new Attribute(
+            get: fn()=> $this->kelas['kode'],
+            set: null,
+        );
+    }
+    public function namaSiswa():Attribute
+    {
+        return new Attribute(
+            get: fn()=> $this->siswa['nama'],
+            set: null,
+        );
+    }
 
     //  FIlter Data User
     public function scopeFilter($query, $filter)

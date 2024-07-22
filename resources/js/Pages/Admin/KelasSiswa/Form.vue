@@ -8,26 +8,111 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, watch, onMounted } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
-
+    kelas: {
+        type: Object,
+        default: () => ({}),
+    },
+    siswa: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 const Form = useForm({
-    name:'',
-    alamat:'',
-    no_telpon:'',
-    username:'',
-    email:'',
-    password:'',
+    kelas_id: '',
+    siswa_id: '',
 })
 
+const Kelas = ref({
+    id: "",
+    kode: "",
+    keterangan: "",
+    tahun_ajaran: "",
+})
+const Siswa = ref({
+    id: "",
+    nama: "",
+    jenkel: "",
+})
+const DataKelas = ref({})
+const DataSiswa = ref({})
+const KelasSearch = ref('')
+const SiswaSearch = ref('')
+const KelasID = ref('')
+const SiswaID = ref('')
+
 function submit() {
-    Form.post(route('OrangTua.store'), {
+    Form.post(route('KelasSiswa.store'), {
         onError: (err) => {
-            console.log(err)
+            var txt = "<ul>"
+            Object.keys(err).forEach((item, val) => {
+                txt += `<li>${err[item]}</li>`
+            });
+            txt += "</ul>";
+            console.log(txt)
+            swal({
+                title: "Peringatan",
+                icon: "error",
+                html: txt,
+                showCloseButton: true,
+                showCancelButton: true,
+            });
         }
     });
+}
+
+watch(KelasSearch, (value) => {
+    axios.get(route('api.kelas.bySearch', { search: value }))
+        .then((res) => {
+            if (res.status == 200) {
+                DataKelas.value = res.data;
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+})
+
+const GetKelasID = (id) => {
+    axios.get(route('api.kelas.byID', { id: id }))
+        .then((res) => {
+            if (res.status == 200) {
+                Form.kelas_id = res.data.id;
+                Kelas.value.kode = res.data.kode;
+                Kelas.value.keterangan = res.data.keterangan;
+                Kelas.value.tahun_ajaran = res.data.tahun_ajaran;
+                DataKelas.value ={}
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
+watch(SiswaSearch, (value) => {
+    axios.get(route('api.siswa.bySearch', { search: value }))
+        .then((res) => {
+            if (res.status == 200) {
+                DataSiswa.value = res.data;
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+})
+
+const GetSiswaID = (id) => {
+    axios.get(route('api.siswa.byID', { id: id }))
+        .then((res) => {
+            if (res.status == 200) {
+                Form.siswa_id = res.data.id;
+                Siswa.value.nama = res.data.nama;
+                Siswa.value.jenkel = res.data.jenkel;
+                DataSiswa.value ={}
+
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
 }
 
 
@@ -44,48 +129,76 @@ function submit() {
 
         <div class="py-4 relative box-content">
             <section class="p-6 bg-gray-100 text-gray-900">
-                <form @submit.prevent="submit()" novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
+                <form @submit.prevent="submit()" novalidate="" action=""
+                    class="container flex flex-col mx-auto space-y-12">
 
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="firstname" class="text-sm">Nama Lengkap</label>
-                                <TextInput id="firstname" type="text" placeholder="nama lengkap" v-model="Form.name"  class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.name"/>
+                            <div class="col-span-full sm:col-span-3 relative">
+                                <label for="firstname" class="text-sm">Kelas</label>
+                                <TextInput id="firstname" type="text" placeholder="Kode Kelas" v-model="KelasSearch"
+                                    class="w-full text-gray-900" />
+
+                                <div class="absolute top-18" v-if="DataKelas.length > 0">
+                                    <ul
+                                        class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                        <template v-for="item in DataKelas" :index="item.kode" :key="item.id">
+                                            <li @click="GetKelasID(item.id)"
+                                                class="w-full cursor-pointer active:bg-gray-300 px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                                {{ item.kode }}</li>
+                                        </template>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="no_telpon" class="text-sm">No. Telepon</label>
-                                <TextInput id="no_telpon" type="text" v-model="Form.no_telpon" placeholder="No. telpon" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.no_telpon"/>
+                            <div class="col-span-full sm:col-span-3 relative flex flex-col">
+                                <div>
+                                    <label for="firstname" class="text-sm">Kelas</label>
+                                    <TextInput :readonly="true" id="firstname" type="text" placeholder="Kelas"
+                                        v-model="Kelas.kode" class="w-full read-only:bg-gray-100 text-gray-900" />
+                                </div>
+                                <div>
+                                    <label for="keterangan" class="text-sm">Keterangan</label>
+                                    <TextInput :readonly="true" id="keterangan" type="text" placeholder="Keterangan"
+                                        v-model="Kelas.keterangan" class="w-full read-only:bg-gray-100 text-gray-900" />
+                                </div>
+                                <div>
+                                    <label for="thn" class="text-sm">Tahun Ajaran</label>
+                                    <TextInput :readonly="true" id="thn" type="text" placeholder="Tahun Ajaran"
+                                        v-model="Kelas.tahun_ajaran" class="w-full read-only:bg-gray-100 text-gray-900" />
+                                </div>
 
                             </div>
-                            <div class="col-span-full">
-                                <label for="alamat" class="text-sm">Alamat</label>
-                                <TextInput id="alamat" type="text" v-model="Form.alamat" placeholder="alamat..." class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.alamat"/>
+                        </div>
+                        <hr class="border-2 border-gray-600 col-span-full">
+                        <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+                            <div class="col-span-full sm:col-span-3 relative">
+                                <label for="firstname" class="text-sm">Siswa</label>
+                                <TextInput id="firstname" type="text" placeholder="nama lengkap" v-model="SiswaSearch"
+                                    class="w-full text-gray-900" />
 
+                                <div class="absolute top-18" v-if="DataSiswa.length > 0">
+                                    <ul
+                                        class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                        <template v-for="item in DataSiswa" :index="item.kode" :key="item.id">
+                                            <li @click="GetSiswaID(item.id)"
+                                                class="w-full cursor-pointer active:bg-gray-300 px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                                {{ item.nama }}</li>
+                                        </template>
+                                    </ul>
+                                </div>
                             </div>
+                            <div class="col-span-full sm:col-span-3 relative flex flex-col">
+                                <div>
+                                    <label for="firstname" class="text-sm">Nama Siswa</label>
+                                    <TextInput :readonly="true" id="firstname" type="text" placeholder="Nama Siswa"
+                                        v-model="Siswa.nama" class="w-full read-only:bg-gray-100 text-gray-900" />
+                                </div>
+                                <div>
+                                    <label for="keterangan" class="text-sm">Jenis Kelamin</label>
+                                    <TextInput :readonly="true" id="keterangan" type="text" placeholder="Jenis Kelamin"
+                                        v-model="Siswa.jenkel" class="w-full read-only:bg-gray-100 text-gray-900" />
+                                </div>
 
-                            <div class="space-y-2 col-span-full">
-                                <p class="font-medium">Data Pengguna</p>
-                                <p class="text-xs">Digunakan Untuk Masuk/Login Ke dalam Sistem</p>
-                            </div>
-                            <div class="col-span-full sm:col-span-2">
-                                <label for="username" class="text-sm">username</label>
-                                <TextInput id="username" type="text" v-model="Form.username" placeholder="@username" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.username"/>
-
-                            </div>
-                            <div class="col-span-full sm:col-span-2">
-                                <label for="state" class="text-sm">Password</label>
-                                <TextInput id="state" type="text" placeholder="" v-model="Form.password" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.password"/>
-
-                            </div>
-                            <div class="col-span-full sm:col-span-2">
-                                <label for="email" class="text-sm">Email</label>
-                                <TextInput id="email" type="email" placeholder="" v-model="Form.email" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.email"/>
                             </div>
                         </div>
                         <PrimaryButton type="submit" class="col-span-full text-center">Simpan</PrimaryButton>
