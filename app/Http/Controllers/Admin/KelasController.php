@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Guru;
 use Inertia\Inertia;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
-use App\Models\Guru;
-use App\Models\TahunAjaran;
 
 class KelasController extends Controller
 {

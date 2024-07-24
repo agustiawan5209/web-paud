@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Kelas;
 use App\Models\JadwalKegiatan;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreJadwalKegiatanRequest;
 use App\Http\Requests\UpdateJadwalKegiatanRequest;
-use App\Models\Kelas;
 
 class JadwalKegiatanController extends Controller
 {
