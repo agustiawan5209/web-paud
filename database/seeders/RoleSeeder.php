@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Guru;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RoleSeeder extends Seeder
 {
@@ -26,7 +27,7 @@ class RoleSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
-            'phone'=> '123456780',
+            'phone' => '123456780',
         ]);
 
         $user->assignRole($role);
@@ -54,5 +55,29 @@ class RoleSeeder extends Seeder
             'show siswa',
         ]);
 
+
+        $guru = User::factory()->create([
+            'name' => 'guru',
+            'username' => 'guru',
+            'email' => 'guru@gmail.com',
+            'password' => bcrypt('12345678'),
+            'phone' => '081524269051',
+        ]);
+        $role = Role::findByName('Guru'); // Replace 'user' with your actual role name
+        if ($role) {
+            $user->assignRole($role); // Assign 'user' role to the user
+            $user->givePermissionTo([
+                'add nilai',
+                'edit nilai',
+                'delete nilai',
+                'show nilai',
+            ]);
+        }
+
+        Guru::create([
+            'user_id' => $guru->id,
+            'nama' => $guru->name,
+            'alamat' => fake()->address(),
+        ]);
     }
 }
