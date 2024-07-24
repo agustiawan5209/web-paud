@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ChartJenisImunisasi from '@/Components/Chart/ChartJenisImunisasi.vue';
-import CardTable from '@/Components/Card/CardTable.vue';
+import CardTable from '@/Components/Table/CardTable.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 
 import { ref, watch, defineProps } from 'vue';
@@ -40,11 +40,11 @@ const crud = ref({
 
 <template>
 
-    <Head title="Jadwal Imunisasi" />
+    <Head title="Jadwal Kegiatan" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Jadwal Imunisasi</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Jadwal Kegiatan</h2>
         </template>
 
         <div class="py-4 relative box-content">

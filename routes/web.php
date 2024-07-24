@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\OrangTuaController;
+use App\Http\Controllers\JadwalKegiatanController;
 use App\Http\Controllers\KelasSiswaController;
 use App\Http\Controllers\TahunAjaranController;
 
@@ -132,6 +133,19 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
             Route::post('/store-data-kelas-siswa', 'store')->name('store');
             Route::put('/update-data-kelas-siswa', 'update')->name('update');
             Route::delete('/hapus-data-kelas-siswa', 'destroy')->name('destroy');
+        });
+    });
+
+     // Router Jadwal
+     Route::group(['prefix' => 'jadwal-kegiatan', 'as' => "Jadwal."], function () {
+        Route::controller(JadwalKegiatanController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data/jadwal-kegiatan', 'create')->name('create');
+            Route::get('/edit-data/jadwal-kegiatan', 'edit')->name('edit');
+            Route::get('/detail-data/jadwal-kegiatan', 'show')->name('show');
+            Route::post('/store-data/jadwal-kegiatan', 'store')->name('store');
+            Route::put('/update-data/jadwal-kegiatan', 'update')->name('update');
+            Route::delete('/hapus-data/jadwal-kegiatan', 'destroy')->name('destroy');
         });
     });
 });

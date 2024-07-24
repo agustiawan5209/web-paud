@@ -24,6 +24,9 @@ Route::get('get-user', [ApiModelController::class, 'getUser'])->name('api.user.g
 Route::get('get-orangtua', [ApiModelController::class, 'getOrgTua'])->name('api.orangtua.getOrgTua');
 Route::get('get-anak', [ApiModelController::class, 'getSiswa'])->name('api.siswa.getSiswa');
 Route::get('get-data-siswa', [ApiModelController::class, 'geDatatSiswa'])->name('api.siswa.getDataSiswa');
+// Guru
+Route::get('get-guru', [ApiModelController::class, 'getDataGuru'])->name('api.Guru.data');
+Route::get('get-guru/{id}', [ApiModelController::class, 'getIDGuru'])->name('api.Guru.byID');
 
 // Kelas SIswa
 Route::get('get-siswa/{id}', [ApiKelasSiswaController::class, 'getSiswaID'])->name('api.siswa.byID');

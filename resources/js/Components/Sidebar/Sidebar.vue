@@ -77,6 +77,14 @@ const toggleDropdownLaporan = () => {
                 <span class="group-hover:text-gray-700 capitalize">Kelas Siswa</span>
             </NavLink>
         </li>
+        <li>
+            <NavLink :href="route('Jadwal.index')"
+                :active="route().current('Jadwal.index') || route().current('Jadwal.create') || route().current('Jadwal.edit') || route().current('Jadwal.show')"
+                :icon="['fas', 'users-line']">
+
+                <span class="group-hover:text-gray-700 capitalize">Jadwal Siswa</span>
+            </NavLink>
+        </li>
 
     </ul>
     <div class="-mx-6 flex items-center justify-between border-t px-6 pt-4">

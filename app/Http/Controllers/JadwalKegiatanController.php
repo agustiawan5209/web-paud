@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreJadwalKegiatanRequest;
 use App\Http\Requests\UpdateJadwalKegiatanRequest;
+use App\Models\Kelas;
 
 class JadwalKegiatanController extends Controller
 {
@@ -19,7 +20,12 @@ class JadwalKegiatanController extends Controller
     public function index()
     {
         $tableName = 'jadwal_kegiatans'; // Ganti dengan nama tabel yang Anda inginkan
-        $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+        // $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+        $columns[] = 'id';
+        $columns[] = 'nama_kelas';
+        $columns[] = 'nama_kegiatan';
+        $columns[] = 'tanggal';
+        $columns[] = 'penanggung_jawab';
         // $columns[] = 'jumlah_anak';
 
         return Inertia::render('Admin/Jadwal/Index', [
@@ -28,10 +34,10 @@ class JadwalKegiatanController extends Controller
             'data' => JadwalKegiatan::filter(Request::only('search', 'order'))
             ->paginate(10),
             'can'=>[
-                'add'=> Auth::user()->can('add riwayat'),
-                'edit'=> Auth::user()->can('edit riwayat'),
-                'show'=> Auth::user()->can('show riwayat'),
-                'delete'=> Auth::user()->can('delete riwayat'),
+                'add'=> Auth::user()->can('add siswa'),
+                'edit'=> Auth::user()->can('edit siswa'),
+                'show'=> Auth::user()->can('show siswa'),
+                'delete'=> Auth::user()->can('delete siswa'),
             ]
         ]);
     }
@@ -42,7 +48,7 @@ class JadwalKegiatanController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Jadwal/Form', [
-            'user'=> User::role('Kader')->get(),
+            'user'=> User::role('Guru')->get(),
         ]);
     }
 
@@ -77,9 +83,11 @@ class JadwalKegiatanController extends Controller
         Request::validate([
             'slug'=> 'required|exists:jadwal_kegiatans,id',
         ]);
+        $jadwalkegiatan = JadwalKegiatan::find(Request::input('slug'));
         return Inertia::render('Admin/Jadwal/Edit', [
-            'user'=> User::role('Kader')->get(),
-            'jadwal'=> JadwalKegiatan::find(Request::input('slug'))
+            'user'=> User::role('Guru')->get(),
+            'jadwal'=> $jadwalkegiatan,
+            'kelas'=> Kelas::find($jadwalkegiatan->kelas_id),
         ]);
     }
 

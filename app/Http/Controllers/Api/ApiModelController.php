@@ -9,6 +9,7 @@ use App\Models\OrangTua;
 use App\Models\JadwalImunisasi;
 use App\Models\RiwayatImunisasi;
 use App\Http\Controllers\Controller;
+use App\Models\Guru;
 use App\Models\Puskesmas;
 use Illuminate\Support\Facades\Request;
 
@@ -43,6 +44,12 @@ class ApiModelController extends Controller
 
         return json_encode($user);
     }
+
+    /**
+     * getSiswa
+     *
+     * @return void
+     */
     public function getSiswa()
     {
         $search = Request::only('search');
@@ -51,6 +58,12 @@ class ApiModelController extends Controller
 
         return json_encode($user);
     }
+
+    /**
+     * geDatatSiswa
+     *
+     * @return void
+     */
     public function geDatatSiswa()
     {
         $search = Request::only('search');
@@ -59,7 +72,31 @@ class ApiModelController extends Controller
 
         return json_encode($user);
     }
+    /**
+     * geDatatGuru
+     *
+     * @return void
+     */
+    public function getDataGuru()
+    {
+        $search = Request::only('search');
 
+        $user = Guru::filter($search)->get();
+
+        return response()->json($user,200);
+    }
+    public function getIDGuru($id)
+    {
+        $user = Guru::find($id);
+
+        return response()->json($user,200);
+    }
+
+    /**
+     * getDoughnatChart
+     *
+     * @return void
+     */
     public function getDoughnatChart()
     {
 

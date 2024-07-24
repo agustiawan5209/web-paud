@@ -12,12 +12,15 @@ import { ref, defineProps, watch, onMounted } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
-
+    user: {
+        type: Object,
+        default: () => ({})
+    }
 })
 const Form = useForm({
-    usia: '',
+    kelas_id: '',
+    nama_kegiatan: '',
     tanggal: '',
-    jenis_imunisasi: '',
     deskripsi: '',
     penanggung_jawab: '',
 })
@@ -30,97 +33,72 @@ function submit() {
     });
 }
 
-const PJ = ref('');
-const changeSelect = ref(0);
-const SelectElement = ref(null);
-const OptiontElement = ref([]);
-const ShowSelect = ref(false);
 
-function searchPengguna(value) {
+const DataPj = ref({})
+const PjSearch = ref('')
+const PjID = ref('')
 
-    if (value.length > 0) {
-        axios.get(route('data.user.getUser', { search: value }))
-            .then((response) => {
-                if (response.status == 200) {
-                    const element = response.data;
-                    ShowSelect.value = true;
-
-                    if (SelectElement.value) {
-                        const childElements = SelectElement.value.childNodes
-                        // loop through the child elements and remove them
-                        while (childElements.length > 0) {
-                            SelectElement.value.removeChild(childElements[0])
-                        }
-                    }
-
-
-                    OptiontElement.value = [];
-                    for (let i = 0; i < element.length; i++) {
-                        const User = element[i];
-                        const Option = document.createElement('option');
-                        Option.value = User.name;
-                        Option.innerText = User.name;
-                        if (SelectElement.value) {
-                            SelectElement.value.appendChild(Option);
-                        }
-                        OptiontElement.value[i] = Option;
-                    }
-                    // console.log(OptiontElement.value)
-
-                }
-            })
-    } else {
-        ShowSelect.value = false;
-
-    }
-}
-
-function SelectChangeElement(event) {
-    PJ.value = event.target.value;
-    Form.penanggung_jawab = event.target.value;
-    if (SelectElement.value) {
-        const childElements = SelectElement.value.childNodes
-        // loop through the child elements and remove them
-        console.log(childElements.length)
-        SelectElement.value.removeChild(childElements[0])
-        if (childElements.length < 1) {
-            changeSelect.value = 1;
-
-        }
-    }
-
-}
-onMounted(() => {
-    // watch(PJ, (value) => {
-    //     searchPengguna(value)
-    // })
-
+watch(PjSearch, (value) => {
+    axios.get(route('api.Guru.data', { search: value }))
+        .then((res) => {
+            if (res.status == 200) {
+                DataPj.value = res.data;
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
 })
 
-const JenisImunisasi = ref([
-    'Vitamin A - 1',
-    'Vitamin A - 2',
-    'Oralit',
-    'BH (NOL)',
-    'BCG',
-    'POLIO - 1',
-    'POLIO - 2',
-    'POLIO - 3',
-    'DPT/HB - 1',
-    'DPT/HB - 2',
-    'DPT/HB - 3',
-    'Campak',
-]);
+const GetPjID = (id) => {
+    axios.get(route('api.Guru.byID', { id: id }))
+        .then((res) => {
+            if (res.status == 200) {
+                Form.penanggung_jawab = res.data.nama;
+                PjID.value = res.data.id;
+                PjSearch.value = res.data.nama;
+                DataPj.value = {}
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
+const DataKelas = ref({})
+const KelasSearch = ref('')
+const KelasID = ref('')
 
+watch(KelasSearch, (value) => {
+    axios.get(route('api.kelas.bySearch', { search: value }))
+        .then((res) => {
+            if (res.status == 200) {
+                DataKelas.value = res.data;
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+})
+
+const GetKelasID = (id) => {
+    axios.get(route('api.kelas.byID', { id: id }))
+        .then((res) => {
+            if (res.status == 200) {
+                Form.kelas_id = id;
+                KelasID.value = res.data.kode;
+                KelasSearch.value = res.data.kode;
+                DataKelas.value = {}
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
 </script>
 
 <template>
 
-    <Head title="Jadwal Imunisasi" />
+    <Head title="Form Jadwal" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Tambah Jadwal Imunisasi</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Tambah Form Jadwal</h2>
         </template>
 
         <div class="py-4 relative box-content">
@@ -128,28 +106,31 @@ const JenisImunisasi = ref([
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Data Informasi Jadwal Imunisasi</p>
-                        <p class="text-xs">Tambahkan data pegawai/staff dari puskesmas</p>
+                        <p class="font-medium">Data Informasi Form Jadwal</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="usia" class="text-sm">Usia</label>
-                                <TextInput id="usia" type="text" placeholder="0 - 5 Tahun" v-model="Form.usia"
+                            <div class="col-span-full relative">
+                                <label for="firstname" class="text-sm">Kelas</label>
+                                <TextInput id="firstname" type="text" placeholder="Kode Kelas" v-model="KelasSearch"
                                     class="w-full text-gray-900" />
-                                <InputError :message="Form.errors.usia" />
+
+                                <div class="absolute top-18" v-if="DataKelas.length > 0">
+                                    <ul
+                                        class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                        <template v-for="item in DataKelas" :index="item.kode" :key="item.id">
+                                            <li @click="GetKelasID(item.id)"
+                                                class="w-full cursor-pointer active:bg-gray-300 px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                                {{ item.kode }}</li>
+                                        </template>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="col-span-full sm:col-span-3">
-                                <label for="jenis_imunisasi" class="text-sm">Jenis Imunisasi</label>
-                                <select id="jenis_imunisasi" v-model="Form.jenis_imunisasi"
-                                    class="w-full border-gray-300 focus:border-primary focus:ring-primary rounded-md shadow-sm text-black">
-                                    <option value="">---</option>
-                                    <option v-for="(item, key) in JenisImunisasi" :value="item" class="text-black">
-                                        {{ item }}
-                                    </option>
-                                </select>
-                                <InputError :message="Form.errors.jenis_imunisasi" />
-
+                                <label for="nama_kegiatan" class="text-sm">Nama Kegiatan</label>
+                                <TextInput id="nama_kegiatan" type="text" placeholder="Nama Kegiatan........."
+                                    v-model="Form.nama_kegiatan" class="w-full text-gray-900" />
+                                <InputError :message="Form.errors.nama_kegiatan" />
                             </div>
                             <div class="col-span-full sm:col-span-2">
                                 <label for="tanggal" class="text-sm">Tanggal</label>
@@ -161,15 +142,19 @@ const JenisImunisasi = ref([
 
                             <div class="col-span-full sm:col-span-2 relative">
                                 <label for="penanggung_jawab" class="text-sm">Penanggung Jawab</label>
-                                <TextInput id="penanggung_jawab" type="text" placeholder="Penanggung Jawab"
-                                    v-model="Form.penanggung_jawab" class="w-full text-gray-900" />
+                                <TextInput id="penanggung_jawab" type="search" placeholder="Penanggung Jawab"
+                                    v-model="PjSearch" class="w-full text-gray-900" />
 
-                                <div class="w-full mx-auto absolute z-10 -bottom-24" v-if="ShowSelect">
-                                    <select id="countries" multiple ref="SelectElement"
-                                        @change="SelectChangeElement($event)"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                    </select>
-                                </div>
+                                    <div class="absolute top-18 z-50" v-if="DataPj.length > 0">
+                                        <ul
+                                            class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                            <template v-for="item in DataPj" :index="item.nama" :key="item.id">
+                                                <li @click="GetPjID(item.id)"
+                                                    class="w-full cursor-pointer active:bg-gray-300 px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                                    {{ item.nama }}</li>
+                                            </template>
+                                        </ul>
+                                    </div>
 
                                 <InputError :message="Form.errors.penanggung_jawab" />
                             </div>
