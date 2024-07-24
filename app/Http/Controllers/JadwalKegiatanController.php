@@ -22,7 +22,7 @@ class JadwalKegiatanController extends Controller
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
         // $columns[] = 'jumlah_anak';
 
-        return Inertia::render('Jadwal/Index', [
+        return Inertia::render('Admin/Jadwal/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'deskripsi'])),
             'data' => JadwalKegiatan::filter(Request::only('search', 'order'))
@@ -41,7 +41,7 @@ class JadwalKegiatanController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Jadwal/Form', [
+        return Inertia::render('Admin/Jadwal/Form', [
             'user'=> User::role('Kader')->get(),
         ]);
     }
@@ -64,7 +64,7 @@ class JadwalKegiatanController extends Controller
         Request::validate([
             'slug'=> 'required|exists:jadwal_kegiatans,id',
         ]);
-        return Inertia::render('Jadwal/Show', [
+        return Inertia::render('Admin/Jadwal/Show', [
             'jadwal'=> JadwalKegiatan::find(Request::input('slug'))
         ]);
     }
@@ -77,7 +77,7 @@ class JadwalKegiatanController extends Controller
         Request::validate([
             'slug'=> 'required|exists:jadwal_kegiatans,id',
         ]);
-        return Inertia::render('Jadwal/Edit', [
+        return Inertia::render('Admin/Jadwal/Edit', [
             'user'=> User::role('Kader')->get(),
             'jadwal'=> JadwalKegiatan::find(Request::input('slug'))
         ]);
