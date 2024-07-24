@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
+use App\Models\Guru;
 use App\Models\TahunAjaran;
 
 class KelasController extends Controller
@@ -20,12 +21,12 @@ class KelasController extends Controller
     {
         $tableName = 'kelas'; // Ganti dengan nama tabel yang Anda inginkan
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
-
+        // dd($columns);
         // dd(Kelas::with(['kader'])->find(1));
 
         return Inertia::render('Admin/Kelas/Index', [
             'search' =>  Request::input('search'),
-            'table_colums' => array_values(array_diff($columns, ['remember_token', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
+            'table_colums' => array_values(array_diff($columns, ['remember_token', 'guru_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => Kelas::filter(Request::only('search', 'order'))->paginate(10),
             'can' => [
                 'add' => Auth::user()->can('add kelas'),
@@ -36,6 +37,7 @@ class KelasController extends Controller
             ],
             'relasi'=> [
                 'tahun_ajarans'=> TahunAjaran::all(),
+                'gurus'=> Guru::all(),
             ],
         ]);
     }
@@ -53,7 +55,11 @@ class KelasController extends Controller
      */
     public function store(StoreKelasRequest $request)
     {
-        $kelas = Kelas::create($request->all());
+        $data = $request->all();
+        $guru = Guru::find($request->guru);
+        $data['guru'] = $guru->nama;
+        $data['guru_id'] = $guru->id;
+        $kelas = Kelas::create($data);
 
         return redirect()->route('Kelas.index')->with('message', 'Data Berhasil Di Tambah!!');
     }
@@ -81,7 +87,11 @@ class KelasController extends Controller
      */
     public function update(UpdateKelasRequest $request, Kelas $kelas)
     {
-        $kelas = Kelas::find($request->id)->update($request->all());
+        $data = $request->all();
+        $guru = Guru::find($request->guru);
+        $data['guru'] = $guru->nama;
+        $data['guru_id'] = $guru->id;
+        $kelas = Kelas::find($request->id)->update($data);
 
         return redirect()->route('Kelas.index')->with('message', 'Data Berhasil Di ubah!!');
     }

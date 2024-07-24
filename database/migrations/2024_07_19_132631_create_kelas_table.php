@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('keterangan', 100);
             $table->string('tahun_ajaran', 100);
             $table->foreign('tahun_ajaran')->references('tahun')->on('tahun_ajarans')->onUpdate('cascade');
+            $table->foreignId('guru_id')->constrained('gurus');
+            $table->string('guru');
             $table->timestamps();
         });
     }

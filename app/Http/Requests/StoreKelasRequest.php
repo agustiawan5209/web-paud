@@ -25,6 +25,7 @@ class StoreKelasRequest extends FormRequest
             'kode'=> 'required|unique:kelas,kode',
             'keterangan'=> 'required|string|max:50',
             'tahun_ajaran'=> 'required|exists:tahun_ajarans,tahun',
+            'guru'=> 'required|exists:gurus,id',
         ];
     }
 }
