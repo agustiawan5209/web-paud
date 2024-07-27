@@ -50,5 +50,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete nilai']);
         Permission::create(['name' => 'show nilai']);
         Permission::create(['name' => 'cetak nilai']);
+
+
+        Permission::create(['name' => 'add absen']);
+        Permission::create(['name' => 'edit absen']);
+        Permission::create(['name' => 'delete absen']);
+        Permission::create(['name' => 'show absen']);
+        Permission::create(['name' => 'cetak absen']);
     }
 }

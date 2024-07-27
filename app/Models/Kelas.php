@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Kelas extends Model
 {
     use HasFactory;
+
+
     protected $table = "kelas";
 
     protected $fillable = ['kode','keterangan', 'tahun_ajaran', 'guru_id', 'guru'];
 
+
+    public function absen(){
+        return $this->hasMany(Absensi::class,'kelas_id', 'id');
+    }
 
     public function scopeFilter($query, $filter)
     {
