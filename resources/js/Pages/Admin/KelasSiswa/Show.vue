@@ -85,7 +85,7 @@ console.log(props.can)
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Detail OrangTua</h2>
+            <h2>Form Detail OrangTua</h2>
         </template>
 
         <Modal :show="ModalVar">

@@ -23,7 +23,7 @@ window.addEventListener('resize', () => {
 
     <transition-group name="nested">
         <aside v-if="showingNavigationDropdown" key="mobile"
-            class="fixed top-0 z-10 ml-0 flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
+            class="fixed top-0 z-10 ml-0 flex h-screen w-full flex-col justify-between border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
             <button class="-mr-2 mt-5 h-16 w-12 border-r lg:hidden"
                 @click="showingNavigationDropdown = !showingNavigationDropdown">
                 <svg xmlns="http://www.w3.org/2000/svg" class="my-auto h-6 w-6 transition-all" fill="none"
@@ -35,16 +35,16 @@ window.addEventListener('resize', () => {
             <Sidebar  />
         </aside>
         <aside key="dekstop"
-            class="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
+            class="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
 
             <Sidebar  />
         </aside>
     </transition-group>
     <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%] ">
-        <div class="sticky top-0 h-16 border-b bg-white lg:py-2.5 z-[100]">
+        <div class="sticky top-0 h-16 border-b bg-gray-800 lg:py-2.5 z-[100]">
             <div class="flex items-center justify-between space-x-4 px-6 2xl:container">
 
-                <h5 hidden class="text-2xl font-medium text-gray-600 lg:block">
+                <h5 hidden class="text-2xl font-medium !text-white lg:block">
                     <slot name="header" />
                 </h5>
                 <button class="-mr-2 h-16 w-12 border-r lg:hidden"

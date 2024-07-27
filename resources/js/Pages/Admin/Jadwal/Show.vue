@@ -27,7 +27,7 @@ const props = defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Detail Jadwal Kegiatan</h2>
+            <h2>Form Detail Jadwal Kegiatan</h2>
         </template>
 
         <div class="md:py-4 relative box-content">

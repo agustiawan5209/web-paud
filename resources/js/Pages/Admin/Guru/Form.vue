@@ -46,7 +46,7 @@ function submit() {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Tambah Guru</h2>
+            <h2>Form Tambah Guru</h2>
         </template>
 
         <div class="py-4 relative box-content">

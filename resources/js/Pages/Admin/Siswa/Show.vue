@@ -35,7 +35,7 @@ const dataSiswa = Object.keys(props.siswa)
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Form Show Siswa</h2>
+            <h2>Form Show Siswa</h2>
         </template>
 
         <div class="md:py-4 relative box-content">
