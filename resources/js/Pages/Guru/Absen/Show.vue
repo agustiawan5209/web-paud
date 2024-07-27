@@ -14,7 +14,7 @@ import { ref, defineProps, watch, onMounted } from 'vue';
 
 const page = usePage();
 const props = defineProps({
-    kelas: {
+    absen: {
         type: Object,
         default: () => ({})
     }
@@ -33,56 +33,49 @@ const props = defineProps({
 
         <div class="md:py-4 relative box-content">
             <section class=" py-2 px-0 md:px-6  md:py-6 bg-gray-100 text-gray-900">
-                <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
-                    <div class="space-y-2 col-span-full lg:col-span-1 px-3 md:px-0">
-                        <p class="font-medium">Detail Informasi Kelas</p>
-                        <p class="text-xs">Detail data Kelas dari </p>
-                    </div>
-                    <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
-                        <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full  ">
-                                <ul class="flex flex-col space-y-20">
-                                    <li class="flex gap-3 py-2 border-b">
-                                        <span class="text-lg">Detail</span>
-                                    </li>
-                                </ul>
+                <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
+                    <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+                        <div class="col-span-full  ">
+                            <ul class="flex flex-col space-y-20">
+                                <li class="flex gap-3 py-2 border-b">
+                                    <span class="text-lg">Data Absensi  {{ absen.kelas.kode }}-{{absen.tanggal}}</span>
+                                </li>
+                            </ul>
 
-                                <table class="w-full table">
-                                    <colgroup>
-                                    <col>
-                                    <col class="w-3">
-                                    <col>
-                                    </colgroup>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">Usia Imunisasi</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ kelas.usia }} </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">Tanggal</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ kelas.kelas }} </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">jenis imunisasi</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ kelas.jenis_imunisasi }} </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">penanggung jawab</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ kelas.penanggung_jawab }} </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">deskripsi</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600 text-left" v-html="kelas.deskripsi"> </td>
-                                    </tr>
+                            <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-2 py-3">
+                                                No.
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Nama Siswa
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Kehadiran
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in absen.dataabsensi" :key="item.id"
+                                            class="odd:bg-white even:bg-gray-50 border-b">
+                                            <td scope="row" class="px-2 py-4 border ">
+                                                {{ index + 1 }}
+                                            </td>
+                                            <td class="px-6 py-4 border">
+                                                {{ item.siswa.nama }}
+                                            </td>
+                                            <td class="px-6 py-4 border">
+                                                <span>{{item.absen}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                    </fieldset>
-                </form>
+                    </div>
+                </fieldset>
             </section>
         </div>
     </AuthenticatedLayout>

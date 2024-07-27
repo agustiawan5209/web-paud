@@ -11,6 +11,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { ref, defineProps, watch, onMounted, inject } from 'vue';
 import axios from 'axios';
 import { FwbRadio } from 'flowbite-vue'
+import { text } from '@fortawesome/fontawesome-svg-core';
 const swal = inject('$swal')
 
 const props = defineProps({
@@ -24,27 +25,94 @@ const props = defineProps({
     },
 })
 const Form = useForm({
-    kelas_id: props.kelas.id,
-    kode: props.kelas.kode,
-    nama: props.kelas.kode,
+    kelas_id: '',
+    kode: '',
+    nama: '',
     tanggal: '',
     siswa: [],
 })
 
 const AbsensSiswa = ref([]);
 
-// Buat Data Input Kehadiran
-onMounted(()=>{
-    const KelasData = props.kelas.kelassiswa;
-    for (let index = 0; index < KelasData.length; index++) {
-        const element = KelasData[index];
-        AbsensSiswa.value.push({
-            siswa_id : element.siswa.id,
-            nama : element.siswa.nama,
-            absen: 'Tidak Hadir',
-        })
+// Get Data Absensi Jika Tersedia
+const TanggalKelas = ref('');
 
+function SearchAbsen(tanggal) {
+    if (tanggal) {
+        axios.get(route('api.getAbsensi', { tanggal: tanggal, kelas_id: Form.kelas_id }))
+            .then((res) => {
+                if (res.status == 200) {
+                    const StatusAbsen = res.data.status;
+                    if (StatusAbsen === true) {
+                        swal({
+                            title: "Peringatan",
+                            icon: "error",
+                            html: `<strong>Data Absensi ${TanggalKelas.value} Sudah Tersedia</strong>
+                        <br>
+                        `,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                        });
+                        AbsensSiswa.value = [];
+                    } else {
+                        Form.tanggal = tanggal;
+                    }
+                }
+            }).catch((err) => {
+                console.error(err);
+            })
     }
+}
+
+// Cari Data Kelas Berdasarkan ID
+// Variabel ID Kelas
+const kelasId = ref('');
+
+function Search(id) {
+    axios.get(route('api.kelas.byID', { id: id }))
+        .then((res) => {
+            if (res.status == 200) {
+                SearchAbsen(TanggalKelas.value);
+                AbsensSiswa.value = []
+                Form.kelas_id = res.data.id;
+                const Kelas_Siswa = res.data.kelassiswa;
+                if (Kelas_Siswa.length < 1) {
+                    swal({
+                        title: "Peringatan",
+                        icon: "error",
+                        html: `<strong>Tidak Ada List Siswa Di Kelas: ${res.data.kode}/${res.data.tahun_ajaran}</strong>
+                        <br>
+                        <p>Hubungi Admin!!</p>
+                        `,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                    });
+                } else {
+                    for (let index = 0; index < Kelas_Siswa.length; index++) {
+                        const element = Kelas_Siswa[index];
+                        AbsensSiswa.value.push({
+                            siswa_id: element.siswa.id,
+                            nama: element.siswa.nama,
+                            absen: 'Tidak Hadir',
+                        })
+
+                    }
+                }
+            }
+        }).catch((err) => {
+            console.error(err);
+        })
+}
+
+
+
+onMounted(() => {
+    watch(kelasId, (value) => {
+        Search(value);
+    })
+    watch(TanggalKelas, (value) => {
+        SearchAbsen(value);
+    })
 })
 
 function submit() {
@@ -84,20 +152,25 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Buat Absensi Kelas {{ kelas.kode }}</p>
+                        <p class="font-medium">Buat Absensi Kelas</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full">
-                                <label for="kode" class="text-sm">kode Kelas</label>
-                                <TextInput id="kode" type="text" placeholder="..............." v-model="Form.kode"
-                                    class="w-full text-gray-900" />
-                                <InputError :message="Form.errors.kelas_id" />
+
+                                <InputLabel for="kelas" value="Kelas" />
+                                <select id="kelas" v-model="kelasId"
+                                    class="px-2 py-1 md:px-3 md:py-2 placeholder-gray-400 border focus:outline-none  w-full sm:text-sm border-gray-200 shadow-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none ">
+                                    <option value="">-----</option>
+                                    <option v-for="item in kelas" :value="item.id">{{ item.kode }}-
+                                        {{ item.tahun_ajaran }}
+                                    </option>
+                                </select>
 
                             </div>
                             <div class="col-span-full">
                                 <label for="tanggal" class="text-sm">Tanggal</label>
-                                <TextInput id="tanggal" type="date" placeholder="..............." v-model="Form.tanggal"
+                                <TextInput id="tanggal" type="date" placeholder="..............." v-model="TanggalKelas"
                                     class="w-full text-gray-900" />
                                 <InputError :message="Form.errors.tanggal" />
 
@@ -106,10 +179,8 @@ function submit() {
 
 
                                 <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
-                                    <table
-                                        class="w-full text-sm text-left rtl:text-right text-gray-500">
-                                        <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50">
+                                    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                             <tr>
                                                 <th scope="col" class="px-2 py-3">
                                                     No.
@@ -123,11 +194,10 @@ function submit() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item,index) in AbsensSiswa" :key="item.id"
+                                            <tr v-for="(item, index) in AbsensSiswa" :key="item.id"
                                                 class="odd:bg-white even:bg-gray-50 border-b">
-                                                <td scope="row"
-                                                    class="px-2 py-4 border ">
-                                                    {{index+1}}
+                                                <td scope="row" class="px-2 py-4 border ">
+                                                    {{ index + 1 }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
                                                     {{ item.nama }}
@@ -135,12 +205,14 @@ function submit() {
                                                 <td class="px-6 py-4 border">
                                                     <div class="grid grid-cols-2 gap-6">
                                                         <div class="flex items-center">
-                                                          <fwb-radio v-model="item.absen" label="Hadir" :name="'radio-absen'+index" value="Hadir" />
+                                                            <fwb-radio v-model="item.absen" label="Hadir"
+                                                                :name="'radio-absen' + index" value="Hadir" />
                                                         </div>
                                                         <div class="flex items-center">
-                                                          <fwb-radio v-model="item.absen" label="Tidak Hadir" :name="'radio-absen'+index" value="Tidak Hadir" />
+                                                            <fwb-radio v-model="item.absen" label="Tidak Hadir"
+                                                                :name="'radio-absen' + index" value="Tidak Hadir" />
                                                         </div>
-                                                      </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>

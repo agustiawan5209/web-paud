@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\Guru\AbsensiController;
+use App\Http\Controllers\Guru\DataAbsensiController;
 use Illuminate\Support\Facades\Route;
 
 

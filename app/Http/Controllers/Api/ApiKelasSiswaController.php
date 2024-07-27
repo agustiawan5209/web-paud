@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\OrangTua;
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
 use Illuminate\Support\Facades\Request;
 
 class ApiKelasSiswaController extends Controller
@@ -55,8 +56,26 @@ class ApiKelasSiswaController extends Controller
      */
     public function getKelasID($id)
     {
-        $user = Kelas::find($id);
+        $user = Kelas::with(['kelassiswa'])->find($id);
 
         return response()->json($user, 200);
+    }
+
+    public function getAbsensi($tanggal, $kelas_id)
+    {
+        $absensi = Absensi::where('kelas_id', $kelas_id)->whereDate('tanggal', $tanggal)->get();
+
+        if ($absensi->count() > 0) {
+            return response()->json([
+                'status'=> false,
+                'data'=> $absensi,
+            ], 200);
+        }else{
+            return response()->json([
+                'status'=> true,
+                'data'=> $absensi,
+
+            ], 200);
+        }
     }
 }

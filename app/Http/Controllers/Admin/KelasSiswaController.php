@@ -22,18 +22,18 @@ class KelasSiswaController extends Controller
     {
         $tableName = 'kelas_siswas'; // Ganti dengan nama tabel yang Anda inginkan
         // $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
-        $columns[]='id';
-        $columns[]='nama_kelas';
-        $columns[]='nama_siswa';
+        $columns[] = 'id';
+        $columns[] = 'nama_kelas';
+        $columns[] = 'nama_siswa';
 
 
         return Inertia::render('Admin/KelasSiswa/Index', [
             'search' =>  Request::input('search'),
-            'table_colums' => array_values(array_diff($columns, ['remember_token','kelas_id','siswa_id', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
+            'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'siswa_id', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => KelasSiswa::filter(Request::only('search', 'order'))
-            ->paginate(10),
-            'can'=>[
-                'add'=> Auth::user()->can('add siswa'),
+                ->paginate(10),
+            'can' => [
+                'add' => Auth::user()->can('add siswa'),
                 'add' => Auth::user()->can('add kelas'),
                 'edit' => Auth::user()->can('edit kelas'),
                 'show' => false,
@@ -49,8 +49,8 @@ class KelasSiswaController extends Controller
     public function create()
     {
         return Inertia::render('Admin/KelasSiswa/Form', [
-            'kelas'=> Kelas::all(),
-            'siswa'=> Siswa::all(),
+            'kelas' => Kelas::all(),
+            'siswa' => Siswa::all(),
         ]);
     }
 
@@ -61,6 +61,13 @@ class KelasSiswaController extends Controller
     {
         $kelas = Kelas::find($request->kelas_id);
         $siswa = Siswa::find($request->siswa_id);
+        $kelas_siswa = KelasSiswa::where('kelas_id', '=', $request->kelas_id)
+            ->where('siswa_id', '=', $request->siswa_id)
+            ->get();
+
+        if ($kelas_siswa->count() > 0) {
+            return redirect()->back()->with('message', 'Data Kelas Siswa Berhasil Di Tambah!!');
+        }
         KelasSiswa::create([
             'kelas_id' => $request->kelas_id,
             'siswa_id' => $request->siswa_id,
@@ -75,8 +82,8 @@ class KelasSiswaController extends Controller
      */
     public function show(KelasSiswa $kelasSiswa)
     {
-        return Inertia::render('Admin/KelasSiswa/Show',[
-            'kelas_siswa'=> KelasSiswa::find(Request::input('slug')),
+        return Inertia::render('Admin/KelasSiswa/Show', [
+            'kelas_siswa' => KelasSiswa::find(Request::input('slug')),
         ]);
     }
 
@@ -85,10 +92,10 @@ class KelasSiswaController extends Controller
      */
     public function edit(KelasSiswa $kelasSiswa)
     {
-        return Inertia::render('Admin/KelasSiswa/Edit',[
-            'kelas_siswa'=> KelasSiswa::find(Request::input('slug')),
-            'kelas'=> Kelas::all(),
-            'siswa'=> Siswa::all(),
+        return Inertia::render('Admin/KelasSiswa/Edit', [
+            'kelas_siswa' => KelasSiswa::find(Request::input('slug')),
+            'kelas' => Kelas::all(),
+            'siswa' => Siswa::all(),
         ]);
     }
 

@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm,usePage } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
@@ -8,9 +8,27 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { ref, defineProps, watch, onMounted } from 'vue';
+import { ref, defineProps, watch, onMounted, inject } from 'vue';
 import axios from 'axios';
 
+// Pesan
+const swal = inject('$swal')
+
+const page = usePage()
+
+onMounted(() => {
+    if (page.props.message !== null) {
+        swal({
+            icon: "success",
+            title: 'Berhasil',
+            text: page.props.message,
+            showConfirmButton: true,
+            timer: 2000
+        });
+    }
+})
+
+// props
 const props = defineProps({
     kelas: {
         type: Object,
@@ -21,6 +39,8 @@ const props = defineProps({
         default: () => ({}),
     },
 })
+
+// variabel Form
 const Form = useForm({
     kelas_id: '',
     siswa_id: '',
@@ -41,8 +61,8 @@ const DataKelas = ref({})
 const DataSiswa = ref({})
 const KelasSearch = ref('')
 const SiswaSearch = ref('')
-const KelasID = ref('')
-const SiswaID = ref('')
+
+// Form Submit
 
 function submit() {
     Form.post(route('KelasSiswa.store'), {
@@ -63,7 +83,7 @@ function submit() {
         }
     });
 }
-
+// cari data kelas
 watch(KelasSearch, (value) => {
     axios.get(route('api.kelas.bySearch', { search: value }))
         .then((res) => {
@@ -74,7 +94,7 @@ watch(KelasSearch, (value) => {
             console.log(err)
         })
 })
-
+// cari kelas berdasarkan id
 const GetKelasID = (id) => {
     axios.get(route('api.kelas.byID', { id: id }))
         .then((res) => {
@@ -89,6 +109,8 @@ const GetKelasID = (id) => {
             console.log(err)
         })
 }
+
+// cari siswa
 watch(SiswaSearch, (value) => {
     axios.get(route('api.siswa.bySearch', { search: value }))
         .then((res) => {
@@ -100,6 +122,7 @@ watch(SiswaSearch, (value) => {
         })
 })
 
+//cari siswa berdasarkan id
 const GetSiswaID = (id) => {
     axios.get(route('api.siswa.byID', { id: id }))
         .then((res) => {
