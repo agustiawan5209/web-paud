@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ChartJenisImunisasi from '@/Components/Chart/ChartJenisImunisasi.vue';
-import SingleTable from '@/Components/Table/SingleTable.vue';
+import CardTable from '@/Components/Table/CardTable.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 
 import { ref, watch, defineProps } from 'vue';
@@ -37,6 +37,7 @@ const crud = ref({
     edit: props.can.edit,
     show: props.can.show,
     delete: props.can.delete,
+    absen: props.can.form,
 })
 
 </script>
@@ -51,7 +52,7 @@ const crud = ref({
         </template>
 
         <div class="py-4 relative box-content">
-            <SingleTable @update:search="search = $event" @update:order="order" :relasi="relasi" :slug="null" path="Absen" :TableData="data" :tableColums="table_colums" :crud="crud" />
+            <CardTable @update:search="search = $event" @update:order="order" :slug="null" path="Absen" :TableData="data" :tableColums="table_colums" :crud="crud" />
         </div>
     </AuthenticatedLayout>
 </template>

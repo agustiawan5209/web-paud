@@ -8,25 +8,66 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { ref, defineProps, watch, onMounted } from 'vue';
+import { ref, defineProps, watch, onMounted, inject } from 'vue';
 import axios from 'axios';
+import { FwbRadio } from 'flowbite-vue'
+const swal = inject('$swal')
 
 const props = defineProps({
-
+    kelas: {
+        type: Object,
+        default: () => ({}),
+    },
+    siswa: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 const Form = useForm({
-    nama: '',
-    kode: '',
+    kelas_id: props.kelas.id,
+    kode: props.kelas.kode,
+    nama: props.kelas.kode,
+    tanggal: '',
+    siswa: [],
+})
+
+const AbsensSiswa = ref([]);
+
+// Buat Data Input Kehadiran
+onMounted(()=>{
+    const KelasData = props.kelas.kelassiswa;
+    for (let index = 0; index < KelasData.length; index++) {
+        const element = KelasData[index];
+        AbsensSiswa.value.push({
+            siswa_id : element.siswa.id,
+            nama : element.siswa.nama,
+            absen: 'Tidak Hadir',
+        })
+
+    }
 })
 
 function submit() {
-    Form.post(route('Kelas.store'), {
+
+    Form.siswa = AbsensSiswa.value;
+    Form.post(route('Absen.store'), {
         onError: (err) => {
-            console.log(err)
+            var txt = "<ul>"
+            Object.keys(err).forEach((item, val) => {
+                txt += `<li>${err[item]}</li>`
+            });
+            txt += "</ul>";
+            console.log(txt)
+            swal({
+                title: "Peringatan",
+                icon: "error",
+                html: txt,
+                showCloseButton: true,
+                showCancelButton: true,
+            });
         }
     });
 }
-
 </script>
 
 <template>
@@ -43,23 +84,69 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Data Informasi Kelas</p>
-                        <p class="text-xs">Tambahkan data</p>
+                        <p class="font-medium">Buat Absensi Kelas {{ kelas.kode }}</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full sm:col-span-3">
+                            <div class="col-span-full">
                                 <label for="kode" class="text-sm">kode Kelas</label>
                                 <TextInput id="kode" type="text" placeholder="..............." v-model="Form.kode"
                                     class="w-full text-gray-900" />
-                                <InputError :message="Form.errors.kode" />
+                                <InputError :message="Form.errors.kelas_id" />
 
                             </div>
-                            <div class="col-span-full sm:col-span-3">
-                                <label for="nama" class="text-sm">Nama Kelas</label>
-                                <TextInput id="nama" type="text" placeholder="..............." v-model="Form.nama"
+                            <div class="col-span-full">
+                                <label for="tanggal" class="text-sm">Tanggal</label>
+                                <TextInput id="tanggal" type="date" placeholder="..............." v-model="Form.tanggal"
                                     class="w-full text-gray-900" />
-                                <InputError :message="Form.errors.nama" />
+                                <InputError :message="Form.errors.tanggal" />
+
+                            </div>
+                            <div class="col-span-full">
+
+
+                                <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
+                                    <table
+                                        class="w-full text-sm text-left rtl:text-right text-gray-500">
+                                        <thead
+                                            class="text-xs text-gray-700 uppercase bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-2 py-3">
+                                                    No.
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Nama Siswa
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Kehadiran
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,index) in AbsensSiswa" :key="item.id"
+                                                class="odd:bg-white even:bg-gray-50 border-b">
+                                                <td scope="row"
+                                                    class="px-2 py-4 border ">
+                                                    {{index+1}}
+                                                </td>
+                                                <td class="px-6 py-4 border">
+                                                    {{ item.nama }}
+                                                </td>
+                                                <td class="px-6 py-4 border">
+                                                    <div class="grid grid-cols-2 gap-6">
+                                                        <div class="flex items-center">
+                                                          <fwb-radio v-model="item.absen" label="Hadir" :name="'radio-absen'+index" value="Hadir" />
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                          <fwb-radio v-model="item.absen" label="Tidak Hadir" :name="'radio-absen'+index" value="Tidak Hadir" />
+                                                        </div>
+                                                      </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
 
                         </div>

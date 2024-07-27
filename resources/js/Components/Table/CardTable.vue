@@ -127,7 +127,7 @@ function deleteItem() {
 }
 
 function cekAksi() {
-    if (props.crud.tambah || props.crud.edit || props.crud.show || props.crud.delete) {
+    if (props.crud.edit || props.crud.show || props.crud.delete || props.crud.absen) {
         return true;
     } else {
         return false;
@@ -147,7 +147,6 @@ function truncateText(text) {
     text += '........'
     return text;
 }
-console.log(props.path)
 </script>
 
 <template>
@@ -249,7 +248,7 @@ console.log(props.path)
                                     class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase">Aksi
                                 </th>
                             </fwb-table-head>
-                            <fwb-table-body  v-if="Form.processing">
+                            <fwb-table-body v-if="Form.processing">
                                 <tr>
                                     <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center ">
                                         <div class="flex justify-center">
@@ -264,10 +263,10 @@ console.log(props.path)
                                     :class="{ 'opacity-75 blur-sm': Form.processing }">
 
                                     <fwb-table-cell
-                                    class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
-                                    v-for="col in tableColums">
+                                        class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border"
+                                        v-for="col in tableColums">
 
-                                    <span v-if="col == 'id' || col == 'slug'">
+                                        <span v-if="col == 'id' || col == 'slug'">
                                             {{ (TableData.current_page - 1) * TableData.per_page + index + 1 }}
                                         </span>
                                         <span v-else-if="col == 'deskripsi' || col == 'keterangan'">
@@ -299,8 +298,15 @@ console.log(props.path)
                                     <fwb-table-cell
                                         class="px-2 py-1 md:px-4 md:py-3  text-xs font-medium text-gray-800 border relative"
                                         v-if="cekAksi()">
+                                        <DropdownLink v-if="crud.absen"
+                                            :href="route(props.path + '.create', { slug: item.id, item: item.kode })"
+                                            class="flex justify-start gap-3 text-gray-700">
+                                            <font-awesome-icon class="text-green-500 hover:text-green-700"
+                                                :icon="['fas', 'pen-to-square']" />
+                                            Buat Absen
+                                        </DropdownLink>
                                         <!-- Settings dropdownTable -->
-                                        <div class="ml-3 relative z-50">
+                                        <div class="ml-3 relative z-50" v-if="crud.edit || crud.delete || crud.reset_password">
                                             <dropdownTable align="top" width="48">
                                                 <template #trigger>
                                                     <span class="inline-flex rounded-md">
@@ -316,6 +322,7 @@ console.log(props.path)
                                                 </template>
 
                                                 <template #content>
+
                                                     <DropdownLink v-if="crud.edit"
                                                         :href="route(props.path + '.edit', { slug: item.id })"
                                                         class="flex justify-start gap-3 text-gray-700">
@@ -323,6 +330,7 @@ console.log(props.path)
                                                             :icon="['fas', 'pen-to-square']" />
                                                         Edit
                                                     </DropdownLink>
+
                                                     <DropdownLink v-if="crud.show"
                                                         :href="route(props.path + '.show', { slug: item.id })"
                                                         class="flex justify-start gap-3 text-gray-700">
@@ -353,7 +361,7 @@ console.log(props.path)
                                 </fwb-table-row>
 
                             </fwb-table-body>
-                            <fwb-table-body  v-else>
+                            <fwb-table-body v-else>
                                 <tr>
                                     <td :colspan="tableColums.length" class="p-5 text-gray-400 text-center">Data Kosong
                                     </td>

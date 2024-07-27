@@ -18,6 +18,9 @@ class Kelas extends Model
     public function absen(){
         return $this->hasMany(Absensi::class,'kelas_id', 'id');
     }
+    public function kelassiswa(){
+        return $this->hasMany(KelasSiswa::class,'kelas_id', 'id');
+    }
 
     public function scopeFilter($query, $filter)
     {
