@@ -83,7 +83,7 @@ const GetKelasID = (id) => {
             if (res.status == 200) {
                 Form.kelas_id = id;
                 KelasID.value = res.data.kode;
-                KelasSearch.value = res.data.kode;
+                KelasSearch.value = `Kelas = ${res.data.kode} || Tahun Ajaran = ${res.data.tahun_ajaran}`;
                 DataKelas.value = {}
             }
         }).catch((err) => {
@@ -117,11 +117,11 @@ const GetKelasID = (id) => {
 
                                 <div class="absolute top-18" v-if="DataKelas.length > 0">
                                     <ul
-                                        class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                        class="w-96 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                         <template v-for="item in DataKelas" :index="item.kode" :key="item.id">
                                             <li @click="GetKelasID(item.id)"
                                                 class="w-full cursor-pointer active:bg-gray-300 px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                                                {{ item.kode }}</li>
+                                                Kelas={{ item.kode }} || Tahun Ajaran ={{item.tahun_ajaran}}</li>
                                         </template>
                                     </ul>
                                 </div>
