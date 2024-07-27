@@ -71,6 +71,12 @@ class RoleSeeder extends Seeder
                 'edit nilai',
                 'delete nilai',
                 'show nilai',
+
+                'form absen',
+                'add absen',
+                'edit absen',
+                'delete absen',
+                'show absen',
             ]);
         }
 

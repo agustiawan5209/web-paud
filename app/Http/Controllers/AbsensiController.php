@@ -28,7 +28,9 @@ class AbsensiController extends Controller
         return Inertia::render('Guru/Absen/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'guru_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
-            'data' => Kelas::filter(Request::only('search', 'order'))->paginate(10),
+            'data' => Kelas::filter(Request::only('search', 'order'))
+            ->where('guru_id', Auth::user()->guru->id)
+            ->paginate(10),
             'can' => [
                 'add' => Auth::user()->can('add absen'),
                 'edit' => Auth::user()->can('edit absen'),

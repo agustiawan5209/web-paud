@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('kelas_id')->constrained('kelas')->cascadeOnDelete();
             $table->foreignId('siswa_id')->constrained('siswas')->cascadeOnDelete();
             $table->date('tanggal');
-            $table->enum('absen', ['Hadir','Tidak Hadir'])->default();
+            $table->enum('absen', ['Hadir','Tidak Hadir'])->default('Hadir`');
             $table->timestamps();
         });
     }
