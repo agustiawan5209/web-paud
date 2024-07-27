@@ -65,8 +65,8 @@ class RoleSeeder extends Seeder
         ]);
         $role = Role::findByName('Guru'); // Replace 'user' with your actual role name
         if ($role) {
-            $user->assignRole($role); // Assign 'user' role to the user
-            $user->givePermissionTo([
+            $guru->assignRole($role); // Assign 'guru' role to the user
+            $guru->givePermissionTo([
                 'add nilai',
                 'edit nilai',
                 'delete nilai',
