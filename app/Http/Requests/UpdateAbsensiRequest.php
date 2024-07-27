@@ -24,9 +24,9 @@ class UpdateAbsensiRequest extends FormRequest
         return [
             'slug'=> 'required|exists:absensis,id',
             'kelas_id'=> 'required|exists:kelas,id',
-            'siswa_id'=> 'required|exists:siswas,id',
+            'siswa'=> 'required|array',
             'tanggal'=> 'required|date',
-            'absen'=> 'required|in:Hadir,Tidak Hadir'
+            'siswa.*.absen'=> 'required|in:Hadir,Tidak Hadir'
         ];
     }
 }

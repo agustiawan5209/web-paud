@@ -36,9 +36,18 @@ const props = defineProps({
                 <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                     <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                         <div class="col-span-full  ">
-                            <ul class="flex flex-col space-y-20">
-                                <li class="flex gap-3 py-2 border-b">
-                                    <span class="text-lg">Data Absensi  {{ absen.kelas.kode }}-{{absen.tanggal}}</span>
+                            <ul class="list-item space-y-2">
+                                <li class="border-b">
+                                    <span class="text-lg">Data Absensi </span>
+                                </li>
+                                <li class="border-b">
+                                    <span class="text-lg">Kelas ={{ absen.kelas.kode }}</span>
+                                </li>
+                                <li class="border-b">
+                                    <span class="text-lg">Tanggal = {{ absen.tanggal }}</span>
+                                </li>
+                                <li class="border-b">
+                                    <span class="text-lg">Tahun Ajaran ={{ absen.kelas.tahun_ajaran }}</span>
                                 </li>
                             </ul>
 
@@ -67,7 +76,7 @@ const props = defineProps({
                                                 {{ item.siswa.nama }}
                                             </td>
                                             <td class="px-6 py-4 border">
-                                                <span>{{item.absen}}</span>
+                                                <span>{{ item.absen }}</span>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -43,7 +43,13 @@ class Absensi extends Model
     public function scopeFilter($query, $filter)
     {
         $query->when($filter['search'] ?? null, function ($query, $search) {
-            $query->whereDate('tanggal', 'like', '%' . $search . '%');
+            $query->whereDate('tanggal', 'like', '%' . $search . '%')
+                ->orWhereHas('kelas', function ($query) use ($search) {
+                    $query->where('kode', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('dataabsensi', function ($query) use ($search) {
+                    $query->where('absen', 'like', '%' . $search . '%');
+                });
         })->when($filter['order'] ?? null, function ($query, $order) {
             $query->orderBy('id', $order);
         });

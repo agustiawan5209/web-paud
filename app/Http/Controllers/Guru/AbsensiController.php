@@ -32,14 +32,15 @@ class AbsensiController extends Controller
         $columns[] = 'tanggal';
         return Inertia::render('Guru/Absen/Index', [
             'search' =>  Request::input('search'),
-            'table_colums' => array_values(array_diff($columns, ['remember_token','kelas_id', 'guru_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
+            'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'guru_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => Absensi::filter(Request::only('search', 'order'))
+                ->with(['kelas', 'dataabsensi'])
                 ->where('guru_id', Auth::user()->guru->id)
                 ->paginate(10),
             'can' => [
                 // 'form' => Auth::user()->can('form absen'),
                 'add' => Auth::user()->can('add absen'),
-                'edit' => false,
+                'edit' => Auth::user()->can('edit absen'),
                 'show' => Auth::user()->can('show absen'),
                 'delete' => Auth::user()->can('delete absen'),
                 'reset' => Auth::user()->can('reset absen'),
@@ -74,7 +75,7 @@ class AbsensiController extends Controller
         $siswa = $request->siswa;
         $absensi =  Absensi::create([
             'kelas_id' => $request->kelas_id,
-            'guru_id'=> Auth::user()->guru->id,
+            'guru_id' => Auth::user()->guru->id,
             'tanggal' => $request->tanggal,
         ]);
         for ($i = 0; $i < count($siswa); $i++) {
@@ -96,7 +97,7 @@ class AbsensiController extends Controller
     public function show(Absensi $absensi)
     {
         return Inertia::render('Guru/Absen/Show', [
-            'absen' => Absensi::with(['kelas','dataabsensi', 'dataabsensi.siswa'])->find(Request::input('slug')),
+            'absen' => Absensi::with(['kelas', 'dataabsensi', 'dataabsensi.siswa'])->find(Request::input('slug')),
         ]);
     }
 
@@ -106,7 +107,9 @@ class AbsensiController extends Controller
     public function edit(Absensi $absensi)
     {
         return Inertia::render('Guru/Absen/Edit', [
-            'absen' => Absensi::with(['kelas','dataabsensi', 'dataabsensi.siswa'])->find(Request::input('slug')),
+            'absen' => Absensi::with(['kelas', 'dataabsensi', 'dataabsensi.siswa'])->find(Request::input('slug')),
+            'kelas' => Kelas::where('guru_id', Auth::user()->guru->id)->get(),
+            'siswa' => Siswa::all(),
         ]);
     }
 
@@ -115,7 +118,20 @@ class AbsensiController extends Controller
      */
     public function update(UpdateAbsensiRequest $request, Absensi $absensi)
     {
-        $absen = Absensi::find(Request::input('slug'))->update($request->all);
+        $siswa = $request->siswa;
+        $absensi =  Absensi::find($request->slug);
+        $absensi->update([
+            'kelas_id' => $request->kelas_id,
+            'tanggal' => $request->tanggal,
+        ]);
+        DataAbsensi::where('absensi_id', $absensi->id)->delete();
+        for ($i = 0; $i < count($siswa); $i++) {
+            DataAbsensi::create([
+                'absensi_id' => $absensi->id,
+                'siswa_id' => $siswa[$i]['siswa_id'],
+                'absen' => $siswa[$i]['absen'],
+            ]);
+        }
         return redirect()->route('Absen.index')->with('message', 'Data Absen Berhasil Di Ubah');
     }
 
