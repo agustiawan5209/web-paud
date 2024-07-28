@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Guru\AbsensiController;
 use App\Http\Controllers\Guru\DataAbsensiController;
+use App\Http\Controllers\Guru\NilaiSiswaController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,18 @@ Route::middleware(['auth', 'verified', 'role:Guru'])->group(function () {
             Route::post('/store-data/absen', 'store')->name('store');
             Route::put('/update-data/absen', 'update')->name('update');
             Route::delete('/hapus-data/absen', 'destroy')->name('destroy');
+        });
+    });
+    // Router Nilai
+    Route::group(['prefix' => 'nilai', 'as' => "NilaiSiswa."], function () {
+        Route::controller(NilaiSiswaController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data/nilai', 'create')->name('create');
+            Route::get('/edit-data/nilai', 'edit')->name('edit');
+            Route::get('/detail-data/nilai', 'show')->name('show');
+            Route::post('/store-data/nilai', 'store')->name('store');
+            Route::put('/update-data/nilai', 'update')->name('update');
+            Route::delete('/hapus-data/nilai', 'destroy')->name('destroy');
         });
     });
 });

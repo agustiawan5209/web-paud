@@ -9,6 +9,7 @@ use App\Models\Siswa;
 use App\Models\OrangTua;
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
+use App\Models\NilaiSiswa;
 use Illuminate\Support\Facades\Request;
 
 class ApiKelasSiswaController extends Controller
@@ -67,13 +68,31 @@ class ApiKelasSiswaController extends Controller
 
         if ($absensi->count() > 0) {
             return response()->json([
-                'status'=> false,
-                'data'=> $absensi,
+                'status' => true,
+                'data' => $absensi,
             ], 200);
-        }else{
+        } else {
             return response()->json([
-                'status'=> true,
-                'data'=> $absensi,
+                'status' => false,
+                'data' => $absensi,
+
+            ], 200);
+        }
+    }
+
+    public function getNilaiSiswa($tanggal, $kelas_id)
+    {
+        $nilai = NilaiSiswa::where('kelas_id', $kelas_id)->whereDate('tanggal', $tanggal)->get();
+
+        if ($nilai->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'data' => $nilai,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'data' => $nilai,
 
             ], 200);
         }
