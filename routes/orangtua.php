@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrangTua\JadwalKegiatanController;
+use App\Http\Controllers\OrangTua\NilaiHarianController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrangTua\SiswaController;
 Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
@@ -16,6 +17,12 @@ Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
         Route::controller(JadwalKegiatanController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/detail-data-kegiatan', 'show')->name('show');
+        });
+    });
+    Route::group(['prefix' => 'data-nilai', 'as' => "Org.Nilai."], function () {
+        Route::controller(NilaiHarianController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/detail-data-nilai', 'show')->name('show');
         });
     });
 

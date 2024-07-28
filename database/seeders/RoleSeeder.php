@@ -107,8 +107,8 @@ class RoleSeeder extends Seeder
         }
 
         OrangTua::create([
-            'user_id' => $user->id,
-            'nama' => $user->name,
+            'user_id' => $orangtua->id,
+            'nama' => $orangtua->name,
             'alamat' => fake()->address(),
         ]);
     }

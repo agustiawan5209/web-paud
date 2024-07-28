@@ -88,7 +88,7 @@ watch(order, (value) => {
 
 const columsReplace = props.tableColums.map(element => {
     if (element == 'org_tua_id') {
-        return 'Pasien'
+        return 'Orang Tua'
     } else {
         return element.replace(/_|\b_id\b/g, ' ');
     }

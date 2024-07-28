@@ -20,6 +20,9 @@ class DataNilaiSiswa extends Model
     public function siswa(){
         return $this->hasOne(Siswa::class,'id','siswa_id');
     }
+    public function nilaisiswa(){
+        return $this->hasOne(NilaiSiswa::class,'id','nilai_siswa_id');
+    }
 
      //  FIlter Data User
      public function scopeFilter($query, $filter)

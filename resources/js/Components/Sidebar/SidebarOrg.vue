@@ -55,6 +55,13 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 <span class="capitalize text-sm">Daftar Kegiatan Siswa</span>
             </NavLink>
         </li>
+        <li class="group">
+            <NavLink :href="route('Org.Nilai.index')"
+                :active="route().current('Org.Nilai.index') || route().current('Org.Nilai.create') || route().current('Org.Nilai.edit') || route().current('Org.Kegiatan.show')"
+                :icon="['fas', 'calendar-days']">
+                <span class="capitalize text-sm">Daftar Nilai Siswa</span>
+            </NavLink>
+        </li>
         <li class=" flex items-center justify-between border-t">
             <NavLink :href="route('logout')" method="post" as="button" :icon="['fas', 'right-from-bracket']">
                 <span class="capitalize">Logout</span>
