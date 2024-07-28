@@ -14,21 +14,20 @@ import { ref, defineProps, watch, onMounted } from 'vue';
 
 const page = usePage();
 const props = defineProps({
-    nilai: {
+    perkembangan: {
         type: Object,
         default: () => ({})
     }
 })
-console.log(props.nilai)
 </script>
 
 <template>
 
-    <Head title="Detail Nilai" />
+    <Head title="Detail Perkembangan" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2> Detail Nilai</h2>
+            <h2>Detail Perkembangan Siswa</h2>
         </template>
 
         <div class="md:py-4 relative box-content">
@@ -38,16 +37,16 @@ console.log(props.nilai)
                         <div class="col-span-full  ">
                             <ul class="list-item space-y-2">
                                 <li class="border-b">
-                                    <span class="text-lg">Data Nilai Siswa </span>
+                                    <span class="text-lg">Data Perkembangan Siswa </span>
                                 </li>
                                 <li class="border-b">
-                                    <span class="text-lg">Kelas ={{ nilai.kelas.kode }}</span>
+                                    <span class="text-lg">Kelas ={{ perkembangan.kelas.kode }}</span>
                                 </li>
                                 <li class="border-b">
-                                    <span class="text-lg">Tanggal = {{ nilai.tanggal }}</span>
+                                    <span class="text-lg">Tanggal = {{ perkembangan.tanggal }}</span>
                                 </li>
                                 <li class="border-b">
-                                    <span class="text-lg">Tahun Ajaran ={{ nilai.kelas.tahun_ajaran }}</span>
+                                    <span class="text-lg">Tahun Ajaran ={{ perkembangan.kelas.tahun_ajaran }}</span>
                                 </li>
                             </ul>
 
@@ -67,7 +66,7 @@ console.log(props.nilai)
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, index) in nilai.datanilaisiswa" :key="item.id"
+                                        <tr v-for="(item, index) in perkembangan.dataperkembangansiswa" :key="item.id"
                                             class="odd:bg-white even:bg-gray-50 border-b">
                                             <td scope="row" class="px-2 py-4 border ">
                                                 {{ index + 1 }}
@@ -75,8 +74,7 @@ console.log(props.nilai)
                                             <td class="px-6 py-4 border">
                                                 {{ item.siswa.nama }}
                                             </td>
-                                            <td class="px-6 py-4 border">
-                                                <span>{{ item.nilai }}</span>
+                                            <td class="px-6 py-4 border" v-html="item.perkembangan">
                                             </td>
                                         </tr>
                                     </tbody>

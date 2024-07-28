@@ -24,11 +24,11 @@ const props = defineProps({
 
 <template>
 
-    <Head title="Kelas" />
+    <Head title="Detail Absensi" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2>Form Detail Kelas</h2>
+            <h2>Detail Absensi</h2>
         </template>
 
         <div class="md:py-4 relative box-content">

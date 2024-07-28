@@ -57,6 +57,14 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 <span class="capitalize">Nilai Siswa</span>
             </NavLink>
         </li>
+        <li>
+            <NavLink :href="route('Perkembangan.index')"
+                :active="route().current('Perkembangan.index') || route().current('Perkembangan.create') || route().current('Perkembangan.edit') || route().current('Perkembangan.show')"
+                :icon="['fas', 'chess-board']">
+
+                <span class="capitalize">Data Perkembangan Siswa</span>
+            </NavLink>
+        </li>
         <li class=" flex items-center justify-between border-t">
             <NavLink :href="route('logout')" method="post" as="button" :icon="['fas', 'right-from-bracket']">
                 <span class="capitalize">Logout</span>
