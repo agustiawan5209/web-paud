@@ -56,10 +56,17 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
             </NavLink>
         </li>
         <li class="group">
-            <NavLink :href="route('Org.Nilai.index')"
+            <NavLink :href="route('Org.Perkembangan.index')"
                 :active="route().current('Org.Nilai.index') || route().current('Org.Nilai.create') || route().current('Org.Nilai.edit') || route().current('Org.Kegiatan.show')"
-                :icon="['fas', 'calendar-days']">
+                :icon="['fas', 'box-archive']">
                 <span class="capitalize text-sm">Daftar Nilai Siswa</span>
+            </NavLink>
+        </li>
+        <li class="group">
+            <NavLink :href="route('Org.Perkembangan.index')"
+                :active="route().current('Org.Perkembangan.index') || route().current('Org.Perkembangan.create') || route().current('Org.Perkembangan.edit') || route().current('Org.Kegiatan.show')"
+                :icon="['fas', 'folder-open']">
+                <span class="capitalize text-sm">Laporan Perkembangan Siswa</span>
             </NavLink>
         </li>
         <li class=" flex items-center justify-between border-t">

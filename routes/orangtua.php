@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\OrangTua\JadwalKegiatanController;
+use App\Http\Controllers\OrangTua\LaporanPerkembanganController;
 use App\Http\Controllers\OrangTua\NilaiHarianController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrangTua\SiswaController;
+
 Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
 
     // Siswa
@@ -23,6 +25,12 @@ Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
         Route::controller(NilaiHarianController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/detail-data-nilai', 'show')->name('show');
+        });
+    });
+    Route::group(['prefix' => 'data-perkembangan', 'as' => "Org.Perkembangan."], function () {
+        Route::controller(LaporanPerkembanganController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/detail-data-perkembangan', 'show')->name('show');
         });
     });
 
