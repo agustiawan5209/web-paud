@@ -122,7 +122,7 @@ class PerkembanganSiswaController extends Controller
             'kelas_id' => $request->kelas_id,
             'tanggal' => $request->tanggal,
         ]);
-        DataPerkembanganSiswa::where('nilai_siswa_id', $perkembanganSiswa->id)->delete();
+        DataPerkembanganSiswa::where('perkembangan_siswa_id', $perkembanganSiswa->id)->delete();
         for ($i = 0; $i < count($siswa); $i++) {
             DataPerkembanganSiswa::create([
                 'perkembangan_siswa_id' => $perkembanganSiswa->id,

@@ -15,7 +15,7 @@ import { text } from '@fortawesome/fontawesome-svg-core';
 const swal = inject('$swal')
 
 const props = defineProps({
-    nilai: {
+    perkembangan: {
         type: Object,
         default: () => ({}),
     },
@@ -29,17 +29,17 @@ const props = defineProps({
     },
 })
 const Form = useForm({
-    slug: props.nilai.id,
-    kelas_id: props.nilai.kelas_id,
-    tanggal: props.nilai.tanggal,
+    slug: props.perkembangan.id,
+    kelas_id: props.perkembangan.kelas_id,
+    tanggal: props.perkembangan.tanggal,
     siswa: [],
 })
 
 
 
-const NilaiSiswas = ref([]);
+const Perkembangans = ref([]);
 
-// Get Data Nilai Jika Tersedia
+// Get Data Perkembangan Siswa Jika Tersedia
 const TanggalKelas = ref(Form.tanggal);
 
 function SearchAbsen(tanggal) {
@@ -52,13 +52,13 @@ function SearchAbsen(tanggal) {
                         swal({
                             title: "Peringatan",
                             icon: "error",
-                            html: `<strong>Data Nilai ${TanggalKelas.value} Sudah Tersedia</strong>
+                            html: `<strong>Data Perkembangan Siswa ${TanggalKelas.value} Sudah Tersedia</strong>
                         <br>
                         `,
                             showCloseButton: true,
                             showCancelButton: true,
                         });
-                        NilaiSiswas.value = [];
+                        Perkembangans.value = [];
                     } else {
                         Form.tanggal = tanggal;
                     }
@@ -78,7 +78,7 @@ function Search(id) {
         .then((res) => {
             if (res.status == 200) {
                 SearchAbsen(TanggalKelas.value);
-                NilaiSiswas.value = []
+                Perkembangans.value = []
                 Form.kelas_id = res.data.id;
                 const Kelas_Siswa = res.data.kelassiswa;
                 if (Kelas_Siswa.length < 1) {
@@ -95,10 +95,10 @@ function Search(id) {
                 } else {
                     for (let index = 0; index < Kelas_Siswa.length; index++) {
                         const element = Kelas_Siswa[index];
-                        NilaiSiswas.value.push({
+                        Perkembangans.value.push({
                             siswa_id: element.siswa.id,
                             nama: element.siswa.nama,
-                            nilai: 'Tidak Hadir',
+                            perkembangan: element.perkembangan,
                         })
 
                     }
@@ -120,23 +120,23 @@ onMounted(() => {
         SearchAbsen(value);
     })
 })
-if (props.nilai) {
+if (props.perkembangan) {
     // Search(Form.kelas_id)
-    console.log(props.nilai)
-    for (let index = 0; index < props.nilai.datanilaisiswa.length; index++) {
-        const element = props.nilai.datanilaisiswa[index];
-        NilaiSiswas.value.push({
+    console.log(props.perkembangan)
+    for (let index = 0; index < props.perkembangan.dataperkembangansiswa.length; index++) {
+        const element = props.perkembangan.dataperkembangansiswa[index];
+        Perkembangans.value.push({
             siswa_id: element.siswa.id,
             nama: element.siswa.nama,
-            nilai: element.nilai,
+            perkembangan: element.perkembangan,
         })
 
     }
 }
 function submit() {
 
-    Form.siswa = NilaiSiswas.value;
-    Form.put(route('NilaiSiswa.update'), {
+    Form.siswa = Perkembangans.value;
+    Form.put(route('Perkembangan.update'), {
         onError: (err) => {
             var txt = "<ul>"
             Object.keys(err).forEach((item, val) => {
@@ -158,11 +158,11 @@ function submit() {
 
 <template>
 
-    <Head title="Nilai" />
+    <Head title="Perkembangan Siswa" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2>Form Edit Nilai </h2>
+            <h2>Form Edit Perkembangan Siswa </h2>
         </template>
 
         <div class="py-4 relative box-content">
@@ -170,7 +170,8 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Edit Nilai Kelas (Tahun Ajaran ={{ nilai.tanggal }} || Kelas= {{ nilai.kelas.kode }})</p>
+                        <p class="font-medium">Edit Perkembangan (Tahun Ajaran ={{ perkembangan.tanggal }} || Kelas= {{
+                            perkembangan.kelas.kode }})</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -212,7 +213,7 @@ function submit() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item, index) in NilaiSiswas" :key="item.id"
+                                            <tr v-for="(item, index) in Perkembangans" :key="item.id"
                                                 class="odd:bg-white even:bg-gray-50 border-b">
                                                 <td scope="row" class="px-2 py-4 border ">
                                                     {{ index + 1 }}
@@ -221,9 +222,9 @@ function submit() {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <td class="px-6 py-4 border">
-                                                        <TextInput type="number" class="w-max" v-model="item.nilai"/>
-                                                    </td>
+                                                    <quill-editor id="deskripsi" contentType="html" theme="snow"
+                                                        v-model:content="item.perkembangan" placeholder="@deskripsi"
+                                                        class="w-full text-gray-900" />
                                                 </td>
                                             </tr>
                                         </tbody>

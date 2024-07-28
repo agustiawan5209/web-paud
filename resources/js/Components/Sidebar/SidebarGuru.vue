@@ -61,7 +61,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 :active="route().current('Perkembangan.index') || route().current('Perkembangan.create') || route().current('Perkembangan.edit') || route().current('Perkembangan.show')"
                 :icon="['fas', 'chart-line']">
 
-                <span class="capitalize">Data Perkembangan Siswa</span>
+                <span class="capitalize">Laporan Perkembangan Siswa</span>
             </NavLink>
         </li>
         <li class=" flex items-center justify-between border-t">
