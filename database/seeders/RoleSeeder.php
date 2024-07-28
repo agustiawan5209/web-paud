@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Guru;
+use App\Models\OrangTua;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -83,6 +84,31 @@ class RoleSeeder extends Seeder
         Guru::create([
             'user_id' => $guru->id,
             'nama' => $guru->name,
+            'alamat' => fake()->address(),
+        ]);
+
+
+        // Orangtua
+        $orangtua = User::factory()->create([
+            'name' => 'orangtua',
+            'username' => 'orangtua',
+            'email' => 'orangtua@gmail.com',
+            'password' => bcrypt('12345678'),
+            'phone' => '081524269051',
+        ]);
+        $role = Role::findByName('Orang Tua'); // Replace 'user' with your actual role name
+        if ($role) {
+            $orangtua->assignRole($role); // Assign 'guru' role to the user
+            $orangtua->givePermissionTo([
+                'show nilai',
+                'show kegiatan',
+                'show siswa',
+            ]);
+        }
+
+        OrangTua::create([
+            'user_id' => $user->id,
+            'nama' => $user->name,
             'alamat' => fake()->address(),
         ]);
     }

@@ -28,8 +28,8 @@ class PerkembanganSiswaController extends Controller
         $tableName = 'perkembangan_siswas'; // Ganti dengan nama tabel yang Anda inginkan
         // $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
         $columns[] = 'id';
-        $columns[] = 'nama_kelas';
         $columns[] = 'tanggal';
+        $columns[] = 'nama_kelas';
         return Inertia::render('Guru/Perkembangan/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'guru_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),

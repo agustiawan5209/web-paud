@@ -44,8 +44,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
         <li>
             <NavLink :href="route('Absen.index')"
                 :active="route().current('Absen.index') || route().current('Absen.create') || route().current('Absen.edit') || route().current('Absen.show')"
-                :icon="['fas', 'chess-board']">
-
+                :icon="['far', 'calendar-check']">
                 <span class="capitalize">Absensi Siswa</span>
             </NavLink>
         </li>
@@ -60,7 +59,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
         <li>
             <NavLink :href="route('Perkembangan.index')"
                 :active="route().current('Perkembangan.index') || route().current('Perkembangan.create') || route().current('Perkembangan.edit') || route().current('Perkembangan.show')"
-                :icon="['fas', 'chess-board']">
+                :icon="['fas', 'chart-line']">
 
                 <span class="capitalize">Data Perkembangan Siswa</span>
             </NavLink>
