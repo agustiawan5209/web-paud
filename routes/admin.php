@@ -80,11 +80,6 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
             Route::post('/store-data-siswa', 'store')->name('store');
             Route::put('/update-data-siswa', 'update')->name('update');
             Route::delete('/hapus-data-siswa', 'destroy')->name('destroy');
-
-            // reset password
-
-            Route::get('/reset-password-siswa', 'resetpassword')->middleware(['auth', 'password.confirm'])->name('reset.password');
-            Route::post('/reset-password-siswa', 'resetpasswordUpdate')->name('reset.password');
         });
     });
     Route::group(['prefix' => 'kelas-siswa', 'as' => "KelasSiswa."], function () {

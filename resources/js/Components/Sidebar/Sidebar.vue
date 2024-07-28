@@ -9,6 +9,7 @@ import DropdownNavItem from './DropdownNavItem.vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import SidebarAdmin from './SidebarAdmin.vue';
 import SidebarGuru from './SidebarGuru.vue';
+import SidebarOrg from './SidebarOrg.vue';
 const Page = usePage().props.auth;
 const Roles = Page.role;
 function roleToCheck(role) {
@@ -41,6 +42,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
         <nav class="flex-1 overflow-y-auto">
             <SidebarAdmin v-if="roleToCheck('Admin')"/>
             <SidebarGuru v-if="roleToCheck('Guru')"/>
+            <SidebarOrg v-if="roleToCheck('Orang Tua')"/>
         </nav>
     </div>
 </template>

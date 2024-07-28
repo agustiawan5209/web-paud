@@ -26,6 +26,20 @@ class Siswa extends Model
         return $this->hasOne(OrangTua::class, 'id', 'org_tua_id');
     }
 
+    public function kelas(){
+        return $this->hasMany(KelasSiswa::class,'siswa_id','id');
+    }
+    public function datanilaisiswa(){
+        return $this->hasMany(DataNilaiSiswa::class,'siswa_id','id');
+    }
+
+    public function dataperkembangansiswa(){
+        return $this->hasMany(DataPerkembanganSiswa::class,'siswa_id','id');
+    }
+    public function dataabsensi(){
+        return $this->hasMany(DataAbsensi::class,'siswa_id','id');
+    }
+
     //  FIlter Data User
     public function scopeFilter($query, $filter)
     {

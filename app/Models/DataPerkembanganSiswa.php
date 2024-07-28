@@ -20,6 +20,9 @@ class DataPerkembanganSiswa extends Model
     public function siswa(){
         return $this->hasOne(Siswa::class,'id','siswa_id');
     }
+    public function perkembangansiswa(){
+        return $this->hasOne(PerkembanganSiswa::class,'id','perkembangan_siswa_id');
+    }
 
      //  FIlter Data User
      public function scopeFilter($query, $filter)

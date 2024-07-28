@@ -306,7 +306,7 @@ function truncateText(text) {
                                             Buat Absen
                                         </DropdownLink>
                                         <!-- Settings dropdownTable -->
-                                        <div class="ml-3 relative z-50" v-if="crud.edit || crud.delete || crud.reset_password">
+                                        <div class="ml-3 relative z-50" v-if="crud.edit ||crud.show || crud.delete || crud.reset_password">
                                             <dropdownTable align="top" width="48">
                                                 <template #trigger>
                                                     <span class="inline-flex rounded-md">

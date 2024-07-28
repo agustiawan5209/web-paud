@@ -41,27 +41,11 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 <span class="-mr-1 font-medium">Dashboard</span>
             </NavLink>
         </li>
-        <li>
-            <NavLink :href="route('Absen.index')"
-                :active="route().current('Absen.index') || route().current('Absen.create') || route().current('Absen.edit') || route().current('Absen.show')"
-                :icon="['far', 'calendar-check']">
-                <span class="capitalize">Absensi Siswa</span>
-            </NavLink>
-        </li>
-        <li>
-            <NavLink :href="route('NilaiSiswa.index')"
-                :active="route().current('NilaiSiswa.index') || route().current('NilaiSiswa.create') || route().current('NilaiSiswa.edit') || route().current('NilaiSiswa.show')"
-                :icon="['fas', 'chess-board']">
-
-                <span class="capitalize">Nilai Siswa</span>
-            </NavLink>
-        </li>
-        <li>
-            <NavLink :href="route('Perkembangan.index')"
-                :active="route().current('Perkembangan.index') || route().current('Perkembangan.create') || route().current('Perkembangan.edit') || route().current('Perkembangan.show')"
-                :icon="['fas', 'chart-line']">
-
-                <span class="capitalize text-sm">Laporan Perkembangan Siswa</span>
+        <li class="group">
+            <NavLink :href="route('Org.Siswa.index')"
+                :active="route().current('Org.Siswa.index') || route().current('Org.Siswa.create') || route().current('Org.Siswa.edit') || route().current('Org.Siswa.show')"
+                :icon="['fas', 'person-breastfeeding']">
+                <span class="capitalize">Data Siswa</span>
             </NavLink>
         </li>
         <li class=" flex items-center justify-between border-t">
