@@ -48,6 +48,13 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 <span class="capitalize">Data Siswa</span>
             </NavLink>
         </li>
+        <li class="group">
+            <NavLink :href="route('Org.Kegiatan.index')"
+                :active="route().current('Org.Kegiatan.index') || route().current('Org.Kegiatan.create') || route().current('Org.Kegiatan.edit') || route().current('Org.Kegiatan.show')"
+                :icon="['fas', 'calendar-days']">
+                <span class="capitalize text-sm">Daftar Kegiatan Siswa</span>
+            </NavLink>
+        </li>
         <li class=" flex items-center justify-between border-t">
             <NavLink :href="route('logout')" method="post" as="button" :icon="['fas', 'right-from-bracket']">
                 <span class="capitalize">Logout</span>

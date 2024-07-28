@@ -51,6 +51,10 @@ class KelasSiswa extends Model
         return $this->hasOne(Siswa::class,'id','siswa_id');
     }
 
+    public function jadwalkegiatan(){
+        return $this->hasMany(Jadwalkegiatan::class,'kelas_id','kelas_id');
+    }
+
     //  FIlter Data User
     public function scopeFilter($query, $filter)
     {
