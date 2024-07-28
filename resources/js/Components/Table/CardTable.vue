@@ -238,15 +238,15 @@ function truncateText(text) {
                             <fwb-table-head
                                 class="text-xs md:text-base font-semibold tracking-wide text-left uppercase border-b border-gray-700  ">
                                 <fwb-table-head-cell scope="col" v-for="item in columsReplace"
-                                    class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize">
+                                    class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-green-600 text-white">
                                     <span v-if="item == 'id' || item == 'slug'" class="w-10">
                                         No.
                                     </span>
                                     <span v-else>{{ item }}</span>
                                 </fwb-table-head-cell>
-                                <th scope="col" v-if="cekAksi()"
-                                    class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase">Aksi
-                                </th>
+                                <fwb-table-head-cell scope="col" v-if="cekAksi()"
+                                    class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase bg-green-600 text-white">Aksi
+                                </fwb-table-head-cell>
                             </fwb-table-head>
                             <fwb-table-body v-if="Form.processing">
                                 <tr>
@@ -307,11 +307,11 @@ function truncateText(text) {
                                         </DropdownLink>
                                         <!-- Settings dropdownTable -->
                                         <div class="ml-3 relative z-50" v-if="crud.edit ||crud.show || crud.delete || crud.reset_password">
-                                            <dropdownTable align="top" width="48">
+                                            <dropdownTable align="top" width="48" :key="index">
                                                 <template #trigger>
                                                     <span class="inline-flex rounded-md">
                                                         <button type="button"
-                                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none transition ease-in-out duration-150">
                                                             Aksi
 
                                                             <font-awesome-icon :icon="['fas', 'ellipsis-vertical']"

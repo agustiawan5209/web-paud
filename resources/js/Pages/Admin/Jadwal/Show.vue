@@ -31,12 +31,12 @@ const props = defineProps({
         </template>
 
         <div class="md:py-4 relative box-content">
-            <section class=" py-2 px-0 md:px-6  md:py-6 bg-gray-100 text-gray-900">
+            <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-white">
                 <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1 px-3 md:px-0">
-                        <p class="font-medium">Detail Informasi Jadwal Kegiatan Kelas {{jadwal.nama_kelas}}</p>
+                        <p class="font-medium">Detail Informasi Jadwal Kegiatan {{jadwal.nama_kelas}}</p>
                     </div>
-                    <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
+                    <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 text-black">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full  ">
                                 <ul class="flex flex-col space-y-20">

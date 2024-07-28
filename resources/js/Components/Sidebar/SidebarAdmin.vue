@@ -80,7 +80,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                     :active="route().current('Jadwal.index') || route().current('Jadwal.create') || route().current('Jadwal.edit') || route().current('Jadwal.show')"
                     :icon="['fas', 'users-line']">
 
-                    <span class="capitalize">Jadwal Siswa</span>
+                    <span class="capitalize">Jadwal Kegiatan Siswa</span>
                 </DropdownNavItem>
             </li>
         </DropdownNavLink>

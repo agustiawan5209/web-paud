@@ -43,7 +43,7 @@ function parseDate(tgl) {
 
         <div class="md:py-4 relative box-content">
 
-            <section class=" py-2 px-0 md:px-6  md:py-6 bg-gray-100 text-gray-900">
+           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-white">
                 <PrimaryButton type="button" onclick="history.back();return false;">Kembali</PrimaryButton>
 
                 <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
