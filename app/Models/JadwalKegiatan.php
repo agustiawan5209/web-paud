@@ -51,7 +51,7 @@ class JadwalKegiatan extends Model
     {
         // dd($this->kelas);
         return new Attribute(
-            get: fn () => $this->kelas == null ? '--' : "Kelas =" . $this->kelas()->first()->kode . " || tahun ajaran = " . $this->kelas->tahun_ajaran,
+            get: fn () => $this->kelas == null ? '--' : "Kelas =" . $this->kelas->kode . " || tahun ajaran = " . $this->kelas->tahun_ajaran,
         );
     }
 

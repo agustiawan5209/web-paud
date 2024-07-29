@@ -24,7 +24,7 @@ class Guru extends Model
     public function nomorTelepon(): Attribute
     {
         return new Attribute(
-            get: fn()=> $this->user->first()->phone,
+            get: fn()=> $this->user->phone,
             set: null,
         );
     }

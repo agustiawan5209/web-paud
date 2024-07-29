@@ -34,7 +34,7 @@ class NilaiSiswa extends Model
     public function namaKelas(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->kelas()->first()->kode,
+            get: fn () => $this->kelas->kode,
             set: null,
         );
     }

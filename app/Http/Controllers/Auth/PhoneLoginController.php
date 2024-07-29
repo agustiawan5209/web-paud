@@ -31,17 +31,17 @@ class PhoneLoginController extends Controller
      */
     public function store(PhoneRequest $request): RedirectResponse
     {
-        $user = User::where('phone', $request->phone)->first();
+        $user = User::where('phone', $request->no_telpon)->first();
 
-        if ($user) {
+        if ($user && $user->hasRole('Orang Tua')) {
             Auth::login($user);
             $request->session()->regenerate();
 
-            return redirect()->route('Customer.dashboard'); // Ganti dengan route sesuai kebutuhan Anda
+            return redirect()->route('dashboard'); // Ganti dengan route sesuai kebutuhan Anda
         }
 
         return back()->withErrors([
-            'Phone' => 'Nomor Telepon Tidak Cocok dengan data kami.',
+            'no_telpon' => 'Nomor Telepon Tidak Cocok dengan data kami.',
         ]);
 
         return redirect()->intended(RouteServiceProvider::HOME);
