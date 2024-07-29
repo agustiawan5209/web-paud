@@ -32,7 +32,7 @@ class PhoneLoginController extends Controller
     public function store(PhoneRequest $request): RedirectResponse
     {
         $user = User::where('phone', $request->no_telpon)->first();
-
+        // dd($user->getRoleNames());
         if ($user && $user->hasRole('Orang Tua')) {
             Auth::login($user);
             $request->session()->regenerate();

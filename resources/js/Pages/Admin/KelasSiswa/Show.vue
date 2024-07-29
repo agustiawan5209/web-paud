@@ -143,7 +143,7 @@ console.log(props.can)
             </section>
         </Modal>
         <div class="md:py-4 relative box-content">
-           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-white">
+           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-dark">
                 <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1 px-3 md:px-0">
                         <p class="font-medium">Data Informasi OrangTua</p>

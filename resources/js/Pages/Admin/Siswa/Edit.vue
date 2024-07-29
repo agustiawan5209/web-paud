@@ -156,12 +156,12 @@ onMounted(() => {
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full sm:col-span-3">
+                            <!-- <div class="col-span-full sm:col-span-3">
                                 <label for="nik" class="text-sm">Nomor Induk Kependudukan (NIK) - Siswa</label>
                                 <TextInput id="nik" type="text" placeholder="Nomor Induk Kependudukan (NIK)" v-model="Form.nik"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.nik" />
-                            </div>
+                            </div> -->
                             <div class="col-span-full sm:col-span-3">
                                 <label for="firstname" class="text-sm">Nama Lengkap Anak</label>
                                 <TextInput id="firstname" type="text" placeholder="nama lengkap" v-model="Form.nama"

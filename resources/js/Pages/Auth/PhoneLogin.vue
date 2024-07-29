@@ -43,7 +43,7 @@ const submit = () => {
             <div>
                 <InputLabel for="no_telpon" value="Nomor HandPhone" />
 
-                <TextInput id="no_telpon" type="number" class="mt-1 block w-full" v-model="form.no_telpon" required autofocus
+                <TextInput id="no_telpon" type="tel" class="mt-1 block w-full" v-model="form.no_telpon" required autofocus
                     autocomplete="no_telpon" />
 
                 <InputError class="mt-2" :message="form.errors.no_telpon" />

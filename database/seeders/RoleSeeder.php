@@ -94,7 +94,7 @@ class RoleSeeder extends Seeder
             'username' => 'orangtua',
             'email' => 'orangtua@gmail.com',
             'password' => bcrypt('12345678'),
-            'phone' => '081524269051',
+            'phone' => '6281524269051',
         ]);// Replace 'user' with your actual role name
         if ($role) {
             $orangtua->assignRole($role_orangtua); // Assign 'guru' role to the user
@@ -109,7 +109,7 @@ class RoleSeeder extends Seeder
             'user_id' => $orangtua->id,
             'nama' => $orangtua->name,
             'alamat' => fake()->address(),
-            'no_telpon' => '081524269051',
+            'no_telpon' => '031524269051',
 
         ]);
     }

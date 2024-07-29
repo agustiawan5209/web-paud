@@ -32,7 +32,7 @@ const props = defineProps({
         </template>
 
         <div class="md:py-4 relative box-content">
-           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-white">
+           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-dark">
                 <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                     <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                         <div class="col-span-full  ">

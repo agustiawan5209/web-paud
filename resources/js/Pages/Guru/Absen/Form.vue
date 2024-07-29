@@ -140,11 +140,11 @@ function submit() {
 
 <template>
 
-    <Head title="Kelas" />
+    <Head title="Form Absensi" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2>Form Tambah Kelas</h2>
+            <h2>Form Tambah Absensi</h2>
         </template>
 
         <div class="py-4 relative box-content">

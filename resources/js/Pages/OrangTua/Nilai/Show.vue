@@ -25,7 +25,7 @@ const props = defineProps({
 
         <div class="md:py-4 relative box-content">
 
-           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-white">
+           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-dark">
                 <PrimaryButton type="button" onclick="history.back();return false;">Kembali</PrimaryButton>
 
                 <div class="relative overflow-x-auto border shadow-md sm:rounded-lg mt-5">

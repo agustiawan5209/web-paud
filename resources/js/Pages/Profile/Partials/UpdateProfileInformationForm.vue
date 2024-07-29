@@ -54,7 +54,7 @@ const form = useForm({
             <div>
                 <InputLabel for="phone" value="No. Telpon" />
 
-                <TextInput id="phone" type="number" class="mt-1 block w-full" v-model="form.phone" required
+                <TextInput id="phone" type="tel" class="mt-1 block w-full" v-model="form.phone" required
                     autocomplete="username" />
 
                 <InputError class="mt-2" :message="form.errors.phone" />
