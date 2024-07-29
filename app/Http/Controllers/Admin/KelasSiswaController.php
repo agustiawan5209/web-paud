@@ -35,7 +35,7 @@ class KelasSiswaController extends Controller
             'can' => [
                 'add' => Auth::user()->can('add siswa'),
                 'add' => Auth::user()->can('add kelas'),
-                'edit' => Auth::user()->can('edit kelas'),
+                'edit' => false,
                 'show' => false,
                 'delete' => Auth::user()->can('delete kelas'),
             ],

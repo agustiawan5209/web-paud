@@ -18,8 +18,8 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $role = Role::create(['name' => 'Admin']);
-        $orangtua = Role::create(['name' => 'Orang Tua']);
-        $guru = Role::create(['name' => 'Guru']);
+        $role_orangtua = Role::create(['name' => 'Orang Tua']);
+        $role_guru = Role::create(['name' => 'Guru']);
 
 
 
@@ -95,10 +95,9 @@ class RoleSeeder extends Seeder
             'email' => 'orangtua@gmail.com',
             'password' => bcrypt('12345678'),
             'phone' => '081524269051',
-        ]);
-        $role = Role::findByName('Orang Tua'); // Replace 'user' with your actual role name
+        ]);// Replace 'user' with your actual role name
         if ($role) {
-            $orangtua->assignRole($role); // Assign 'guru' role to the user
+            $orangtua->assignRole($role_orangtua); // Assign 'guru' role to the user
             $orangtua->givePermissionTo([
                 'show nilai',
                 'show kegiatan',
@@ -110,6 +109,8 @@ class RoleSeeder extends Seeder
             'user_id' => $orangtua->id,
             'nama' => $orangtua->name,
             'alamat' => fake()->address(),
+            'no_telpon' => '081524269051',
+
         ]);
     }
 }

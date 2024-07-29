@@ -16,6 +16,7 @@ const props = defineProps({
         default:()=>({})
     }
 })
+console.log(orangTua)
 const Form = useForm({
     slug: props.orangTua.id,
     name:props.orangTua.user.name,
