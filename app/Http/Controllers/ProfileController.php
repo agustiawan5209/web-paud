@@ -27,12 +27,36 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
+
+
+    public function updatePhoto(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'profile_photo' => ['nullable', 'image', 'max:2048'], // Validasi untuk foto profil
+        ]);
+        $user = auth()->user();
+
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profile-photos', 'public');
+            $user->profile_photo = $path;
+        }
+
+        $user->save();
+
+        return Redirect::route('profile.edit');
+    }
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $user = auth()->user();
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+        }
+
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profile-photos', 'public');
+            $user->profile_photo_path = $path;
         }
 
         $request->user()->save();

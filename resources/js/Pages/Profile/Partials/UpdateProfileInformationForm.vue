@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -21,6 +22,7 @@ const form = useForm({
     email: user.email,
     phone: user.phone,
 });
+
 </script>
 
 <template>
@@ -33,7 +35,8 @@ const form = useForm({
             </p>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+        <form @submit.prevent="form.patch(route('profile.update'))"  class="mt-6 space-y-6">
+
             <div>
                 <InputLabel for="name" value="Name" />
 

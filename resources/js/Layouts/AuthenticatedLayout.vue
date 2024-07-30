@@ -5,8 +5,11 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import Sidebar from '@/Components/Sidebar/Sidebar.vue';
+
+
+const user = usePage().props.auth.user;
 
 const showingNavigationDropdown = ref(false);
 function getWindows() {
@@ -57,9 +60,13 @@ window.addEventListener('resize', () => {
                 </button>
                 <div class="flex space-x-4">
 
-                    <Link :href="route('profile.edit')" type="button" :class="route().current('profile.edit') ? 'bg-green-400 active:bg-green-500 text-white' : 'bg-gray-100 active:bg-gray-200'"
+                    <Link :href="route('profile.edit')" type="button" :class="route().current('profile.edit') ? 'bg-white active:bg-green-500 text-white' : 'bg-gray-100 active:bg-gray-200'"
                         class="h-10 px-4 w-full rounded-xl border  flex items-center gap-2" >
-                        Profile <font-awesome-icon class="text-gray-600" :icon="['fas', 'user']" />
+                        <img v-if="user.profile_photo_path" class="inline-block w-8 h-8 rounded-full ring-2 ring-white" :src="user.profile_photo_path" alt="">
+
+                        <img v-else class="inline-block w-8 h-8 rounded-full ring-2 ring-white" :src="'/images/vecteezy_profile-icon-design-vector_5544718.jpg'" alt="">
+
+
                     </Link>
                 </div>
             </div>
