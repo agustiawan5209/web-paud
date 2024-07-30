@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\OrangTua;
+namespace App\Http\Controllers\Guru;
 
 use Inertia\Inertia;
 use App\Models\JadwalKegiatan;
@@ -18,12 +18,11 @@ class JadwalKegiatanController extends Controller
         $tableName = 'jadwal_kegiatans'; // Ganti dengan nama tabel yang Anda inginkan
         // $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
         $columns[] = 'id';
+        $columns[] = 'kelass';
         $columns[] = 'nama_kegiatan';
-        // $columns[] = 'kelass';
-        $columns[] = 'nama_siswa';
-        $columns[] = 'tanggal_kegiatan';
-        // $columns[] = 'penanggung_jawab';
-        // $columns[] = 'jumlah_anak';
+        $columns[] = 'tanggal';
+        $columns[] = 'penanggung_jawab';
+
         $jadwal = JadwalKegiatan::filter(Request::only('search', 'order'))
             ->with(['kelas', 'kelassiswa', 'kelassiswa.siswa', 'kelassiswa.siswa.orangtua'])
             ->whereHas('kelassiswa', function ($query) {
@@ -33,12 +32,10 @@ class JadwalKegiatanController extends Controller
                     });
                 });
             })
-            // ->join('kelas', 'jadwal_kegiatans.kelas_id', '=', 'kelas.id')
-            ->join('kelas_siswas', 'jadwal_kegiatans.kelas_id', '=', 'kelas_siswas.kelas_id')
-            ->join('siswas', 'kelas_siswas.siswa_id', '=', 'siswas.id')
-            ->select('jadwal_kegiatans.id', 'nama_kegiatan',  'siswas.nama as nama_siswa', 'jadwal_kegiatans.tanggal as tanggal_kegiatan')
+            ->join('kelas', 'jadwal_kegiatans.kelas_id', '=', 'kelas.id')
+            ->select('jadwal_kegiatans.id', 'nama_kegiatan', 'tanggal', 'penanggung_jawab', 'kelas.kode as kelass')
             ->paginate(10);
-        // dd($jadwal);
+
         return Inertia::render('OrangTua/Jadwal/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'deskripsi'])),
@@ -55,10 +52,10 @@ class JadwalKegiatanController extends Controller
     public function show(JadwalKegiatan $jadwalkegiatan)
     {
         Request::validate([
-            'slug'=> 'required|exists:jadwal_kegiatans,id',
+            'slug' => 'required|exists:jadwal_kegiatans,id',
         ]);
         return Inertia::render('Admin/Jadwal/Show', [
-            'jadwal'=> JadwalKegiatan::find(Request::input('slug'))
+            'jadwal' => JadwalKegiatan::find(Request::input('slug'))
         ]);
     }
 }
