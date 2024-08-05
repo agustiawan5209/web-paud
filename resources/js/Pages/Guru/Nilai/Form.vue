@@ -12,6 +12,9 @@ import { ref, defineProps, watch, onMounted, inject } from 'vue';
 import axios from 'axios';
 import { FwbRadio } from 'flowbite-vue'
 import { text } from '@fortawesome/fontawesome-svg-core';
+
+import { FwbFileInput } from 'flowbite-vue'
+
 const swal = inject('$swal')
 
 const props = defineProps({
@@ -30,6 +33,7 @@ const Form = useForm({
     nama: '',
     tanggal: '',
     siswa: [],
+    image: [],
 })
 
 const AbsensSiswa = ref([]);
@@ -116,9 +120,32 @@ onMounted(() => {
     })
 })
 
-function submit() {
 
+// Multiple Image
+const imagePreviews = ref([]);
+const ImageUpload = ref([]);
+const handleFileUpload = (event) => {
+  const files = event.target.files;
+  for (let i = 0; i < files.length; i++) {
+    ImageUpload.value.push(files[i])
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreviews.value.push(e.target.result);
+    };
+    reader.readAsDataURL(files[i]);
+  }
+};
+
+const removeImage = (index) => {
+  imagePreviews.value.splice(index, 1);
+  ImageUpload.value.splice(index, 1);
+};
+
+// Post
+function submit() {
+    // console.log(imagePreviews.value)
     Form.siswa = AbsensSiswa.value;
+    Form.image = ImageUpload;
     Form.post(route('NilaiSiswa.store'), {
         onError: (err) => {
             var txt = "<ul>"
@@ -158,7 +185,22 @@ function submit() {
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full">
-
+                                <div class="mb-4">
+                                    <input
+                                      type="file"
+                                      multiple
+                                      @change="handleFileUpload"
+                                      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500"
+                                    />
+                                  </div>
+                                  <div class="grid grid-cols-3 gap-4">
+                                    <div v-for="(image, index) in imagePreviews" :key="index" class="relative">
+                                      <img :src="image" class="object-cover h-32 w-full rounded-lg" />
+                                      <button @click="removeImage(index)" class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full focus:outline-none">x</button>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-span-full">
                                 <InputLabel for="kelas" value="Kelas" />
                                 <select id="kelas" v-model="kelasId"
                                     class="px-2 py-1 md:px-3 md:py-2 placeholder-gray-400 border focus:outline-none  w-full sm:text-sm border-gray-200 shadow-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none ">
@@ -204,7 +246,7 @@ function submit() {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <TextInput type="number" class="w-max" v-model="item.nilai"/>
+                                                    <TextInput type="number" class="w-max" v-model="item.nilai" />
                                                 </td>
                                             </tr>
                                         </tbody>

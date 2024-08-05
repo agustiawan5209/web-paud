@@ -27,6 +27,11 @@ class NilaiSiswa extends Model
         return $this->hasMany(DataNilaiSiswa::class, 'nilai_siswa_id', 'id');
     }
 
+    public function galeriNilai()
+    {
+        return $this->hasMany(GaleriNilai::class, 'nilai_id', 'id');
+    }
+
     protected $appends = [
         'nama_kelas',
     ];

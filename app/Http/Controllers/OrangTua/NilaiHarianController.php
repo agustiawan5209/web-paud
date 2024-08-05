@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\NilaiSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -39,7 +40,8 @@ class NilaiHarianController extends Controller
             'slug'=> 'required|exists:siswas,id',
         ]);
         return Inertia::render("OrangTua/Nilai/Show", [
-            'siswa' => Siswa::with(['dataperkembangansiswa', 'datanilaisiswa', 'dataabsensi', 'kelas', 'dataperkembangansiswa.perkembangansiswa', 'datanilaisiswa.nilaisiswa', 'dataabsensi.absensi',])->find(Request::input('slug')),
+            'nilai'=> NilaiSiswa::find(Request::input('slug')),
+            'siswa' => Siswa::with(['dataperkembangansiswa', 'datanilaisiswa', 'dataabsensi', 'kelas', 'dataperkembangansiswa.perkembangansiswa', 'datanilaisiswa.nilaisiswa', 'dataabsensi.absensi', 'datanilaisiswa.nilaisiswa.galeriNilai'])->find(Request::input('slug')),
             // 'orangTua'=> OrangTua::all(),
         ]);
     }

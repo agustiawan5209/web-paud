@@ -21,6 +21,10 @@ class DataAbsensi extends Model
         return $this->hasOne(Siswa::class,'id','siswa_id');
     }
 
+    public function absensi(){
+        return $this->hasOne(Absensi::class,'id','absensi_id');
+    }
+
      //  FIlter Data User
      public function scopeFilter($query, $filter)
      {

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNilaiSiswaRequest extends FormRequest
+class StoreGaleriNilaiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,12 +22,7 @@ class StoreNilaiSiswaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kelas_id'=> 'required|exists:kelas,id',
-            'siswa'=> 'required|array',
-            'tanggal'=> 'required|date',
-            'siswa.*.nilai'=> 'required|between:1,100',
-            'image'=> 'required|array',
-            'image.*'=> 'image|max:2040'
+            //
         ];
     }
 }

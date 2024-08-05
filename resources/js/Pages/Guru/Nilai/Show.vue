@@ -32,7 +32,7 @@ console.log(props.nilai)
         </template>
 
         <div class="md:py-4 relative box-content">
-           <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-dark">
+            <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-dark">
                 <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                     <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                         <div class="col-span-full  ">
@@ -49,8 +49,17 @@ console.log(props.nilai)
                                 <li class="border-b">
                                     <span class="text-lg">Tahun Ajaran ={{ nilai.kelas.tahun_ajaran }}</span>
                                 </li>
+                                <li class="border-b">
+                                    <span class="text-lg">Foto Siswa</span>
+                                </li>
                             </ul>
 
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 align-middle place-items-center py-4" >
+                                <div class="col-span-1 bg-white border border-gray-200 rounded-lg shadow " v-for="item in nilai.galeri_nilai">
+                                    <img class="rounded-t-lg object-cover " :src="item.image_path" alt="" />
+                                </div>
+
+                            </div>
                             <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">

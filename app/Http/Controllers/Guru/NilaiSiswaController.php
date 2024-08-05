@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreNilaiSiswaRequest;
 use App\Http\Requests\UpdateNilaiSiswaRequest;
 use App\Models\DataNilaiSiswa;
+use App\Models\GaleriNilai;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -73,17 +74,34 @@ class NilaiSiswaController extends Controller
     {
         $nilai = $request->all();
         $siswa = $request->siswa;
+        $image = $request->image;
+
         $nilaiSiswa =  NilaiSiswa::create([
             'kelas_id' => $request->kelas_id,
             'guru_id' => Auth::user()->guru->id,
             'tanggal' => $request->tanggal,
         ]);
+
         for ($i = 0; $i < count($siswa); $i++) {
             DataNilaiSiswa::create([
                 'nilai_siswa_id' => $nilaiSiswa->id,
                 'siswa_id' => $siswa[$i]['siswa_id'],
                 'nilai' => $siswa[$i]['nilai'],
 
+            ]);
+        }
+
+        for ($i = 0; $i < count($image); $i++) {
+            $file = $image[$i];
+
+            // Nama File
+            $nameFile = md5($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/galeri', $nameFile);
+
+            // Simpan Data
+            $galeriSiswa = GaleriNilai::create([
+                'nilai_id' => $nilaiSiswa->id,
+                'image' => $nameFile,
             ]);
         }
         return redirect()->route('NilaiSiswa.index')->with('message', 'Data Nilai Siswa Berhasil Di Tambah');
@@ -95,7 +113,7 @@ class NilaiSiswaController extends Controller
     public function show(NilaiSiswa $nilaiSiswa)
     {
         return Inertia::render('Guru/Nilai/Show', [
-            'nilai' => NilaiSiswa::with(['kelas', 'datanilaisiswa', 'datanilaisiswa.siswa'])->find(Request::input('slug')),
+            'nilai' => NilaiSiswa::with(['kelas', 'datanilaisiswa', 'datanilaisiswa.siswa', 'galeriNilai'])->find(Request::input('slug')),
         ]);
     }
 
@@ -105,7 +123,7 @@ class NilaiSiswaController extends Controller
     public function edit(NilaiSiswa $nilaiSiswa)
     {
         return Inertia::render('Guru/Nilai/Edit', [
-            'nilai' => NilaiSiswa::with(['kelas', 'datanilaisiswa', 'datanilaisiswa.siswa'])->find(Request::input('slug')),
+            'nilai' => NilaiSiswa::with(['kelas', 'datanilaisiswa', 'datanilaisiswa.siswa', 'galeriNilai'])->find(Request::input('slug')),
             'kelas' => Kelas::where('guru_id', Auth::user()->guru->id)->get(),
             'siswa' => Siswa::all(),
         ]);
