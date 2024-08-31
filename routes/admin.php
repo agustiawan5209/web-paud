@@ -73,7 +73,8 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
     // Siswa
     Route::group(['prefix' => 'siswa', 'as' => "Siswa."], function () {
         Route::controller(SiswaController::class)->group(function () {
-            Route::get('/', 'index')->name('index');
+            Route::get('/', 'page')->name('page');
+            Route::get('/list', 'index')->name('index');
             Route::get('/tambah-data-siswa', 'create')->name('create');
             Route::get('/detail-data-siswa', 'show')->name('show');
             Route::get('/edit-data-siswa', 'edit')->middleware(['auth', 'password.confirm'])->name('edit');

@@ -11,25 +11,66 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
+use App\Models\Kelas;
+use App\Models\KelasSiswa;
+use Illuminate\Support\Facades\Validator;
 
 class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function page()
+    {
+        $tableName = 'kelas'; // Ganti dengan nama tabel yang Anda inginkan
+        $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+
+
+        return Inertia::render('Admin/Siswa/Page', [
+            'search' =>  Request::input('search'),
+            'table_colums' => array_values(array_diff($columns, ['remember_token', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
+            'data' => Kelas::filter(Request::only('search', 'order'))
+                ->with(['kelassiswa'])
+                ->paginate(10),
+            'can' => [
+                'add' => Auth::user()->can('add kelas'),
+                'edit' => Auth::user()->can('edit kelas'),
+                'delete' => Auth::user()->can('delete kelas'),
+                'show' => Auth::user()->can('show kelas'),
+            ]
+        ]);
+    }
     public function index()
     {
+
+        $valid = Validator::make(Request::all(), [
+            'slug' => 'required|exists:kelas,id',
+        ]);
+
+        if ($valid->fails()) {
+            return redirect()->back()->withErrors($valid)->withInput();
+        }
         $tableName = 'siswas'; // Ganti dengan nama tabel yang Anda inginkan
         $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+        $kelas_siswa = KelasSiswa::where('kelas_id', Request::input('slug'))->get();
+        $siswa = [];
+        foreach ($kelas_siswa as $key => $value) {
+            $siswa[] = $value->siswa_id;
+        }
+        // dd($siswa);
 
         return Inertia::render('Admin/Siswa/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'password', 'org_tua_id', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => Siswa::filter(Request::only('search', 'order'))
-            ->with(['orangTua'])
-            ->paginate(10),
-            'can'=>[
-                'add'=> Auth::user()->can('add orangtua'),
+                ->whereIn('id', $siswa)
+                ->with(['orangTua'])
+                ->paginate(10),
+            'can' => [
+                'add' => Auth::user()->can('add siswa'),
+                'edit' => Auth::user()->can('edit siswa'),
+                'delete' => Auth::user()->can('delete siswa'),
+                'show' => Auth::user()->can('show siswa'),
             ]
         ]);
     }
@@ -41,10 +82,11 @@ class SiswaController extends Controller
     {
         return Inertia::render("Admin/Siswa/Form", [
             'siswa' => Siswa::where('org_tua_id', '=', Request::input('orang_tua'))->get(),
-            'orangTua'=> Auth::user()->orangtua,
-            'can'=>[
-                'add'=> Auth::user()->can('add orangtua'),
-            ]
+            'orangTua' => Auth::user()->orangtua,
+            'can' => [
+                'add' => Auth::user()->can('add orangtua'),
+            ],
+            'kelas' => Kelas::all(),
         ]);
     }
 
@@ -61,7 +103,16 @@ class SiswaController extends Controller
      */
     public function store(StoreSiswaRequest $request)
     {
-        Siswa::create($request->all());
+        $siswa = Siswa::create($request->all());
+
+        $kelas = Kelas::find($request->kelas);
+        KelasSiswa::create([
+            'kelas_id' => $kelas->id,
+            'siswa_id' => $siswa->id,
+            'kelas' => $kelas,
+            'siswa' => $siswa,
+        ]);
+
         return redirect()->route('Siswa.index')->with('message', 'Data Siswa Berhasil Di tambah!!');
     }
 
@@ -71,11 +122,11 @@ class SiswaController extends Controller
     public function show(Siswa $siswa)
     {
         Request::validate([
-            'slug'=> 'required|exists:siswas,id',
+            'slug' => 'required|exists:siswas,id',
         ]);
         return Inertia::render("Admin/Siswa/Show", [
             'siswa' => Siswa::with(['orangTua'])->find(Request::input('slug')),
-            'orangTua'=> OrangTua::all(),
+            'orangTua' => OrangTua::all(),
         ]);
     }
 
@@ -85,14 +136,15 @@ class SiswaController extends Controller
     public function edit(Siswa $siswa)
     {
         Request::validate([
-            'slug'=> 'required|exists:siswas,id',
+            'slug' => 'required|exists:siswas,id',
         ]);
         return Inertia::render("Admin/Siswa/Edit", [
             'siswa' => Siswa::find(Request::input('slug')),
-            'orangTua'=> OrangTua::all(),
-            'can'=>[
-                'add'=> Auth::user()->can('add orangtua'),
-            ]
+            'orangTua' => OrangTua::all(),
+            'can' => [
+                'add' => Auth::user()->can('add orangtua'),
+            ],
+            'kelas'=> Kelas::all(),
         ]);
     }
 
@@ -101,7 +153,15 @@ class SiswaController extends Controller
      */
     public function update(UpdateSiswaRequest $request, Siswa $siswa)
     {
-        Siswa::find(Request::input('slug'))->update($request->all());
+        $siswa = Siswa::find(Request::input('slug'))->update($request->all());
+
+        $kelas = Kelas::find($request->kelas);
+        KelasSiswa::where('siswa_id', $siswa->id)->update([
+            'kelas_id' => $kelas->id,
+            'siswa_id' => $siswa->id,
+            'kelas' => $kelas,
+            'siswa' => $siswa,
+        ]);
         return redirect()->route('Siswa.index')->with('message', 'Data Siswa Berhasil Di Edit!!');
     }
 

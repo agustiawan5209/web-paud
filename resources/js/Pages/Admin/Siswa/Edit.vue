@@ -24,6 +24,10 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     },
+    kelas: {
+        type: Object,
+        default: () => ({})
+    },
 })
 const Form = useForm({
     slug: props.siswa.id,
@@ -199,6 +203,16 @@ onMounted(() => {
                                 </div>
 
                                 <InputError :message="Form.errors.jenkel" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="kelas" class="text-sm">Kelas</label>
+                                <select id="kelas" v-model="Form.kelas"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required>
+                                    <option value="">-----</option>
+                                    <option v-for="item in kelas" :value="item.id">{{item.kode}}</option>
+                                </select>
+                                <InputError :message="Form.errors.kelas" />
 
                             </div>
                         </div>

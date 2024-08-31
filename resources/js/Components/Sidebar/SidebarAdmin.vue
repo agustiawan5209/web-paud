@@ -61,8 +61,8 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
         <DropdownNavLink title="Master Siswa" :active="route().current('Siswa.index') || route().current('Siswa.create') || route().current('Siswa.edit') || route().current('Siswa.show') || route().current('KelasSiswa.index') || route().current('KelasSiswa.create') || route().current('KelasSiswa.edit') || route().current('KelasSiswa.show') || route().current('Jadwal.index') || route().current('Jadwal.create') || route().current('Jadwal.edit') || route().current('Jadwal.show')">
             <template #icon>📂</template>
             <li class="group">
-                <DropdownNavItem :href="route('Siswa.index')"
-                    :active="route().current('Siswa.index') || route().current('Siswa.create') || route().current('Siswa.edit') || route().current('Siswa.show')"
+                <DropdownNavItem :href="route('Siswa.page')"
+                    :active="route().current('Siswa.page') || route().current('Siswa.index') || route().current('Siswa.create') || route().current('Siswa.edit') || route().current('Siswa.show')"
                     :icon="['fas', 'person-breastfeeding']">
                     <span class="capitalize">Data Siswa</span>
                 </DropdownNavItem>

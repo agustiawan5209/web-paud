@@ -28,6 +28,7 @@ class StoreSiswaRequest extends FormRequest
             'jenkel' => 'required|string|in:Laki-Laki,Perempuan',
             'org_tua_id' => 'required|integer|exists:orang_tuas,id',
             'nama_orang_tua'=> 'required|string',
+            'kelas'=> 'required|exists:kelas,id',
         ];
     }
 }

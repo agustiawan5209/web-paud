@@ -3,6 +3,16 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head,usePage } from '@inertiajs/vue3';
 import HeaderStats from '@/Components/Header/HeaderStats.vue';
 import { defineProps } from "vue";
+import { FwbCarousel } from 'flowbite-vue'
+
+const pictures = [
+  {src: '/images/sk1.jpg', alt: 'Image 1'},
+  {src: '/images/sk2.jpg', alt: 'Image 1'},
+  {src: '/images/sk3.jpg', alt: 'Image 2'},
+  {src: '/images/sk4.jpg', alt: 'Image 2'},
+  {src: '/images/sk5.jpg', alt: 'Image 3'},
+  {src: '/images/sk6.jpg', alt: 'Image 3'},
+]
 
 const Page = usePage().props.auth;
 const Roles = Page.role;
@@ -53,7 +63,7 @@ const props = defineProps({
 
             </div>
             <div class="py-4 relative box-content bg-white border rounded-lg" v-if="roleToCheck('Orang Tua')">
-                <div class="bg-priamry overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-priamry overflow-hidden shadow-sm sm:rounded-lg h-96">
                     <div class="grid grid-cols-1 2xl:grid-cols-2 gap-7 p-2 place-content-end">
                         <div class=" p-3 flex justify-center items-center relative">
                             <div class="text-lg font-semibold text-center">
@@ -65,7 +75,20 @@ const props = defineProps({
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="container px-4 md:px-10 my-3 mx-auto image-carousel">
+                <fwb-carousel class="h-full w-full" animation="true" slide :pictures="pictures" />
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style>
+.image-carousel >div>div{
+    height: 600px !important;
+}
+.image-carousel img{
+    object-fit: cover;
+}
+</style>
