@@ -60,7 +60,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 :active="route().current('NilaiSiswa.index') || route().current('NilaiSiswa.create') || route().current('NilaiSiswa.edit') || route().current('NilaiSiswa.show')"
                 :icon="['fas', 'chess-board']">
 
-                <span class="capitalize">Nilai Siswa</span>
+                <span class="capitalize">Buku Penghubung</span>
             </NavLink>
         </li>
         <li>

@@ -59,7 +59,7 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
             <NavLink :href="route('Org.Nilai.index')"
                 :active="route().current('Org.Nilai.index') || route().current('Org.Nilai.create') || route().current('Org.Nilai.edit') || route().current('Org.Nilai.show')"
                 :icon="['fas', 'box-archive']">
-                <span class="capitalize text-sm">Daftar Nilai Siswa</span>
+                <span class="capitalize text-sm">Buku Penghubung</span>
             </NavLink>
         </li>
         <li class="group">
