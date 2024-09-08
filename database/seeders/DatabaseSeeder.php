@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             TahunAjaranSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
-            UserSeeder::class,
+            // UserSeeder::class,
         ]);
     }
 }
