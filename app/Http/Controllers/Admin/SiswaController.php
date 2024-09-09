@@ -103,6 +103,7 @@ class SiswaController extends Controller
      */
     public function store(StoreSiswaRequest $request)
     {
+        // dd($request->all());
         $siswa = Siswa::create($request->all());
 
         $kelas = Kelas::find($request->kelas);
@@ -113,7 +114,7 @@ class SiswaController extends Controller
             'siswa' => $siswa,
         ]);
 
-        return redirect()->route('Siswa.index')->with('message', 'Data Siswa Berhasil Di tambah!!');
+        return redirect()->route('Siswa.index', ['slug'=> $kelas->id])->with('message', 'Data Siswa Berhasil Di tambah!!');
     }
 
     /**

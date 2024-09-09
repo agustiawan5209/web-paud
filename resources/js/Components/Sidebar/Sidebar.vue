@@ -35,11 +35,11 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
 
 </script>
 <template>
-    <div class="flex flex-col w-full h-full bg-gray-800 text-white">
+    <div class="flex flex-col w-full h-full bg-gray-800 text-white z-[9999]">
         <div class="flex items-center justify-center h-16 bg-gray-900">
             <h1 class="text-2xl font-bold">PAUD</h1>
         </div>
-        <nav class="flex-1 overflow-y-auto">
+        <nav class="flex-1 overflow-y-auto ">
             <SidebarAdmin v-if="roleToCheck('Admin')"/>
             <SidebarGuru v-if="roleToCheck('Guru')"/>
             <SidebarOrg v-if="roleToCheck('Orang Tua')"/>

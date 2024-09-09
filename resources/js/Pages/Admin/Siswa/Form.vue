@@ -39,6 +39,7 @@ function roleToCheck(role) {
 
 
 const Form = useForm({
+    slug: '1',
     nama: '',
     nik: '',
     tempat_lahir: '',
