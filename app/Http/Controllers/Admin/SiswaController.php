@@ -57,7 +57,6 @@ class SiswaController extends Controller
         foreach ($kelas_siswa as $key => $value) {
             $siswa[] = $value->siswa_id;
         }
-        // dd($siswa);
 
         return Inertia::render('Admin/Siswa/Index', [
             'search' =>  Request::input('search'),
@@ -71,7 +70,8 @@ class SiswaController extends Controller
                 'edit' => Auth::user()->can('edit siswa'),
                 'delete' => Auth::user()->can('delete siswa'),
                 'show' => Auth::user()->can('show siswa'),
-            ]
+            ],
+            'slug'=> Request::input('slug'),
         ]);
     }
 

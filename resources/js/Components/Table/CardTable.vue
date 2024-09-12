@@ -23,9 +23,10 @@ const search = ref('')
 
 defineExpose({
     search,
-    order
+    order,
 })
-const page = usePage()
+const page = usePage();
+console.log(page)
 
 onMounted(() => {
     if (page.props.message !== null) {
