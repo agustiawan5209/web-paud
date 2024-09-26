@@ -21,6 +21,7 @@ const Form = useForm({
     kelas_id: '',
     nama_kegiatan: '',
     tanggal: '',
+    jam: '',
     deskripsi: '',
     penanggung_jawab: '',
 })
@@ -137,6 +138,13 @@ const GetKelasID = (id) => {
                                 <TextInput id="tanggal" type="date" v-model="Form.tanggal" placeholder="tanggal..."
                                     class="w-full text-gray-900" />
                                 <InputError :message="Form.errors.tanggal" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-2">
+                                <label for="jam" class="text-sm">jam</label>
+                                <TextInput id="jam" type="time" v-model="Form.jam" placeholder="jam..."
+                                    class="w-full text-gray-900" />
+                                <InputError :message="Form.errors.jam" />
 
                             </div>
 

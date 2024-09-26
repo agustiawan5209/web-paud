@@ -17,6 +17,7 @@ class JadwalKegiatan extends Model
     protected $fillable = [
         'kelas_id',
         'tanggal',
+        'jam',
         'nama_kegiatan',
         'deskripsi',
         'penanggung_jawab',

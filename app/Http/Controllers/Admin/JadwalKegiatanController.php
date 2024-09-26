@@ -25,6 +25,7 @@ class JadwalKegiatanController extends Controller
         $columns[] = 'id';
         $columns[] = 'nama_kelas';
         $columns[] = 'nama_kegiatan';
+        $columns[] = 'jam';
         $columns[] = 'tanggal';
         $columns[] = 'penanggung_jawab';
         // $columns[] = 'jumlah_anak';

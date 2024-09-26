@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_kegiatan', 100);
             $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
             $table->date('tanggal');
+            $table->time('jam');
             $table->longText('deskripsi');
             $table->string('penanggung_jawab', 100);
             $table->timestamps();

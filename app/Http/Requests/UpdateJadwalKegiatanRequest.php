@@ -26,6 +26,7 @@ class UpdateJadwalKegiatanRequest extends FormRequest
             'kelas_id'=> 'required|exists:kelas,id',
             'nama_kegiatan'=> 'required|string|max:100',
             'tanggal' => 'required|date',
+            'jam' => 'required',
             'deskripsi' => 'required|string',
             'penanggung_jawab' => 'required|string|max:50',
         ];
