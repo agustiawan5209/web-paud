@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\DataPerkembanganSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -42,5 +43,17 @@ class LaporanPerkembanganController extends Controller
             'siswa' => Siswa::with(['dataperkembangansiswa', 'datanilaisiswa', 'dataabsensi', 'kelas', 'dataperkembangansiswa.perkembangansiswa', 'datanilaisiswa.nilaisiswa', 'dataabsensi.absensi',])->find(Request::input('slug')),
             // 'orangTua'=> OrangTua::all(),
         ]);
+    }
+
+    public function update(){
+        Request::validate([
+            'siswa_id'=> 'required|exists:siswas,id',
+            'slug'=> 'required|exists:data_perkembangan_siswas,id',
+        ]);
+        $request = Request::all();
+
+        DataPerkembanganSiswa::find(Request::input('slug'))->update(['respon'=> $request['respon']]);
+
+        return redirect()->route('Org.Perkembangan.show', ['slug'=> Request::input('siswa_id')])->with('message', 'Berhasil Disimpan!!');
     }
 }

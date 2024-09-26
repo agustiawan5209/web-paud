@@ -15,6 +15,7 @@ class DataPerkembanganSiswa extends Model
         'perkembangan_siswa_id',
         'siswa_id',
         'perkembangan',
+        'respon',
     ];
 
     public function siswa(){

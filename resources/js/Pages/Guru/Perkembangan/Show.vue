@@ -61,7 +61,10 @@ const props = defineProps({
                                                 Nama Siswa
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Kehadiran
+                                                Perkembangan
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Respon Orang Tua
                                             </th>
                                         </tr>
                                     </thead>
@@ -75,6 +78,8 @@ const props = defineProps({
                                                 {{ item.siswa.nama }}
                                             </td>
                                             <td class="px-6 py-4 border" v-html="item.perkembangan">
+                                            </td>
+                                            <td class="px-6 py-4 border" v-html="item.respon">
                                             </td>
                                         </tr>
                                     </tbody>

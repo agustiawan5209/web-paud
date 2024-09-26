@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('perkembangan_siswa_id')->constrained('perkembangan_siswas')->cascadeOnDelete();
             $table->foreignId('siswa_id')->constrained('siswas')->cascadeOnDelete();
             $table->text('perkembangan');
+            $table->text('respon')->nullable();
             $table->timestamps();
         });
     }

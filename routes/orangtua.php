@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
         Route::controller(LaporanPerkembanganController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/detail-data-perkembangan', 'show')->name('show');
+            Route::put('update-laporan', 'update')->name('update');
         });
     });
 
