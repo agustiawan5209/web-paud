@@ -32,7 +32,9 @@ const props = defineProps({
 const Form = useForm({
     slug: props.siswa.id,
     nama: props.siswa.nama,
-    nik: props.siswa.nik,
+    nisn: props.siswa.nisn,
+    agama: props.siswa.agama,
+    alamat: props.siswa.alamat,
     tempat_lahir: props.siswa.tempat_lahir,
     tgl_lahir: props.siswa.tgl_lahir,
     jenkel: props.siswa.jenkel,
@@ -160,12 +162,12 @@ onMounted(() => {
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <!-- <div class="col-span-full sm:col-span-3">
-                                <label for="nik" class="text-sm">Nomor Induk Kependudukan (NIK) - Siswa</label>
-                                <TextInput id="nik" type="text" placeholder="Nomor Induk Kependudukan (NIK)" v-model="Form.nik"
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="firstname" class="text-sm">NISN Siswa</label>
+                                <TextInput id="firstname" type="text" placeholder="nisn...." v-model="Form.nisn"
                                     class="w-full text-gray-900 text-sm" />
-                                <InputError :message="Form.errors.nik" />
-                            </div> -->
+                                <InputError :message="Form.errors.nisn" />
+                            </div>
                             <div class="col-span-full sm:col-span-3">
                                 <label for="firstname" class="text-sm">Nama Lengkap Anak</label>
                                 <TextInput id="firstname" type="text" placeholder="nama lengkap" v-model="Form.nama"
@@ -184,6 +186,20 @@ onMounted(() => {
                                 <TextInput id="tgl_lahir" type="date" v-model="Form.tgl_lahir"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.tgl_alhir" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="agama" class="text-sm">Agama</label>
+                                <TextInput id="agama" type="text" v-model="Form.agama"
+                                    class="w-full text-gray-900 text-sm" />
+                                <InputError :message="Form.errors.agama" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="alamat" class="text-sm">Alamat Siswa</label>
+                                <TextInput id="alamat" type="text" v-model="Form.alamat"
+                                    class="w-full text-gray-900 text-sm" />
+                                <InputError :message="Form.errors.alamat" />
 
                             </div>
                             <div class="col-span-full sm:col-span-3">

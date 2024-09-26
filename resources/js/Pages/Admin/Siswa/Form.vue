@@ -41,7 +41,9 @@ function roleToCheck(role) {
 const Form = useForm({
     slug: '1',
     nama: '',
-    nik: '',
+    nisn: '',
+    agama: '',
+    alamat: '',
     tempat_lahir: '',
     tgl_lahir: '',
     jenkel: '',
@@ -173,7 +175,13 @@ onMounted(() => {
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
 
                             <div class="col-span-full sm:col-span-3">
-                                <label for="firstname" class="text-sm">Nama Lengkap Anak</label>
+                                <label for="firstname" class="text-sm">NISN Siswa</label>
+                                <TextInput id="firstname" type="text" placeholder="nisn...." v-model="Form.nisn"
+                                    class="w-full text-gray-900 text-sm" />
+                                <InputError :message="Form.errors.nisn" />
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="firstname" class="text-sm">Nama Lengkap Siswa</label>
                                 <TextInput id="firstname" type="text" placeholder="nama lengkap" v-model="Form.nama"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.nama" />
@@ -190,6 +198,20 @@ onMounted(() => {
                                 <TextInput id="tgl_lahir" type="date" v-model="Form.tgl_lahir"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.tgl_lahir" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="agama" class="text-sm">Agama</label>
+                                <TextInput id="agama" type="text" v-model="Form.agama"
+                                    class="w-full text-gray-900 text-sm" />
+                                <InputError :message="Form.errors.agama" />
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="alamat" class="text-sm">Alamat Siswa</label>
+                                <TextInput id="alamat" type="text" v-model="Form.alamat"
+                                    class="w-full text-gray-900 text-sm" />
+                                <InputError :message="Form.errors.alamat" />
 
                             </div>
                             <div class="col-span-full sm:col-span-3">
