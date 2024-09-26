@@ -20,8 +20,8 @@
             margin-bottom: 10px;
         }
 
-        .header h1,
         .header h2,
+        .header h3,
         .header p {
             margin: 0;
             padding: 0;
@@ -31,6 +31,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            font-size: 12px;
         }
 
         .content table,
@@ -64,14 +65,16 @@
             width: 100%;
             position: relative;
             text-align: right;
+            font-size: 12px;
 
         }
-        .ttd table{
+
+        .ttd table {
             position: absolute;
             right: 0;
         }
 
-        .ttd table td{
+        .ttd table td {
             text-align: center;
         }
     </style>
@@ -80,8 +83,8 @@
 <body>
     <div class="header">
         {{-- <img src="{{ asset('path/to/logo.png') }}" alt="Logo Perusahaan"> --}}
-        <h1>YAYASAN ANAK MADANI MASAGENA</h1>
-        <h1>PAUD INSAN MASAGENA</h1>
+        <h2>YAYASAN ANAK MADANI MASAGENA</h2>
+        <h3>PAUD INSAN MASAGENA</h3>
         <p>Jalan Hertasning Bok E10 Noor 11 RT/RW 00/006 Kelurahan Tidung</p>
         <p>Kecamatan Rappocini, Kota Makassar. Telp: 0411-869762</p>
         <p>email: insanmasagena@gmail.com</p>
@@ -97,22 +100,23 @@
         <table>
             <thead class="content-head">
                 <tr>
-                    <th class="px-4 py-3">No</th>
-                    <th class="px-4 py-3">Jam</th>
-                    <th class="px-4 py-3">Tanggal</th>
-                    <th class="px-4 py-3">Nama Kegiatan</th>
-                    <!-- <th class="px-4 py-3">Keterangan</th> -->
-                    <th class="px-4 py-3">Penanggung Jawab</th>
+                    <th>Jam</th>
+                    <th>Senin</th>
+                    <th>Selasa</th>
+                    <th>Rabu</th>
+                    <th>Kamis</th>
+                    <th>Jumat</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $item)
+                @foreach ($jadwal->jadwal as $item)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->jam }}</td>
-                        <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->nama_kegiatan }}</td>
-                        <td>{!! $item->penanggung_jawab !!}</td>
+                        <td>{{ $item['jam'] }}</td>
+                        <td>{{ $item['senin'] }}</td>
+                        <td>{{ $item['selasa'] }}</td>
+                        <td>{{ $item['rabu'] }}</td>
+                        <td>{{ $item['kamis'] }}</td>
+                        <td>{{ $item['jumat'] }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -125,12 +129,12 @@
             <tr>
                 <td>Makassar, <span>&nbsp;&nbsp;</span> {{ date(' F Y') }} <br>
                     Kepala Sekolah
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <span>Kepala Sekolah</span>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span>Kepala Sekolah</span>
 
 
                 </td>

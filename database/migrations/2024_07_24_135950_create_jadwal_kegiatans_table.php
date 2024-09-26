@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('jadwal_kegiatans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kegiatan', 100);
             $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
-            $table->date('tanggal');
-            $table->time('jam');
-            $table->longText('deskripsi');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->json('jadwal');
             $table->string('penanggung_jawab', 100);
             $table->timestamps();
         });

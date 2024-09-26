@@ -44,7 +44,7 @@ class JadwalKegiatanController extends Controller
             'kelas'=>Kelas::all(),
             'can'=>[
                 'add'=> Auth::user()->can('add siswa'),
-                'edit'=> Auth::user()->can('edit siswa'),
+                'edit'=> false,
                 'show'=> Auth::user()->can('show siswa'),
                 'delete'=> Auth::user()->can('delete siswa'),
             ]
@@ -67,6 +67,7 @@ class JadwalKegiatanController extends Controller
     public function store(StoreJadwalKegiatanRequest $request)
     {
         $data = $request->all();
+        // dd($data);
         $jadwalkegiatan = JadwalKegiatan::create($request->all());
         return redirect()->route('Jadwal.index')->with('message', 'data jadwal imunisasi berhasil di tambah!!!');
     }

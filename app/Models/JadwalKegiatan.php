@@ -16,15 +16,14 @@ class JadwalKegiatan extends Model
     protected $table = 'jadwal_kegiatans';
     protected $fillable = [
         'kelas_id',
-        'tanggal',
-        'jam',
-        'nama_kegiatan',
-        'deskripsi',
+        'start_date',
+        'end_date',
+        'jadwal',
         'penanggung_jawab',
     ];
 
     protected $casts = [
-        // 'tanggal'=> 'date',
+        'jadwal' => 'json',
     ];
 
     public function kelas()
@@ -38,21 +37,14 @@ class JadwalKegiatan extends Model
     }
 
     protected $appends = [
-        'jadwal',
         'nama_kelas'
     ];
 
-    public function jadwal(): Attribute
-    {
-        return new Attribute(
-            get: fn () => Carbon::parse($this->tanggal)->format('j F Y'),
-        );
-    }
     public function namaKelas(): Attribute
     {
         // dd($this->kelas);
         return new Attribute(
-            get: fn () => $this->kelas == null ? '--' : "Kelas =" . $this->kelas->kode . " || tahun ajaran = " . $this->kelas->tahun_ajaran,
+            get: fn() => $this->kelas == null ? '--' : "Kelas =" . $this->kelas->kode . " || tahun ajaran = " . $this->kelas->tahun_ajaran,
         );
     }
 
@@ -62,10 +54,8 @@ class JadwalKegiatan extends Model
     public function scopeFilter($query, $filter)
     {
         $query->when($filter['search'] ?? null, function ($query, $search) {
-            $query->where('deskripsi', 'like', '%' . $search . '%')
-                ->orWhereDate('tanggal', 'like', '%' . $search . '%')
-                ->orWhere('penanggung_jawab', 'like', '%' . $search . '%')
-                ->orWhere('nama_kegiatan', 'like', '%' . $search . '%');
+            $query->whereDate('start_date', 'like', '%' . $search . '%')
+                ->orWhere('penanggung_jawab', 'like', '%' . $search . '%');
         })->when($filter['order'] ?? null, function ($query, $order) {
             $query->orderBy('id', $order);
         });
@@ -74,8 +64,7 @@ class JadwalKegiatan extends Model
     public function scopeFilterBySearch($query, $search)
     {
         $query->when($search ?? null, function ($query, $search) {
-            $query->where('penanggung_jawab', 'like', '%' . $search . '%')
-                ->orWhere('nama_kegiatan', 'like', '%' . $search . '%');
+            $query->where('penanggung_jawab', 'like', '%' . $search . '%');
         });
     }
 
@@ -87,8 +76,19 @@ class JadwalKegiatan extends Model
     }
     public function scopeFilterByDate($query, $date)
     {
+        // Pastikan $date adalah string yang valid untuk Carbon
+        $startDate = Carbon::parse($date)->format('Y-m-d');  // Tanggal awal
+        $endDate = Carbon::parse($date)->addDay(7)->format('Y-m-d');  // Tanggal 7 hari setelahnya
+
+        // Gunakan whereBetween untuk rentang tanggal
+        $query->when($date ?? null, function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('end_date', [$startDate, $endDate]);
+        });
+    }
+    public function scopeFilterByDateBetween($query, $date)
+    {
         $query->when($date ?? null, function ($query, $date) {
-            $query->whereDate('tanggal', $date);
+            $query->whereBetween('start_date', [$date['date'], $date['end_date']]);
         });
     }
 

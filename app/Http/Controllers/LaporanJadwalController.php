@@ -12,13 +12,12 @@ class LaporanJadwalController extends Controller
 {
     public function cetak(){
         // Ambil data jadwal berdasarkan id
-        $data = JadwalKegiatan::filterByDate(Request::input('date'))->get();
-        $jadwal = JadwalKegiatan::filterByDate(Request::input('date'))->first();
+        $jadwal = JadwalKegiatan::find(Request::input('slug'));
         $kelas = Kelas::find($jadwal->kelas_id);
 
 
         // Load view untuk PDF dan pass data jadwal
-        $pdf = PDF::loadView('pdf.jadwal', compact('data', 'kelas'));
+        $pdf = PDF::loadView('pdf.jadwal', compact('jadwal', 'kelas'))->setPaper('a4', 'landscape');
 
         // Unduh PDF
         return $pdf->stream('jadwal.pdf');

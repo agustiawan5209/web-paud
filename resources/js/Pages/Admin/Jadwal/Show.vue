@@ -19,6 +19,27 @@ const props = defineProps({
     }
 })
 
+const downloadPDF = () => {
+    axios({
+        method: 'get',
+        url: route('Laporan.jadwal.cetak', {
+            slug: props.jadwal.id,
+        }),
+        responseType: 'blob'
+    })
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', props.jadwal.start_date + '-' + props.jadwal.end_date + '.pdf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 </script>
 
 <template>
@@ -33,23 +54,27 @@ const props = defineProps({
         <div class="md:py-4 relative box-content">
             <section class=" py-2 px-0 md:px-6  md:py-6 bg-primary text-dark">
                 <form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
-                    <div class="space-y-2 col-span-full lg:col-span-1 px-3 md:px-0">
-                        <p class="font-medium">Detail Informasi Jadwal Kegiatan {{jadwal.nama_kelas}}</p>
-                    </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 text-black">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full  ">
                                 <ul class="flex flex-col space-y-20">
                                     <li class="flex gap-3 py-2 border-b">
-                                        <span class="text-lg">Detail</span>
+                                        <span class="text-lg">Detail Informasi Jadwal Kegiatan
+                                            {{ jadwal.nama_kelas }}</span>
                                     </li>
                                 </ul>
+                                <div class="p-2">
+                                    <PrimaryButton @click="downloadPDF" class="!bg-red-600" type="button">
+                                        <font-awesome-icon :icon="['fas', 'file-pdf']" />
+                                        <span>cetak</span>
+                                    </PrimaryButton>
+                                </div>
 
                                 <table class="w-full table">
                                     <colgroup>
-                                    <col class="w-32">
-                                    <col class="w-3">
-                                    <col>
+                                        <col class="w-32">
+                                        <col class="w-3">
+                                        <col>
                                     </colgroup>
                                     <tr class="">
                                         <td class="text-sm border-b py-2 font-bold capitalize">Kelas</td>
@@ -59,22 +84,34 @@ const props = defineProps({
                                     <tr class="">
                                         <td class="text-sm border-b py-2 font-bold capitalize">Tanggal</td>
                                         <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ jadwal.jadwal }} </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">Nama Kegiatan</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600"> {{ jadwal.nama_kegiatan }} </td>
+                                        <td class="text-sm border-b text-gray-600"> {{ jadwal.start_date }}-{{
+                                            jadwal.end_date
+                                            }} </td>
                                     </tr>
                                     <tr class="">
                                         <td class="text-sm border-b py-2 font-bold capitalize">penanggung jawab</td>
                                         <td>:</td>
                                         <td class="text-sm border-b text-gray-600"> {{ jadwal.penanggung_jawab }} </td>
                                     </tr>
-                                    <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold capitalize">deskripsi</td>
-                                        <td>:</td>
-                                        <td class="text-sm border-b text-gray-600 text-left" v-html="jadwal.deskripsi"> </td>
+                                </table>
+
+                                <table class="w-full table">
+                                    <tr class="bg-orange-200">
+                                        <th class="text-sm border py-2 font-bold capitalize">Jam</th>
+                                        <th class="text-sm border py-2 font-bold capitalize">Senin</th>
+                                        <th class="text-sm border py-2 font-bold capitalize">Selasa</th>
+                                        <th class="text-sm border py-2 font-bold capitalize">Rabu</th>
+                                        <th class="text-sm border py-2 font-bold capitalize">Kamis</th>
+                                        <th class="text-sm border py-2 font-bold capitalize">Jum'at</th>
+                                    </tr>
+
+                                    <tr v-for="item in jadwal.jadwal">
+                                        <td class="text-xs border p-2"> {{ item.jam }} </td>
+                                        <td class="text-xs border p-2">{{ item.senin }}</td>
+                                        <td class="text-xs border p-2">{{ item.selasa }}</td>
+                                        <td class="text-xs border p-2">{{ item.rabu }}</td>
+                                        <td class="text-xs border p-2">{{ item.kamis }}</td>
+                                        <td class="text-xs border p-2">{{ item.jumat }}</td>
                                     </tr>
                                 </table>
                             </div>

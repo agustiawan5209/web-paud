@@ -238,7 +238,7 @@ function deleteItem() {
                                 <th class="px-4 py-3">No</th>
                                 <th class="px-4 py-3">Jam</th>
                                 <th class="px-4 py-3">Tanggal</th>
-                                <th class="px-4 py-3">Nama Kegiatan</th>
+                                <!-- <th class="px-4 py-3">Nama Kegiatan</th> -->
                                 <!-- <th class="px-4 py-3">Keterangan</th> -->
                                 <th class="px-4 py-3">Penanggung Jawab</th>
                                 <th class="px-4 py-3">Aksi</th>
@@ -251,13 +251,10 @@ function deleteItem() {
                                     {{ (jadwal.current_page - 1) * jadwal.per_page + index + 1 }}
                                 </td>
                                 <td class="px-4 py-3 border text-sm">
-                                    {{ item.jam }}
+                                    {{ item.nama_kelas }}
                                 </td>
                                 <td class="px-4 py-3 border text-sm">
-                                    {{ item.tanggal }}
-                                </td>
-                                <td class="px-4 py-3 border text-sm">
-                                    {{ item.nama_kegiatan }}
+                                    {{ item.start_date }}
                                 </td>
                                 <!-- <td class="px-4 py-3 border text-sm">
                                     {{ item.deskripsi }}
