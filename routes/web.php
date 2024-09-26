@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanJadwalController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -35,3 +36,12 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/guru.php';
 require __DIR__ . '/orangtua.php';
+
+
+// Laporan
+
+Route::group(['prefix' => 'laporan', 'as' => "Laporan."], function () {
+    Route::controller(LaporanJadwalController::class)->group(function () {
+        Route::get('/jadwal', 'cetak')->name('jadwal.cetak');
+    });
+});

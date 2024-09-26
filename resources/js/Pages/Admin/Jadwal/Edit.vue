@@ -29,6 +29,7 @@ const Form = useForm({
     slug: props.jadwal.id,
     kelas_id: props.jadwal.kelas_id,
     nama_kegiatan: props.jadwal.nama_kegiatan,
+    jam: props.jadwal.jam,
     tanggal: props.jadwal.tanggal,
     deskripsi: props.jadwal.deskripsi,
     penanggung_jawab: props.jadwal.penanggung_jawab,
@@ -148,7 +149,13 @@ const GetKelasID = (id) => {
                                 <InputError :message="Form.errors.tanggal" />
 
                             </div>
+                            <div class="col-span-full sm:col-span-2">
+                                <label for="jam" class="text-sm">jam</label>
+                                <TextInput id="jam" type="time" v-model="Form.jam" placeholder="jam..."
+                                    class="w-full text-gray-900" />
+                                <InputError :message="Form.errors.jam" />
 
+                            </div>
                             <div class="col-span-full sm:col-span-2 relative">
                                 <label for="penanggung_jawab" class="text-sm">Penanggung Jawab</label>
                                 <TextInput id="penanggung_jawab" type="search" placeholder="Penanggung Jawab"

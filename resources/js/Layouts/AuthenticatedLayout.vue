@@ -26,7 +26,7 @@ window.addEventListener('resize', () => {
 
     <transition-group name="nested">
         <aside v-if="showingNavigationDropdown" key="mobile"
-            class="fixed top-0 z-[999] ml-0 flex h-screen w-full flex-col justify-between border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
+            class="fixed top-0 z-[200] ml-0 flex h-screen w-full flex-col justify-between border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
             <button class="ml-5 h-16 w-12 border-r lg:hidden"
                 @click="showingNavigationDropdown = !showingNavigationDropdown">
                 <svg xmlns="http://www.w3.org/2000/svg" class="my-auto h-6 w-6 transition-all" fill="none"
@@ -38,7 +38,7 @@ window.addEventListener('resize', () => {
             <Sidebar  />
         </aside>
         <aside key="dekstop"
-            class="fixed top-0 z-[999] ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
+            class="fixed top-0 z-[200] ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-y-auto">
 
             <Sidebar  />
         </aside>

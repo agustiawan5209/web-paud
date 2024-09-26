@@ -70,4 +70,32 @@ class JadwalKegiatan extends Model
             $query->orderBy('id', $order);
         });
     }
+
+    public function scopeFilterBySearch($query, $search)
+    {
+        $query->when($search ?? null, function ($query, $search) {
+            $query->where('penanggung_jawab', 'like', '%' . $search . '%')
+                ->orWhere('nama_kegiatan', 'like', '%' . $search . '%');
+        });
+    }
+
+    public function scopeFilterByOrder($query, $order)
+    {
+        $query->when($order ?? null, function ($query, $order) {
+            $query->orderBy('id', $order);
+        });
+    }
+    public function scopeFilterByDate($query, $date)
+    {
+        $query->when($date ?? null, function ($query, $date) {
+            $query->whereDate('tanggal', $date);
+        });
+    }
+
+    public function scopeFilterByRole($query, $role)
+    {
+        $query->when(Auth::user()->hasRole('Pasien'), function ($query, $role) {
+            $query->where('id_pasien', Auth::user()->pasien->id);
+        });
+    }
 }

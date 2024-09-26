@@ -33,8 +33,15 @@ class JadwalKegiatanController extends Controller
         return Inertia::render('Admin/Jadwal/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'deskripsi'])),
-            'data' => JadwalKegiatan::filter(Request::only('search', 'order'))
+            'jadwal' => JadwalKegiatan::filterByOrder(Request::input('order'))
+            ->filterBySearch(Request::input('search'))
+            ->filterByRole(Request::input('order'))
+            ->filterByDate(Request::input('date'))
+            ->when(Request::input('kelas_id'), function ($query) {
+                $query->where('kelas_id', Request::input('kelas_id'));
+            })
             ->paginate(10),
+            'kelas'=>Kelas::all(),
             'can'=>[
                 'add'=> Auth::user()->can('add siswa'),
                 'edit'=> Auth::user()->can('edit siswa'),
@@ -110,5 +117,8 @@ class JadwalKegiatanController extends Controller
         $jadwalkegiatan = JadwalKegiatan::find(Request::input('slug'))->delete();
         return redirect()->route('Jadwal.index')->with('message', 'data jadwal imunisasi berhasil di Hapus!!!');
     }
+
+
+
 
 }
