@@ -6,11 +6,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Siswa;
 use App\Models\OrangTua;
-use App\Models\JadwalImunisasi;
-use App\Models\RiwayatImunisasi;
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
-use App\Models\Puskesmas;
+use App\Models\Informasi;
 use Illuminate\Support\Facades\Request;
 
 class ApiModelController extends Controller
@@ -110,6 +108,13 @@ class ApiModelController extends Controller
             'data_chart' => $data,
             'label' => $label,
         ]);
+    }
+
+    public function SettingInformasi()
+    {
+        $informasi = Informasi::find(1);
+
+        return json_encode($informasi);
     }
 
 }

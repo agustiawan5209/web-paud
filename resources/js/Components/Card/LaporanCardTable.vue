@@ -321,7 +321,7 @@ const downloadPDF = () => {
                                                 <p class="whitespace-nowrap text-xs">{{ item.status }}</p>
                                             </span>
                                             <span v-else
-                                                class="inline-flex items-center justify-center rounded-full bg-green-100 px-2.5 py-0.5 text-green-700">
+                                                class="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-blue-700">
 
                                                 <p class="whitespace-nowrap text-xs">{{ item.status }}</p>
                                             </span>
@@ -351,7 +351,7 @@ const downloadPDF = () => {
                                                     <DropdownLink v-if="crud.edit"
                                                         :href="route(props.path + '.edit', { slug: item.id })"
                                                         class="flex justify-start gap-3 text-gray-700">
-                                                        <font-awesome-icon class="text-green-500 hover:text-green-700"
+                                                        <font-awesome-icon class="text-blue-500 hover:text-blue-700"
                                                             :icon="['fas', 'pen-to-square']" />
                                                         Edit
                                                     </DropdownLink>

@@ -46,7 +46,7 @@ function closeModal(){
                     <li class="text-base font-bold text-slate-700">Harga Sewa: {{produk.produk_id.rupiah}}</li>
                     <li class="text-base font-bold text-slate-700">Tanggal Pengambilan: {{produk.tgl_pengambilan}}</li>
                     <li class="text-base font-bold text-slate-700">Tanggal Pengembalian: {{produk.tgl_pengembalian}}</li>
-                    <li class="text-base font-bold text-slate-700">Status Sewa: <span class="p-2 bg-green-100 text-green-800">{{produk.status}}</span></li>
+                    <li class="text-base font-bold text-slate-700">Status Sewa: <span class="p-2 bg-blue-100 text-blue-800">{{produk.status}}</span></li>
                 </ul>
 
             </div>

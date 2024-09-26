@@ -171,7 +171,7 @@ function editUpdate() {
                     </span>
 
                 </PrimaryButton>
-                <PrimaryButton v-else type="submit" class="w-full text-center !bg-green-500">
+                <PrimaryButton v-else type="submit" class="w-full text-center !bg-blue-500">
                     <span v-if="FormCreate.processing" class="flex justify-center">
                         <fwb-spinner color="blue" size="6" />
                     </span>

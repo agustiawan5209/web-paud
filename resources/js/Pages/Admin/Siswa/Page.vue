@@ -64,15 +64,15 @@ const crud = ref({
                                     <fwb-table-head
                                         class="text-xs md:text-base font-semibold tracking-wide text-left uppercase border-b border-gray-700  ">
                                         <fwb-table-head-cell scope="col"
-                                            class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-green-600 text-white">
+                                            class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-blue-600 text-white">
                                             No.
                                         </fwb-table-head-cell>
                                         <fwb-table-head-cell scope="col"
-                                            class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-green-600 text-white">
+                                            class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-blue-600 text-white">
                                             Nama Kelas
                                         </fwb-table-head-cell>
                                         <fwb-table-head-cell
-                                            class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase bg-green-600 text-white">Detail
+                                            class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase bg-blue-600 text-white">Detail
                                         </fwb-table-head-cell>
                                     </fwb-table-head>
                                     <fwb-table-body class="bg-white divide-y ">

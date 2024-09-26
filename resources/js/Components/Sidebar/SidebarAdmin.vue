@@ -102,7 +102,11 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
                 <span class="capitalize">Orang Tua</span>
             </NavLink>
         </li>
-
+        <li>
+            <NavLink :href="route('Setting.create')" :icon="['fas', 'gears']">
+                <span class="group-hover:text-gray-700 capitalize">Pengaturan Informasi PAUD</span>
+            </NavLink>
+        </li>
 
 
         <li class=" flex items-center justify-between border-t">

@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LaporanJadwalController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\LaporanJadwalController;
 
 
 /*
@@ -19,9 +21,8 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('phone-login');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/informasi-puskesmas', [HomeController::class, 'informasi'])->name('Home.informasi');
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -43,5 +44,13 @@ require __DIR__ . '/orangtua.php';
 Route::group(['prefix' => 'laporan', 'as' => "Laporan."], function () {
     Route::controller(LaporanJadwalController::class)->group(function () {
         Route::get('/jadwal', 'cetak')->name('jadwal.cetak');
+    });
+});
+
+ // Route Setting
+ Route::group(['prefix' => 'setting-paud', 'as' => "Setting."], function () {
+    Route::controller(InformasiController::class)->group(function () {
+        Route::get('/', 'create')->name('create');
+        Route::post('/store-data-paud', 'store')->name('store');
     });
 });

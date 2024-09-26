@@ -16,7 +16,7 @@ const Loaded = ref(false)
 const AttributeData = ref([{
     key: 'today',
     highlight: {
-        color: 'purple',
+        color: 'yellow',
         fillMode: 'solid',
         contentClass: 'italic',
     },

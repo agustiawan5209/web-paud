@@ -281,7 +281,7 @@ function submit() {
                                 </div>
                                 <div class="mt-8">
                                     <button type="submit" :disabled="Form.jumlah_bayar == ''"
-                                        class="w-full disabled:bg-red-300 bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">Submit</button>
+                                        class="w-full disabled:bg-red-300 bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">Submit</button>
                                 </div>
                             </div>
                         </div>

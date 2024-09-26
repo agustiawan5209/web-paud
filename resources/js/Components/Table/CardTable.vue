@@ -239,14 +239,14 @@ function truncateText(text) {
                             <fwb-table-head
                                 class="text-xs md:text-base font-semibold tracking-wide text-left uppercase border-b border-gray-700  ">
                                 <fwb-table-head-cell scope="col" v-for="item in columsReplace"
-                                    class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-green-600 text-white">
+                                    class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-blue-600 text-white">
                                     <span v-if="item == 'id' || item == 'slug'" class="w-10">
                                         No.
                                     </span>
                                     <span v-else>{{ item }}</span>
                                 </fwb-table-head-cell>
                                 <fwb-table-head-cell scope="col" v-if="cekAksi()"
-                                    class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase bg-green-600 text-white">Aksi
+                                    class=" px-2 py-1 md:px-3 md:py-3 text-center font-medium uppercase bg-blue-600 text-white">Aksi
                                 </fwb-table-head-cell>
                             </fwb-table-head>
                             <fwb-table-body v-if="Form.processing">
@@ -275,7 +275,7 @@ function truncateText(text) {
                                         </span>
                                         <span v-else-if="col == 'status'">
                                             <span v-if="item.status == 0 || item.status == '0'"
-                                                class="inline-flex items-center justify-center rounded-full bg-green-100 px-2.5 py-0.5 text-green-700">
+                                                class="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-blue-700">
 
                                                 <p class="whitespace-nowrap text-sm">Tersedia</p>
                                             </span>
@@ -302,7 +302,7 @@ function truncateText(text) {
                                         <DropdownLink v-if="crud.absen"
                                             :href="route(props.path + '.create', { slug: item.id, item: item.kode })"
                                             class="flex justify-start gap-3 text-gray-700">
-                                            <font-awesome-icon class="text-green-500 hover:text-green-700"
+                                            <font-awesome-icon class="text-blue-500 hover:text-blue-700"
                                                 :icon="['fas', 'pen-to-square']" />
                                             Buat Absen
                                         </DropdownLink>
@@ -327,7 +327,7 @@ function truncateText(text) {
                                                     <DropdownLink v-if="crud.edit"
                                                         :href="route(props.path + '.edit', { slug: item.id })"
                                                         class="flex justify-start gap-3 text-gray-700">
-                                                        <font-awesome-icon class="text-green-500 hover:text-green-700"
+                                                        <font-awesome-icon class="text-blue-500 hover:text-blue-700"
                                                             :icon="['fas', 'pen-to-square']" />
                                                         Edit
                                                     </DropdownLink>

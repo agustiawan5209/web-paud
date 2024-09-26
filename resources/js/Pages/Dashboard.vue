@@ -67,7 +67,7 @@ const props = defineProps({
                     <div class="grid grid-cols-1 2xl:grid-cols-2 gap-7 p-2 place-content-end">
                         <div class=" p-3 flex justify-center items-center relative">
                             <div class="text-lg font-semibold text-center">
-                                <span class="text-green-700 md:text-4xl">SISTEM INFORMASI MONITORING</span> <br>
+                                <span class="text-blue-700 md:text-4xl">SISTEM INFORMASI MONITORING</span> <br>
                                 <span class="md:text-2xl">PERKEMBANGAN PENDIDIKAN ANAK USIA DINI</span>
                                  BERBASIS WEB PADA <span class="text-red-600 text-2xl">PAUD INSAN MASAGENA
                                     MAKASSAR</span>

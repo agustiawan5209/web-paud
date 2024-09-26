@@ -2,57 +2,62 @@
 import { Link } from '@inertiajs/vue3';
 </script>
 <template>
-    <div class="container mx-auto px-2 overflow-hidden">
+    <section class="bg-white dark:bg-gray-900">
+        <div
+            class="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-3 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
 
-        <div class="relative py-16">
-            <div class="container relative m-auto px-6 text-gray-500 md:px-12">
-                <div class="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3">
-                    <div
-                        class="group space-y-6 border border-gray-100 rounded-3xl bg-white px-8 py-12 text-center shadow-2xl shadow-gray-600/10 ">
-                        <img class="mx-auto w-24" src="images/svg/Pediatrician-bro.svg" alt="illustration"
-                            loading="lazy" />
-                        <h3 class="text-2xl font-semibold text-gray-800">Layanan Imunisasi</h3>
-                        <p>
-                            Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum, consectetur ullam
-                            tempora ipsa iste officia sed officiis! Incidunt ea animi officiis.
-                        </p>
-                        <Link :href="route('Jadwal.index')"
-                            class="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 before:transition before:duration-300 group-hover:before:scale-125">
-                            <span class="text-primary">&rightarrow;</span>
-                        </Link>
-                    </div>
-                    <div
-                        class="group space-y-6 border border-gray-100 rounded-3xl bg-white px-8 py-12 text-center shadow-2xl shadow-gray-600/10 ">
-                        <img class="mx-auto w-24" src="images/svg/Segmentation-bro.svg" alt="illustration"
-                            loading="lazy" />
-                        <h3 class="text-2xl font-semibold text-gray-800">Grafik Pertumbuan Siswa</h3>
-                        <p>
-                            Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum, consectetur ullam
-                            tempora ipsa iste officia sed officiis! Incidunt ea animi officiis.
-                        </p>
+            <div class="col-span-1">
+                <p class="text-lg font-medium text-yellow-600 dark:text-yellow-500">Fasilitas Menyenangkan</p>
+                <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                    Ruang bermain yang luas dan aman untuk belajar dan berkembang</h2>
+                <ul class="list-disc space-y-2 pl-4">
+                    <li>Ruang belajar yang nyaman dan penuh warna</li>
+                    <li>Lapangan bermain outdoor yang luas</li>
+                    <li>Area bermain air dan pasir yang menyenangkan</li>
+                    <li>Perpustakaan mini dengan berbagai macam buku cerita</li>
+                    <li>Dan masih banyak lagi!</li>
+                </ul>
+            </div>
 
-                        <Link :href="route('Siswa.index')"
-                            class="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 before:transition before:duration-300 group-hover:before:scale-125">
-                            <span class="text-primary">&rightarrow;</span>
-                        </Link>
-                    </div>
-                    <div
-                        class="group space-y-6 border border-gray-100 rounded-3xl bg-white px-8 py-12 text-center shadow-2xl shadow-gray-600/10 ">
-                        <img class="mx-auto w-24" src="images/svg/Motherhood-amico.svg" alt="illustration"
-                            loading="lazy" />
-                        <h3 class="text-2xl font-semibold text-gray-800">Informasi Ibu Dan Anak</h3>
-                        <p>
-                            Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum, consectetur ullam
-                            tempora ipsa iste officia sed officiis! Incidunt ea animi officiis.
-                        </p>
-                        <Link :href="route('login')"
-                            class="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 before:transition before:duration-300 group-hover:before:scale-125">
-                            <span class="text-primary">&rightarrow;</span>
-                        </Link>
-                    </div>
+            <div class="col-span-1">
+                <p class="text-lg font-medium text-yellow-600 dark:text-yellow-500">Program Pendidikan yang Menyeluruh
+                </p>
+                <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                    Mempersiapkan anak menuju masa depan yang cerah</h2>
+                <ul class="list-disc space-y-2 pl-4">
+                    <li>Mengembangkan keterampilan kognitif, sosial, dan emosional anak</li>
+                    <li>Memperkenalkan konsep literasi dan numerasi dasar</li>
+                    <li>Kegiatan eksplorasi sains dan kreativitas yang menarik</li>
+                    <li>Pembelajaran berbasis bermain yang menyenangkan</li>
+                    <li>Program agama dan budi pekerti yang berkarakter</li>
+                </ul>
+            </div>
+
+            <div class="col-span-1">
+                <p class="text-lg font-medium text-yellow-600 dark:text-yellow-500">Galeri Foto</p>
+                <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                    Lihat keseruan belajar di PAUD Insan Masagena</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <a href="#" class="group hover:opacity-75">
+                        <img src="/images/sk2.jpg" alt="Photo 1"
+                            class="rounded-lg w-full h-auto object-cover group-hover:scale-105">
+                    </a>
+                    <a href="#" class="group hover:opacity-75">
+                        <img src="/images/sk4.jpg" alt="Photo 2"
+                            class="rounded-lg w-full h-auto object-cover group-hover:scale-105">
+                    </a>
+                    <a href="#" class="group hover:opacity-75">
+                        <img src="/images/sk1.jpg" alt="Photo 3"
+                            class="rounded-lg w-full h-auto object-cover group-hover:scale-105">
+                    </a>
+                    <a href="#" class="group hover:opacity-75">
+                        <img src="/images/sk5.jpg" alt="Photo 4"
+                            class="rounded-lg w-full h-auto object-cover group-hover:scale-105">
+                    </a>
                 </div>
             </div>
         </div>
+        </section>
 
-    </div>
+        <!-- End block -->
 </template>

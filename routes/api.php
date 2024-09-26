@@ -37,3 +37,5 @@ Route::get('get-absensi/{tanggal}/{kelas_id}', [ApiKelasSiswaController::class, 
 Route::get('get-data-nilai/{tanggal}/{kelas_id}', [ApiKelasSiswaController::class, 'getNilaiSiswa'])->name('api.getNilaiSiswa');
 Route::get('get-data-perkembangan/{tanggal}/{kelas_id}', [ApiKelasSiswaController::class, 'getKelasPerkembangan'])->name('api.getKelasPerkembangan');
 
+
+Route::get('get-setting-informasi', [ApiModelController::class, 'SettingInformasi'])->name('api.setting.informasi');

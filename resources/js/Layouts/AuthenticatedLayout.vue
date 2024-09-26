@@ -60,7 +60,7 @@ window.addEventListener('resize', () => {
                 </button>
                 <div class="flex space-x-4">
 
-                    <Link :href="route('profile.edit')" type="button" :class="route().current('profile.edit') ? 'bg-white active:bg-green-500 text-white' : 'bg-gray-100 active:bg-gray-200'"
+                    <Link :href="route('profile.edit')" type="button" :class="route().current('profile.edit') ? 'bg-white active:bg-blue-500 text-white' : 'bg-gray-100 active:bg-gray-200'"
                         class="h-10 px-4 w-full rounded-xl border  flex items-center gap-2" >
                         <img v-if="user.profile_photo_path" class="inline-block w-8 h-8 rounded-full ring-2 ring-white" :src="user.profile_photo_path" alt="">
 

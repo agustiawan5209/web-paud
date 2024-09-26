@@ -37,7 +37,7 @@ const toggleDropdown = () => {
 
 const classes = computed(() =>
     props.active
-        ? 'flex items-center w-full p-4 hover:bg-gray-700 bg-gradient-to-r from-primary to-green-400 '
+        ? 'flex items-center w-full p-4 hover:bg-gray-700 bg-gradient-to-r from-primary to-blue-400 '
         : 'flex items-center w-full p-4 hover:bg-gray-700'
 );
 </script>

@@ -18,11 +18,11 @@ const props = defineProps({
 
 const classes = computed(() =>
     props.active
-        ? 'relative flex items-center space-x-4 bg-gradient-to-r from-primary to-green-400 p-2 sm:p-4 text-base text-white'
+        ? 'relative flex items-center space-x-4 bg-gradient-to-r from-primary to-blue-400 p-2 sm:p-4 text-base text-white'
         : ' flex items-center space-x-4 rounded-md p-2 sm:p-4 text-base text-white'
 );
 const classesIcon = computed(() =>
-    props.active ? 'text-green-200' : 'text-gray-50 group-hover:text-green-500'
+    props.active ? 'text-blue-200' : 'text-gray-50 group-hover:text-blue-500'
 );
 </script>
 
