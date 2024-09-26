@@ -42,7 +42,6 @@ class JadwalKegiatan extends Model
 
     public function namaKelas(): Attribute
     {
-        // dd($this->kelas);
         return new Attribute(
             get: fn() => $this->kelas == null ? '--' : "Kelas =" . $this->kelas->kode . " || tahun ajaran = " . $this->kelas->tahun_ajaran,
         );

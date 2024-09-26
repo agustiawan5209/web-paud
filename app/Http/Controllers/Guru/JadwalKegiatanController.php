@@ -33,17 +33,17 @@ class JadwalKegiatanController extends Controller
                 });
             })
             ->join('kelas', 'jadwal_kegiatans.kelas_id', '=', 'kelas.id')
-            ->select('jadwal_kegiatans.id', 'nama_kegiatan', 'tanggal', 'penanggung_jawab', 'kelas.kode as kelass')
+            ->select('jadwal_kegiatans.id', 'start_date', 'penanggung_jawab', 'kelas.kode as kelass')
             ->paginate(10);
 
         return Inertia::render('OrangTua/Jadwal/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'deskripsi'])),
-            'data' => $jadwal,
+            'jadwal' => $jadwal,
             'can' => [
                 'add' => Auth::user()->can('add siswa'),
                 'edit' => Auth::user()->can('edit siswa'),
-                'show' => Auth::user()->can('show siswa'),
+                'show' => true,
                 'delete' => Auth::user()->can('delete siswa'),
             ]
         ]);
