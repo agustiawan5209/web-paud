@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('informasis', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_informasi', 50);
+            $table->string('kepala_informasi', 50);
+            $table->string('nip', 50);
+            $table->string('foto_profile', 50)->nullable();
+            $table->string('alamat',255);
+            $table->string('logo', 100)->nullable();
+            $table->longText('visi');
+            $table->longText('misi');
+            $table->longText('deskripsi');
             $table->timestamps();
         });
     }
