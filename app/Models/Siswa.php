@@ -30,7 +30,7 @@ class Siswa extends Model
     }
 
     public function kelas(){
-        return $this->hasMany(KelasSiswa::class,'siswa_id','id');
+        return $this->hasOne(KelasSiswa::class,'siswa_id','id');
     }
     public function datanilaisiswa(){
         return $this->hasMany(DataNilaiSiswa::class,'siswa_id','id');

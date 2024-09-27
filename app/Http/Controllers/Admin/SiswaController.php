@@ -140,7 +140,7 @@ class SiswaController extends Controller
             'slug' => 'required|exists:siswas,id',
         ]);
         return Inertia::render("Admin/Siswa/Edit", [
-            'siswa' => Siswa::find(Request::input('slug')),
+            'siswa' => Siswa::with(['kelas'])->find(Request::input('slug')),
             'orangTua' => OrangTua::all(),
             'can' => [
                 'add' => Auth::user()->can('add orangtua'),
@@ -154,7 +154,8 @@ class SiswaController extends Controller
      */
     public function update(UpdateSiswaRequest $request, Siswa $siswa)
     {
-        $siswa = Siswa::find(Request::input('slug'))->update($request->all());
+        $siswa = Siswa::with(['kelas'])->find(Request::input('slug'));
+        $siswa->update($request->all());
 
         $kelas = Kelas::find($request->kelas);
         KelasSiswa::where('siswa_id', $siswa->id)->update([
@@ -163,7 +164,7 @@ class SiswaController extends Controller
             'kelas' => $kelas,
             'siswa' => $siswa,
         ]);
-        return redirect()->route('Siswa.index')->with('message', 'Data Siswa Berhasil Di Edit!!');
+        return redirect()->route('Siswa.index', ['slug'=> $request->kelas])->with('message', 'Data Siswa Berhasil Di Edit!!');
     }
 
     /**

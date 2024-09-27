@@ -40,7 +40,9 @@ const Form = useForm({
     jenkel: props.siswa.jenkel,
     org_tua_id: props.siswa.org_tua_id,
     nama_orang_tua: props.siswa.nama_orang_tua,
+    kelas: props.siswa.kelas.kelas_id,
 })
+
 function submit() {
     Form.put(route('Siswa.update'), {
         onError: (err) => {
