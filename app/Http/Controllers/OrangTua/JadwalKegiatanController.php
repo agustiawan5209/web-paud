@@ -34,15 +34,15 @@ class JadwalKegiatanController extends Controller
                 });
             })
             // ->join('kelas', 'jadwal_kegiatans.kelas_id', '=', 'kelas.id')
-            ->join('kelas_siswas', 'jadwal_kegiatans.kelas_id', '=', 'kelas_siswas.kelas_id')
-            ->join('siswas', 'kelas_siswas.siswa_id', '=', 'siswas.id')
-            ->select('jadwal_kegiatans.id', 'nama_kegiatan',  'siswas.nama as nama_siswa', 'jadwal_kegiatans.tanggal as tanggal_kegiatan')
+            // ->join('kelas_siswas', 'jadwal_kegiatans.kelas_id', '=', 'kelas_siswas.kelas_id')
+            // ->join('siswas', 'kelas_siswas.siswa_id', '=', 'siswas.id')
+            // ->select('jadwal_kegiatans.id',  'kelas.kode as nama_kelas', 'jadwal_kegiatans.start_date as tanggal_kegiatan')
             ->paginate(10);
         // dd($jadwal);
         return Inertia::render('OrangTua/Jadwal/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'deskripsi'])),
-            'data' => $jadwal,
+            'jadwal' => $jadwal,
             'can' => [
                 'add' => Auth::user()->can('add siswa'),
                 'edit' => Auth::user()->can('edit siswa'),

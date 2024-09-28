@@ -236,7 +236,7 @@ function deleteItem() {
                             <tr
                                 class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-blue-600 text-white">
                                 <th class="px-4 py-3">No</th>
-                                <th class="px-4 py-3">Jam</th>
+                                <th class="px-4 py-3">Nama Kelas</th>
                                 <th class="px-4 py-3">Tanggal</th>
                                 <!-- <th class="px-4 py-3">Nama Kegiatan</th> -->
                                 <!-- <th class="px-4 py-3">Keterangan</th> -->

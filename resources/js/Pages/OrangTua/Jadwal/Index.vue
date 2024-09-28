@@ -84,28 +84,28 @@ const KelasSearch = ref(props.kelas_id)
 
 watch(search, (value) => {
     Form.search = value
-    Form.get(route('Guru.Jadwal.index'), {
+    Form.get(route('Org.Kegiatan.index'), {
         preserveScroll: true,
         preserveState: true,
     })
 })
 watch(order, (value) => {
     Form.order = value
-    Form.get(route('Guru.Jadwal.index'), {
+    Form.get(route('Org.Kegiatan.index'), {
         preserveScroll: true,
         preserveState: true,
     })
 })
 watch(date, (value) => {
     Form.date = value
-    Form.get(route('Guru.Jadwal.index'), {
+    Form.get(route('Org.Kegiatan.index'), {
         preserveScroll: true,
         preserveState: true,
     })
 })
 watch(KelasSearch, (value) => {
     Form.kelas_id = value
-    Form.get(route('Guru.Jadwal.index'), {
+    Form.get(route('Org.Kegiatan.index'), {
         preserveScroll: true,
         preserveState: true,
     })
@@ -139,7 +139,7 @@ function showDeleteModal(item) {
 }
 
 function deleteItem() {
-    DeleteForm.delete(route('Guru.Jadwal.destroy'), {
+    DeleteForm.delete(route('Org.Kegiatan.destroy'), {
         preserveState: true,
         preserveScroll: true,
         onFinish: () => {
@@ -172,13 +172,7 @@ function deleteItem() {
 
         <div class="py-4 relative box-content">
             <div class="border divide-y divide-gray-200 max-w-7xl mb-8 overflow-hidden rounded-lg shadow-xs bg-white">
-                <div class="py-3 px-4">
-                    <div class="relative max-w-xs">
-                        <Link :href="route('Guru.Jadwal.create')">
-                        <PrimaryButton type="button">Tambah Data</PrimaryButton>
-                        </Link>
-                    </div>
-                </div>
+
                 <div class="py-3 px-4 flex justify-between">
                     <div class="flex gap-4">
                         <div class="relative max-w-xs">
@@ -236,7 +230,7 @@ function deleteItem() {
                             <tr
                                 class="px-2 py-1 md:px-6 md:py-3 text-nowrap text-start font-medium capitalize bg-blue-600 text-white">
                                 <th class="px-4 py-3">No</th>
-                                <th class="px-4 py-3">Nama Kelas</th>
+                                <th class="px-4 py-3">Nama Kels</th>
                                 <th class="px-4 py-3">Tanggal</th>
                                 <!-- <th class="px-4 py-3">Nama Kegiatan</th> -->
                                 <!-- <th class="px-4 py-3">Keterangan</th> -->
@@ -251,7 +245,7 @@ function deleteItem() {
                                     {{ (jadwal.current_page - 1) * jadwal.per_page + index + 1 }}
                                 </td>
                                 <td class="px-4 py-3 border text-sm">
-                                    {{ item.kelass }}
+                                    {{ item.nama_kelas }}
                                 </td>
                                 <td class="px-4 py-3 border text-sm">
                                     {{ item.start_date }}
@@ -281,35 +275,12 @@ function deleteItem() {
 
                                             <template #content>
 
-                                                <DropdownLink v-if="crud.edit"
-                                                    :href="route('Guru.Jadwal.edit', { slug: item.id })"
-                                                    class="flex justify-start gap-3 text-gray-700">
-                                                    <font-awesome-icon class="text-blue-500 hover:text-blue-700"
-                                                        :icon="['fas', 'pen-to-square']" />
-                                                    Edit
-                                                </DropdownLink>
-
                                                 <DropdownLink v-if="crud.show"
-                                                    :href="route('Guru.Jadwal.show', { slug: item.id })"
+                                                    :href="route('Org.Kegiatan.show', { slug: item.id })"
                                                     class="flex justify-start gap-3 text-gray-700">
                                                     <font-awesome-icon class="text-blue-500 hover:text-blue-700"
                                                         :icon="['fas', 'eye']" />
                                                     Detail
-                                                </DropdownLink>
-                                                <button type="button" v-if="crud.delete" @click="showDeleteModal(item)"
-                                                    class="flex justify-start gap-3 w-full px-4 py-1 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
-                                                    <font-awesome-icon class="text-red-500 hover:text-red-700"
-                                                        :icon="['fas', 'trash-can']" />
-                                                    hapus
-                                                </button>
-
-
-                                                <DropdownLink v-if="crud.reset_password"
-                                                    :href="route('Guru.Jadwal.reset.password', { slug: item.user.id })"
-                                                    class="flex justify-start gap-3 text-gray-700">
-                                                    <font-awesome-icon class="text-blue-500 hover:text-blue-700"
-                                                        :icon="['fas', 'key']" />
-                                                    Reset Password
                                                 </DropdownLink>
                                             </template>
                                         </dropdownTable>
