@@ -11,13 +11,25 @@ let roomChat = ref([]);
 let recipientid = ref(null)
 let recipientuser = ref([])
 const chatModal = ref(false);
-const ModalChatRoom = ref(true)
-
+const ModalChatRoom = ref(false)
+let chatNotRead = ref(0);
 
 onMounted(async () => {
 
     roomChat.value = await getChatRoom();
+
+    await axios.get('/chat/not/read').then((res) => {
+        if (res.status == 200) {
+            chatNotRead.value = res.data;
+            console.log(res.data)
+        }
+    }).catch((err) => {
+        console.log(err);
+        chatNotRead.value = 0;  // Jika ada error, return null atau pesan error
+    })
+
 })
+
 
 async function readChat(recipient) {
     try {
@@ -38,7 +50,7 @@ async function getMessage(recipient) {
         chatModal.value = true;
         recipientid.value = recipient.id;
         recipientuser.value = recipient;
-
+        NewChat.value = true;
         return res.data;  // Return data dari request
     } catch (err) {
         console.log(err);
@@ -59,12 +71,33 @@ async function getChatRoom() {
     }
 }
 
+async function findChat() {
+    try {
+        NewChat.value = false;
+        const res = await axios.get('/chat/search/room');
+        if (res.status === 200) {
+            roomChat.value = res.data;  // Simpan hasil di roomChat
+            return res.data;  // Return data dari request
+        }
+    } catch (err) {
+        console.log(err);
+        return null;  // Jika ada error, return null atau pesan error
+    }
+}
+
 const newMessage = ref('')
 const restModal = () => {
+    getChatRoom();
+    NewChat.value = true;
+    roomChat.value = [];
     chatModal.value = false;
     recipientid.value = null;
     messages.value = [];
+
 }
+
+
+const NewChat = ref(true);
 
 </script>
 
@@ -72,7 +105,7 @@ const restModal = () => {
     <!-- Snippet -->
     <div>
 
-        <button type="button" @click="ModalChatRoom = ! ModalChatRoom"
+        <button type="button" @click="ModalChatRoom = !ModalChatRoom"
             class="relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                 viewBox="0 0 20 16">
@@ -82,13 +115,13 @@ const restModal = () => {
             </svg>
             <span class="sr-only">Notifications</span>
             Pesan
-            <div
+            <div v-if="chatNotRead > 0"
                 class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
-                8</div>
+               {{ chatNotRead }} </div>
         </button>
 
     </div>
-    <div class=" absolute left-0" v-if="ModalChatRoom ">
+    <div class=" absolute left-0" v-if="ModalChatRoom">
         <section class=" antialiased bg-gray-50 text-gray-600 min-h-screen p-4 relative">
             <button>
                 <button type="button" class="px-2 py-1" @click="ModalChatRoom = false">
@@ -104,8 +137,8 @@ const restModal = () => {
                             <!-- Image + name -->
                             <div class="flex items-center">
                                 <a class="inline-flex items-start mr-3" href="#0">
-                                    <img class="rounded-full" v-if="user.profile_photo_path"
-                                        :src="user.profile_photo_path" width="48" height="48" :alt="user.name" />
+                                    <img class="rounded-full" v-if="user.profile_photo" :src="user.profile_photo_path"
+                                        width="48" height="48" :alt="user.name" />
                                     <img v-else class="rounded-full"
                                         :src="'/images/vecteezy_profile-icon-design-vector_5544718.jpg'" width="48"
                                         height="48" alt="">
@@ -118,7 +151,7 @@ const restModal = () => {
                             </div>
                         </div>
                     </header>
-                    <button type="button" class="px-2 py-1" v-if="chatModal" @click="restModal()">
+                    <button type="button" class="px-2 py-1" v-if="chatModal || NewChat == false" @click="restModal()">
                         <font-awesome-icon class="text-2xl text-primary" :icon="['far', 'square-caret-left']" /> Kembali
                     </button>
                     <!-- Card body -->
@@ -126,7 +159,7 @@ const restModal = () => {
                         <div class="py-3 px-5" v-if="chatModal == false">
                             <h3 class="text-xs font-semibold uppercase text-gray-400 mb-1">Chats</h3>
                             <!-- Chat list -->
-                            <div class="divide-y divide-gray-200 h-60">
+                            <div class="divide-y divide-gray-200 h-60 overflow-y-auto">
                                 <!-- User -->
                                 <button v-for="item in roomChat"
                                     class="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50">
@@ -146,7 +179,7 @@ const restModal = () => {
                                 <!-- User -->
                             </div>
                             <!-- Bottom right button -->
-                            <button
+                            <button @click="findChat()" v-if="NewChat"
                                 class="absolute bottom-5 right-5 inline-flex items-center text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded-full text-center px-3 py-2 shadow-lg focus:outline-none focus-visible:ring-2">
                                 <svg class="w-3 h-3 fill-current text-indigo-300 flex-shrink-0 mr-2"
                                     viewBox="0 0 12 12">
@@ -165,6 +198,9 @@ const restModal = () => {
             </div>
 
         </section>
+
+        <!-- Modal Find Chat -->
+
 
 
     </div>

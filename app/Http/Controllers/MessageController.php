@@ -14,19 +14,22 @@ use Illuminate\Support\Facades\Request;
 class MessageController extends Controller
 {
 
-    public function getPenerima($recipientId)
+    public function chatNotRead()
     {
-
-        $messages = Message::where(function ($query) use ($recipientId) {
-            $query->where('user_id', auth()->id())
-                ->where('recipient_id', $recipientId);
-        })
-            ->orderBy('created_at', 'asc')->get();
+        $messages = Message::where('recipient_id', auth()->id())->count();
         return response()->json($messages);
     }
-    public function getPengirim(User $user, Message $message)
+
+    public function findChat()
     {
-        return response()->json($user);
+        if (in_array('Orang Tua', Auth::user()->getRoleNames()->toArray())) {
+            $data = User::withoutRole('Orang Tua')->where('id', '!=', auth()->id())->get();
+        } else if (in_array('Guru', Auth::user()->getRoleNames()->toArray())) {
+            $data = [];
+        } else {
+            $data = User::withoutRole('Admin')->where('id', '!=', auth()->id())->get();
+        }
+        return response()->json($data);
     }
 
     public function getChatRoom(User $user, $recipientId)
@@ -37,8 +40,11 @@ class MessageController extends Controller
         foreach ($user->recipient as $key => $value) {
             $sender[$value->user_id] = User::find($value->user_id);
         }
+
         return response()->json(array_values($sender));
     }
+
+
     public function index($recipientId)
     {
         $messages = Message::where(function ($query) use ($recipientId) {

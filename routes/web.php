@@ -58,8 +58,9 @@ Route::group(['prefix' => 'laporan', 'as' => "Laporan."], function () {
 
 Route::get('/chat/{recipientId}', [MessageController::class, 'index']);
 Route::post('/chat', [MessageController::class, 'store']);
-Route::get('/chat/sender/{sender_id}', [MessageController::class, 'getPengirim']);
-Route::get('/chat/sender/{sender_id}', [MessageController::class, 'getPengirim']);
-Route::get('/chat/recepient/{recepient_id}', [MessageController::class, 'getPenerima']);
 Route::get('/chat/chatroom/{recepient_id}', [MessageController::class, 'getChatRoom']);
 Route::put('/chat/{recipientId}', [MessageController::class, 'update']);
+
+Route::get('/chat/search/room', [MessageController::class, 'findChat']);
+Route::get('/chat/not/read', [MessageController::class, 'chatNotRead']);
+
