@@ -78,7 +78,7 @@ const props = defineProps({
 
             </div>
             <div class="container px-4 md:px-10 my-3 mx-auto image-carousel">
-                <fwb-carousel class="h-full w-full" animation="true" slide :pictures="pictures" />
+                <fwb-carousel class="h-full w-full" :animation="true" :slide="true" :pictures="pictures" />
             </div>
         </div>
     </AuthenticatedLayout>

@@ -56,7 +56,7 @@ class User extends Authenticatable
     public function profilePhotoPath(): Attribute
     {
         return new Attribute(
-            get: fn()=> asset('storage/'. $this->profile_photo),
+            get: fn() => asset('storage/' . $this->profile_photo),
             set: null,
         );
     }
@@ -68,5 +68,14 @@ class User extends Authenticatable
     public function guru()
     {
         return $this->hasOne(Guru::class, 'user_id', 'id');
+    }
+
+    public function sender()
+    {
+        return $this->hasMany(Message::class, 'user_id', 'id');
+    }
+    public function recipient()
+    {
+        return $this->hasMany(Message::class, 'recipient_id', 'id');
     }
 }

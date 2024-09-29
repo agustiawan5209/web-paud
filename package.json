@@ -30,6 +30,8 @@
         "flowbite": "^2.4.1",
         "flowbite-vue": "^0.1.5",
         "gsap": "^3.12.2",
+        "laravel-echo": "^1.16.1",
+        "pusher-js": "^8.4.0-rc2",
         "v-calendar": "^3.1.2",
         "vue-chartjs": "^5.3.1",
         "vue-pdf-embed": "^2.0.3",

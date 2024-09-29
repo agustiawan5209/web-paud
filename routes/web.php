@@ -8,7 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\LaporanJadwalController;
-
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,3 +54,12 @@ Route::group(['prefix' => 'laporan', 'as' => "Laporan."], function () {
         Route::post('/store-data-paud', 'store')->name('store');
     });
 });
+
+
+Route::get('/chat/{recipientId}', [MessageController::class, 'index']);
+Route::post('/chat', [MessageController::class, 'store']);
+Route::get('/chat/sender/{sender_id}', [MessageController::class, 'getPengirim']);
+Route::get('/chat/sender/{sender_id}', [MessageController::class, 'getPengirim']);
+Route::get('/chat/recepient/{recepient_id}', [MessageController::class, 'getPenerima']);
+Route::get('/chat/chatroom/{recepient_id}', [MessageController::class, 'getChatRoom']);
+Route::put('/chat/{recipientId}', [MessageController::class, 'update']);
