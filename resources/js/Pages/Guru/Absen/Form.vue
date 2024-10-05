@@ -212,6 +212,14 @@ function submit() {
                                                             <fwb-radio v-model="item.absen" label="Tidak Hadir"
                                                                 :name="'radio-absen' + index" value="Tidak Hadir" />
                                                         </div>
+                                                        <div class="flex items-center">
+                                                            <fwb-radio v-model="item.absen" label="Sakit"
+                                                                :name="'radio-absen' + index" value="Sakit" />
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <fwb-radio v-model="item.absen" label="Izin"
+                                                                :name="'radio-absen' + index" value="Izin" />
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>

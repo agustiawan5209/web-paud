@@ -25,7 +25,7 @@ class MessageController extends Controller
         if (in_array('Orang Tua', Auth::user()->getRoleNames()->toArray())) {
             $data = User::withoutRole('Orang Tua')->where('id', '!=', auth()->id())->get();
         } else if (in_array('Guru', Auth::user()->getRoleNames()->toArray())) {
-            $data = [];
+            $data = User::where('id', '!=', auth()->id())->get();
         } else {
             $data = User::withoutRole('Admin')->where('id', '!=', auth()->id())->get();
         }
