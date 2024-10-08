@@ -73,10 +73,14 @@ class AbsensiController extends Controller
     {
         $absen = $request->all();
         $siswa = $request->siswa;
+
+        $kelas = Kelas::find($request->kelas_id);
         $absensi =  Absensi::create([
             'kelas_id' => $request->kelas_id,
             'guru_id' => Auth::user()->guru->id,
             'tanggal' => $request->tanggal,
+            'tahun_ajaran'=> $kelas->tahun_ajaran,
+
         ]);
         for ($i = 0; $i < count($siswa); $i++) {
 
@@ -85,7 +89,7 @@ class AbsensiController extends Controller
                 'absensi_id' => $absensi->id,
                 'siswa_id' => $siswa[$i]['siswa_id'],
                 'absen' => $siswa[$i]['absen'],
-
+                'tahun_ajaran'=> $kelas->tahun_ajaran,
             ]);
         }
         return redirect()->route('Absen.index')->with('message', 'Data Absen Berhasil Di Tambah');

@@ -15,6 +15,7 @@ class DataAbsensi extends Model
         'absensi_id',
         'siswa_id',
         'absen',
+        'tahun_ajaran',
     ];
 
     public function siswa(){

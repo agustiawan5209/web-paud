@@ -16,6 +16,7 @@ class Absensi extends Model
         'kelas_id',
         'guru_id',
         'tanggal',
+        'tahun_ajaran',
     ];
 
     public function kelas()
