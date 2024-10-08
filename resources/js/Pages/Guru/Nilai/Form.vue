@@ -41,34 +41,6 @@ const AbsensSiswa = ref([]);
 // Get Data Nilai Siswa Jika Tersedia
 const TanggalKelas = ref('');
 
-function SearchAbsen(tanggal) {
-    if (tanggal) {
-        axios.get(route('api.getNilaiSiswa', { tanggal: tanggal, kelas_id: Form.kelas_id }))
-            .then((res) => {
-                if (res.status == 200) {
-                    console.log(res.data)
-                    const StatusAbsen = res.data.status;
-                    if (StatusAbsen === true) {
-                        swal({
-                            title: "Peringatan",
-                            icon: "error",
-                            html: `<strong>Data Nilai Siswa ${TanggalKelas.value} Sudah Tersedia</strong>
-                        <br>
-                        `,
-                            showCloseButton: true,
-                            showCancelButton: true,
-                        });
-                        AbsensSiswa.value = [];
-                    } else {
-                        Form.tanggal = tanggal;
-                    }
-                }
-            }).catch((err) => {
-                console.error(err);
-            })
-    }
-}
-
 // Cari Data Kelas Berdasarkan ID
 // Variabel ID Kelas
 const kelasId = ref('');
@@ -77,7 +49,6 @@ function Search(id) {
     axios.get(route('api.kelas.byID', { id: id }))
         .then((res) => {
             if (res.status == 200) {
-                SearchAbsen(TanggalKelas.value);
                 AbsensSiswa.value = []
                 Form.kelas_id = res.data.id;
                 const Kelas_Siswa = res.data.kelassiswa;
@@ -115,9 +86,6 @@ onMounted(() => {
     watch(kelasId, (value) => {
         Search(value);
     })
-    watch(TanggalKelas, (value) => {
-        SearchAbsen(value);
-    })
 })
 
 
@@ -140,54 +108,6 @@ const removeImage = (index) => {
     imagePreviews.value.splice(index, 1);
     ImageUpload.value.splice(index, 1);
 };
-
-// Post
-function submit() {
-    // console.log(imagePreviews.value)
-    Form.siswa = AbsensSiswa.value;
-    Form.image = ImageUpload;
-    Form.post(route('NilaiSiswa.store'), {
-        onError: (err) => {
-            var txt = "<ul>"
-            Object.keys(err).forEach((item, val) => {
-                txt += `<li>${err[item]}</li>`
-            });
-            txt += "</ul>";
-            console.log(txt)
-            swal({
-                title: "Peringatan",
-                icon: "error",
-                html: txt,
-                showCloseButton: true,
-                showCancelButton: true,
-            });
-        }
-    });
-}
-
-const editorOptions = {
-    modules: {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [{ 'header': 1 }, { 'header': 2 }],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],
-            [{ 'indent': '-1' }, { 'indent': '+1' }],
-            [{ 'direction': 'rtl' }],
-            [{ 'size': ['small', false, 'large', 'huge'] }],
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            [{ 'font': [] }],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'align': [] }],
-            ['clean'],
-            ['link', 'image', 'video']
-        ],
-        syntax: {
-            highlight: text => hljs.highlightAuto(text).value
-        }
-    }
-}
 
 </script>
 

@@ -65,6 +65,8 @@ const AbsensSiswa = ref([]);
 // Post
 function submit() {
     Form.post(route('NilaiSiswa.store.form'), {
+        preserveState:true,
+        preserveScroll:true,
         onError: (err) => {
             var txt = "<ul>"
             Object.keys(err).forEach((item, val) => {
@@ -80,7 +82,7 @@ function submit() {
                 showCancelButton: true,
             });
         },
-        onSuccess: ()=>{
+        onFinish: ()=>{
             window.location.href = route('NilaiSiswa.index')
         }
     });

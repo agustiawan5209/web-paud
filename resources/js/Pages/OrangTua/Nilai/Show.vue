@@ -42,13 +42,10 @@ const props = defineProps({
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-3 border">
-                                    Tanggal Penilaian Harian
+                                    Tanggal Laporan Harian
                                 </th>
                                 <th scope="col" class="px-6 py-3 border">
                                     Nilai
-                                </th>
-                                <th scope="col" class="px-6 py-3 border">
-                                    Galeri
                                 </th>
                             </tr>
                         </thead>
@@ -62,17 +59,8 @@ const props = defineProps({
                                     <span> {{ item.nilaisiswa.tanggal }} </span>
                                 </td>
                                 <td class="px-6 py-4 border">
-                                    <span> {{ item.nilai }} </span>
-                                </td>
-                                <td class="px-6 py-4 border">
-                                    <div
-                                        class="grid grid-cols-1 md:grid-cols-4 gap-4 align-middle place-items-center py-4">
-                                        <div class="col-span-1 bg-white border border-gray-200 rounded-lg shadow "
-                                            v-for="item in item.nilaisiswa.galeri_nilai">
-                                            <img class="rounded-t-lg object-cover " :src="item.image_path" alt="" />
-                                        </div>
+                                    <a :href="'/storage/'+item.nilai" target="_blank">{{ item.nilai }}</a>
 
-                                    </div>
                                 </td>
                             </tr>
                         </tbody>

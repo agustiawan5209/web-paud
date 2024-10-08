@@ -52,12 +52,18 @@
         .bold {
             font-weight: bold;
         }
-        * img{
+
+        * img {
             text-align: center;
             width: 200px;
         }
-        * p :not(img){
+
+        * p :not(img) {
             text-align: justify;
+        }
+
+        .page-break {
+            page-break-after: auto;
         }
     </style>
 </head>
@@ -78,7 +84,7 @@
     </div>
 
     <h2 class="section-title">Identitas Peserta Didik</h2>
-    <table>
+    <table >
         <tr>
             <th>Nama Peserta Didik</th>
             <td>{{ $data['siswa']['nama'] }}</td>
@@ -110,7 +116,7 @@
             </td>
         </tr>
     </table>
-
+    <div class="page-break"></div>
     <h2 class="section-title">Pendahuluan</h2>
     <p
         style="column-count: 2;
@@ -205,6 +211,7 @@ column-rule: 1px none #000000;
 -moz-column-rule: 1px none #000000;">
         {!! $data['text7'] !!}</p>
 
+        <div class="page-break"></div>
 
     <h2 class="section-title">Rekapitulasi Kehadiran</h2>
     <table>
@@ -216,17 +223,17 @@ column-rule: 1px none #000000;
         <tr>
             <td>1</td>
             <td>Sakit</td>
-            <td>5 Hari</td>
+            <td> {{ $absensi_sakit }} Hari</td>
         </tr>
         <tr>
             <td>2</td>
             <td>Izin</td>
-            <td>33 Hari</td>
+            <td>{{ $absensi_Izin }} Hari</td>
         </tr>
         <tr>
             <td>3</td>
             <td>Tanpa Keterangan</td>
-            <td>-</td>
+            <td> {{ $absensi_tanpa_keterangan }} Hari</td>
         </tr>
     </table>
 
