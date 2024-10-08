@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
@@ -125,20 +125,20 @@ onMounted(() => {
 const imagePreviews = ref([]);
 const ImageUpload = ref([]);
 const handleFileUpload = (event) => {
-  const files = event.target.files;
-  for (let i = 0; i < files.length; i++) {
-    ImageUpload.value.push(files[i])
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreviews.value.push(e.target.result);
-    };
-    reader.readAsDataURL(files[i]);
-  }
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+        ImageUpload.value.push(files[i])
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreviews.value.push(e.target.result);
+        };
+        reader.readAsDataURL(files[i]);
+    }
 };
 
 const removeImage = (index) => {
-  imagePreviews.value.splice(index, 1);
-  ImageUpload.value.splice(index, 1);
+    imagePreviews.value.splice(index, 1);
+    ImageUpload.value.splice(index, 1);
 };
 
 // Post
@@ -164,6 +164,31 @@ function submit() {
         }
     });
 }
+
+const editorOptions = {
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            [{ 'direction': 'rtl' }],
+            [{ 'size': ['small', false, 'large', 'huge'] }],
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'font': [] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }],
+            ['clean'],
+            ['link', 'image', 'video']
+        ],
+        syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+        }
+    }
+}
+
 </script>
 
 <template>
@@ -184,22 +209,7 @@ function submit() {
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                            <div class="col-span-full">
-                                <div class="mb-4">
-                                    <input
-                                      type="file"
-                                      multiple
-                                      @change="handleFileUpload"
-                                      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500"
-                                    />
-                                  </div>
-                                  <div class="grid grid-cols-3 gap-4">
-                                    <div v-for="(image, index) in imagePreviews" :key="index" class="relative">
-                                      <img :src="image" class="object-cover h-32 w-full rounded-lg" />
-                                      <button @click="removeImage(index)" class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full focus:outline-none">x</button>
-                                    </div>
-                                  </div>
-                            </div>
+
                             <div class="col-span-full">
                                 <InputLabel for="kelas" value="Kelas" />
                                 <select id="kelas" v-model="kelasId"
@@ -209,13 +219,6 @@ function submit() {
                                         {{ item.tahun_ajaran }}
                                     </option>
                                 </select>
-
-                            </div>
-                            <div class="col-span-full">
-                                <label for="tanggal" class="text-sm">Tanggal</label>
-                                <TextInput id="tanggal" type="date" placeholder="..............." v-model="TanggalKelas"
-                                    class="w-full text-gray-900" />
-                                <InputError :message="Form.errors.tanggal" />
 
                             </div>
                             <div class="col-span-full">
@@ -246,9 +249,12 @@ function submit() {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <quill-editor id="nilai" contentType="html" theme="snow"
-                                                        v-model:content="item.nilai" placeholder="@nilai"
-                                                        class="w-full text-gray-900" />
+                                                    <Link
+                                                        :href="route('NilaiSiswa.form', { siswa: item.siswa_id, kelas: Form.kelas_id })">
+                                                    <PrimaryButton type="button">Buat Laporan</PrimaryButton>
+
+                                                    </Link>
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -258,8 +264,6 @@ function submit() {
                             </div>
 
                         </div>
-                        <PrimaryButton type="submit" class="col-span-full mt-20 text-center z-[100]">Simpan
-                        </PrimaryButton>
                     </fieldset>
                 </form>
             </section>

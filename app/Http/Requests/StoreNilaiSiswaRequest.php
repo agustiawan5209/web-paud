@@ -23,11 +23,11 @@ class StoreNilaiSiswaRequest extends FormRequest
     {
         return [
             'kelas_id'=> 'required|exists:kelas,id',
-            'siswa'=> 'required|array',
+            'siswa'=> 'required',
             'tanggal'=> 'required|date',
-            'siswa.*.nilai'=> 'required|between:1,100',
-            'image'=> 'required|array',
-            'image.*'=> 'image|max:2040'
+            // 'siswa.*.nilai'=> 'required|between:1,100',
+            // 'image'=> 'required|array',
+            // 'image.*'=> 'image|max:2040'
         ];
     }
 }

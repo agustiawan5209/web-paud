@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Guru;
 
-use App\Http\Controllers\Controller;
+use PDF;
+use Carbon\Carbon;
 use App\Models\Guru;
 use Inertia\Inertia;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\NilaiSiswa;
+use App\Models\GaleriNilai;
 use App\Models\TahunAjaran;
+use App\Models\DataNilaiSiswa;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreNilaiSiswaRequest;
 use App\Http\Requests\UpdateNilaiSiswaRequest;
-use App\Models\DataNilaiSiswa;
-use App\Models\GaleriNilai;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class NilaiSiswaController extends Controller
 {
@@ -67,9 +69,63 @@ class NilaiSiswaController extends Controller
         ]);
     }
 
+    public function form()
+    {
+
+        Request::validate([
+            'siswa' => 'required|exists:siswas,id',
+            'kelas' => 'required|exists:kelas,id',
+        ]);
+
+        return Inertia::render('Guru/Nilai/Store', [
+            'kelas' => Kelas::find(Request::input('kelas')),
+            'siswa' => Siswa::find(Request::input('siswa')),
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
+
+
+    public function storeForm(StoreNilaiSiswaRequest $request)
+    {
+        $data = $request->all();
+        try {
+            $nilaiSiswa = NilaiSiswa::where('tanggal', $request->tanggal)->where('kelas_id', $request->kelas_id)->where('guru_id', Auth::user()->guru->id)->first();
+            if ($nilaiSiswa === null) {
+                $nilaiSiswa =  NilaiSiswa::create([
+                    'kelas_id' => $request->kelas_id,
+                    'guru_id' => Auth::user()->guru->id,
+                    'tanggal' => $request->tanggal,
+                ]);
+                $dataNilai = DataNilaiSiswa::create([
+                    'nilai_siswa_id' => $nilaiSiswa->id,
+                    'siswa_id' => $data['siswa_id'],
+                    'nilai' => $namaPDF,
+                ]);
+            } else {
+                $siswa_data = DataNilaiSiswa::where('nilai_siswa_id', $nilaiSiswa->id)->where('siswa_id', $data['siswa_id'])->get();
+                if ($siswa_data->count() < 1) {
+                    $pdf = PDF::loadView('pdf.laporanperkembangan', compact('data'))->setPaper('a4', 'potrait');
+
+                    $namaPDF = 'galeri/' . $data['nama'] . '.pdf';
+                    Storage::put('public/' . $namaPDF, $pdf->download()->getOriginalContent());
+
+
+                    $dataNilai = DataNilaiSiswa::create([
+                        'nilai_siswa_id' => $nilaiSiswa->id,
+                        'siswa_id' => $data['siswa_id'],
+                        'nilai' => $namaPDF,
+                    ]);
+                }
+            }
+
+            return redirect()->route('NilaiSiswa.index')->with('message', 'Data Nilai Siswa Berhasil Di Tambah');
+        } catch (\Throwable $th) {
+            return redirect()->route('NilaiSiswa.index')->with('message', $th->getMessage());
+        }
+    }
     public function store(StoreNilaiSiswaRequest $request)
     {
         $nilai = $request->all();

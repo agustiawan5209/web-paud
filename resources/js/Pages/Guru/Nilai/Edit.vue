@@ -154,6 +154,7 @@ function submit() {
         }
     });
 }
+
 </script>
 
 <template>
@@ -170,7 +171,9 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Edit Nilai Kelas (Tahun Ajaran ={{ nilai.tanggal }} || Kelas= {{ nilai.kelas.kode }})</p>
+                        <p class="font-medium">Edit Nilai Kelas (Tahun Ajaran ={{ nilai.tanggal }} || Kelas= {{
+                            nilai.kelas.kode
+                        }})</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -221,8 +224,8 @@ function submit() {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <quill-editor id="nilai" contentType="html" theme="snow"
-                                                        v-model:content="item.nilai" placeholder="@nilai"
+                                                    <quill-editor id="nilai"  contentType="html"
+                                                        theme="snow" v-model:content="item.nilai" placeholder="@nilai"
                                                         class="w-full text-gray-900" />
                                                 </td>
                                             </tr>
