@@ -246,7 +246,9 @@ function submit() {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <TextInput type="number" class="w-max" v-model="item.nilai" />
+                                                    <quill-editor id="nilai" contentType="html" theme="snow"
+                                                        v-model:content="item.nilai" placeholder="@nilai"
+                                                        class="w-full text-gray-900" />
                                                 </td>
                                             </tr>
                                         </tbody>
