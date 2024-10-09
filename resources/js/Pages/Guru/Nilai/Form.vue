@@ -41,6 +41,35 @@ const AbsensSiswa = ref([]);
 // Get Data Nilai Siswa Jika Tersedia
 const TanggalKelas = ref('');
 
+
+function SearchAbsen(tanggal) {
+    if (tanggal) {
+        axios.get(route('api.getNilaiSiswa', { tanggal: tanggal, kelas_id: Form.kelas_id }))
+            .then((res) => {
+                if (res.status == 200) {
+                    console.log(res.data)
+                    const StatusAbsen = res.data.status;
+                    if (StatusAbsen === true) {
+                        swal({
+                            title: "Peringatan",
+                            icon: "error",
+                            html: `<strong>Data Nilai Siswa ${TanggalKelas.value} Sudah Tersedia</strong>
+                        <br>
+                        `,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                        });
+                        AbsensSiswa.value = [];
+                    } else {
+                        Form.tanggal = tanggal;
+                    }
+                }
+            }).catch((err) => {
+                console.error(err);
+            })
+    }
+}
+
 // Cari Data Kelas Berdasarkan ID
 // Variabel ID Kelas
 const kelasId = ref('');
@@ -49,6 +78,7 @@ function Search(id) {
     axios.get(route('api.kelas.byID', { id: id }))
         .then((res) => {
             if (res.status == 200) {
+                SearchAbsen(TanggalKelas.value);
                 AbsensSiswa.value = []
                 Form.kelas_id = res.data.id;
                 const Kelas_Siswa = res.data.kelassiswa;
@@ -69,7 +99,7 @@ function Search(id) {
                         AbsensSiswa.value.push({
                             siswa_id: element.siswa.id,
                             nama: element.siswa.nama,
-                            nilai: 0,
+                            nilai: 'HAI',
                         })
 
                     }
@@ -85,6 +115,9 @@ function Search(id) {
 onMounted(() => {
     watch(kelasId, (value) => {
         Search(value);
+    })
+    watch(TanggalKelas, (value) => {
+        SearchAbsen(value);
     })
 })
 
@@ -109,6 +142,30 @@ const removeImage = (index) => {
     ImageUpload.value.splice(index, 1);
 };
 
+// Post
+function submit() {
+    // console.log(imagePreviews.value)
+    Form.siswa = AbsensSiswa.value;
+    Form.image = ImageUpload;
+    Form.tanggal = TanggalKelas.value;
+    Form.post(route('NilaiSiswa.store'), {
+        onError: (err) => {
+            var txt = "<ul>"
+            Object.keys(err).forEach((item, val) => {
+                txt += `<li>${err[item]}</li>`
+            });
+            txt += "</ul>";
+            console.log(txt)
+            swal({
+                title: "Peringatan",
+                icon: "error",
+                html: txt,
+                showCloseButton: true,
+                showCancelButton: true,
+            });
+        }
+    });
+}
 </script>
 
 <template>
@@ -129,7 +186,22 @@ const removeImage = (index) => {
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-
+                            <div class="col-span-full">
+                                <div class="mb-4">
+                                    <input
+                                      type="file"
+                                      multiple
+                                      @change="handleFileUpload"
+                                      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500"
+                                    />
+                                  </div>
+                                  <div class="grid grid-cols-3 gap-4">
+                                    <div v-for="(image, index) in imagePreviews" :key="index" class="relative">
+                                      <img :src="image" class="object-cover h-32 w-full rounded-lg" />
+                                      <button @click="removeImage(index)" class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full focus:outline-none">x</button>
+                                    </div>
+                                  </div>
+                            </div>
                             <div class="col-span-full">
                                 <InputLabel for="kelas" value="Kelas" />
                                 <select id="kelas" v-model="kelasId"
@@ -140,6 +212,12 @@ const removeImage = (index) => {
                                     </option>
                                 </select>
 
+                            </div>
+                            <div class="col-span-full">
+                                <label for="tanggal" class="text-sm">Tanggal</label>
+                                <TextInput id="tanggal" type="date" placeholder="..............." v-model="TanggalKelas"
+                                    class="w-full text-gray-900" />
+                                <InputError :message="Form.errors.tanggal" />
                             </div>
                             <div class="col-span-full">
 
@@ -169,11 +247,9 @@ const removeImage = (index) => {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <Link
-                                                        :href="route('NilaiSiswa.form', { siswa: item.siswa_id, kelas: Form.kelas_id })">
-                                                    <PrimaryButton type="button">Buat Laporan</PrimaryButton>
-
-                                                    </Link>
+                                                    <quill-editor id="nilai" contentType="html" theme="snow"
+                                                    v-model:content="item.nilai" placeholder="@nilai"
+                                                    class="w-full text-gray-900" />
 
                                                 </td>
                                             </tr>
@@ -182,7 +258,8 @@ const removeImage = (index) => {
                                 </div>
 
                             </div>
-
+                            <PrimaryButton type="submit" class="col-span-full mt-20 text-center z-[100]">Simpan
+                            </PrimaryButton>
                         </div>
                     </fieldset>
                 </form>

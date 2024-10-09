@@ -85,7 +85,7 @@ console.log(props.nilai)
                                                 {{ item.siswa.nama }}
                                             </td>
                                             <td class="px-6 py-4 border">
-                                                <a :href="'/storage/'+item.nilai" target="_blank">{{ item.nilai }}</a>
+                                                <span v-html="item.nilai"></span>
                                             </td>
                                         </tr>
                                     </tbody>
