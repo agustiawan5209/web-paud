@@ -77,7 +77,9 @@ const props = defineProps({
                                             <td class="px-6 py-4 border">
                                                 {{ item.siswa.nama }}
                                             </td>
-                                            <td class="px-6 py-4 border" v-html="item.perkembangan">
+                                            <td class="px-6 py-4 border" >
+                                                <a :href="'/storage/'+item.perkembangan" target="_blank">{{ item.perkembangan }}</a>
+
                                             </td>
                                             <td class="px-6 py-4 border" v-html="item.respon">
                                             </td>

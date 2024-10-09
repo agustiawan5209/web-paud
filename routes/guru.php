@@ -38,11 +38,9 @@ Route::middleware(['auth', 'verified', 'role:Guru'])->group(function () {
         Route::controller(NilaiSiswaController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/tambah-data/nilai', 'create')->name('create');
-            Route::get('/buat-data/nilai', 'form')->name('form');
             Route::get('/edit-data/nilai', 'edit')->name('edit');
             Route::get('/detail-data/nilai', 'show')->name('show');
             Route::post('/store-data/nilai', 'store')->name('store');
-            Route::post('/store-data/nilai-siswa', 'storeForm')->name('store.form');
             Route::put('/update-data/nilai', 'update')->name('update');
             Route::delete('/hapus-data/nilai', 'destroy')->name('destroy');
         });
@@ -59,6 +57,10 @@ Route::middleware(['auth', 'verified', 'role:Guru'])->group(function () {
             Route::post('/store-data/perkembangan-siswa', 'store')->name('store');
             Route::put('/update-data/perkembangan-siswa', 'update')->name('update');
             Route::delete('/hapus-data/perkembangan-siswa', 'destroy')->name('destroy');
+
+
+            Route::get('/buat-data/nilai', 'form')->name('form');
+            Route::post('/store-data/nilai-siswa', 'storeForm')->name('store.form');
         });
     });
 });

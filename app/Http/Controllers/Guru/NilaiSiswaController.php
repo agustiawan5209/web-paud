@@ -70,78 +70,14 @@ class NilaiSiswaController extends Controller
         ]);
     }
 
-    public function form()
-    {
 
-        Request::validate([
-            'siswa' => 'required|exists:siswas,id',
-            'kelas' => 'required|exists:kelas,id',
-        ]);
-
-        return Inertia::render('Guru/Nilai/Store', [
-            'kelas' => Kelas::find(Request::input('kelas')),
-            'siswa' => Siswa::find(Request::input('siswa')),
-        ]);
-    }
 
     /**
      * Store a newly created resource in storage.
      */
 
 
-    public function storeForm(StoreNilaiSiswaRequest $request)
-    {
-        $data = $request->all();
-        $kelas = Kelas::find($request->kelas_id);
-        $absensi_sakit = DataAbsensi::where('siswa_id', $request->siswa_id)
-            ->where('tahun_ajaran', $kelas->tahun_ajaran)
-            ->where('absen', 'Sakit')
-            ->count();
-        $absensi_tanpa_keterangan = DataAbsensi::where('siswa_id', $request->siswa_id)
-            ->where('tahun_ajaran', $kelas->tahun_ajaran)
-            ->where('absen', 'Tidak Hadir')
-            ->count();
-        $absensi_Izin = DataAbsensi::where('siswa_id', $request->siswa_id)
-            ->where('tahun_ajaran', $kelas->tahun_ajaran)
-            ->where('absen', 'Izin')
-            ->count();
-        try {
-            $nilaiSiswa = NilaiSiswa::where('tanggal', $request->tanggal)->where('kelas_id', $request->kelas_id)->where('guru_id', Auth::user()->guru->id)->first();
 
-            $pdf = PDF::loadView('pdf.laporanperkembangan', compact('data', 'absensi_sakit','absensi_tanpa_keterangan', 'absensi_Izin'))->setPaper('a4', 'potrait');
-
-            $namaPDF = 'galeri/' . $data['nama'] . '.pdf';
-            Storage::put('public/' . $namaPDF, $pdf->download()->getOriginalContent());
-
-            if ($nilaiSiswa === null) {
-                $nilaiSiswa =  NilaiSiswa::create([
-                    'kelas_id' => $request->kelas_id,
-                    'guru_id' => Auth::user()->guru->id,
-                    'tanggal' => $request->tanggal,
-                ]);
-                $dataNilai = DataNilaiSiswa::create([
-                    'nilai_siswa_id' => $nilaiSiswa->id,
-                    'siswa_id' => $data['siswa_id'],
-                    'nilai' => $namaPDF,
-                ]);
-            } else {
-                $siswa_data = DataNilaiSiswa::where('nilai_siswa_id', $nilaiSiswa->id)->where('siswa_id', $data['siswa_id'])->get();
-                if ($siswa_data->count() < 1) {
-
-
-                    $dataNilai = DataNilaiSiswa::create([
-                        'nilai_siswa_id' => $nilaiSiswa->id,
-                        'siswa_id' => $data['siswa_id'],
-                        'nilai' => $namaPDF,
-                    ]);
-                }
-            }
-
-            return redirect()->route('NilaiSiswa.index')->with('message', 'Data Nilai Siswa Berhasil Di Tambah');
-        } catch (\Throwable $th) {
-            return redirect()->route('NilaiSiswa.index')->with('message', $th->getMessage());
-        }
-    }
     public function store(StoreNilaiSiswaRequest $request)
     {
         $nilai = $request->all();

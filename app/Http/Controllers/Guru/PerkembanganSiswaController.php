@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Guru;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Guru;
 use Inertia\Inertia;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use App\Models\PerkembanganSiswa;
+use App\Models\DataAbsensi;
 use App\Models\TahunAjaran;
+use App\Models\PerkembanganSiswa;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DataPerkembanganSiswa;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StorePerkembanganSiswaRequest;
 use App\Http\Requests\UpdatePerkembanganSiswaRequest;
-use App\Models\DataPerkembanganSiswa;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
-
+use PDF;
 class PerkembanganSiswaController extends Controller
 {
     /**
@@ -65,7 +67,75 @@ class PerkembanganSiswaController extends Controller
             'siswa' => Siswa::all(),
         ]);
     }
+    public function form()
+    {
 
+        Request::validate([
+            'siswa' => 'required|exists:siswas,id',
+            'kelas' => 'required|exists:kelas,id',
+        ]);
+
+        return Inertia::render('Guru/Perkembangan/Store', [
+            'kelas' => Kelas::find(Request::input('kelas')),
+            'siswa' => Siswa::find(Request::input('siswa')),
+        ]);
+    }
+
+    public function storeForm(StorePerkembanganSiswaRequest $request)
+    {
+        $data = $request->all();
+        $kelas = Kelas::find($request->kelas_id);
+        $absensi_sakit = DataAbsensi::where('siswa_id', $request->siswa_id)
+            ->where('tahun_ajaran', $kelas->tahun_ajaran)
+            ->where('absen', 'Sakit')
+            ->count();
+        $absensi_tanpa_keterangan = DataAbsensi::where('siswa_id', $request->siswa_id)
+            ->where('tahun_ajaran', $kelas->tahun_ajaran)
+            ->where('absen', 'Tidak Hadir')
+            ->count();
+        $absensi_Izin = DataAbsensi::where('siswa_id', $request->siswa_id)
+            ->where('tahun_ajaran', $kelas->tahun_ajaran)
+            ->where('absen', 'Izin')
+            ->count();
+        try {
+            $perkembanganSiswa = PerkembanganSiswa::where('tanggal', $request->tanggal)->where('kelas_id', $request->kelas_id)->where('guru_id', Auth::user()->guru->id)->first();
+
+            $pdf = PDF::loadView('pdf.laporanperkembangan', compact('data', 'absensi_sakit','absensi_tanpa_keterangan', 'absensi_Izin'))->setPaper('a4', 'potrait');
+
+            $namaPDF = 'galeri/' . $data['nama'] . '.pdf';
+            Storage::put('public/' . $namaPDF, $pdf->download()->getOriginalContent());
+
+            if ($perkembanganSiswa === null) {
+                $perkembanganSiswa =  PerkembanganSiswa::create([
+                    'kelas_id' => $request->kelas_id,
+                    'guru_id' => Auth::user()->guru->id,
+                    'tanggal' => $request->tanggal,
+                ]);
+                $dataNilai = DataPerkembanganSiswa::create([
+                    'perkembangan_siswa_id' => $perkembanganSiswa->id,
+                    'siswa_id' => $data['siswa_id'],
+                    'perkembangan' => $namaPDF,
+                ]);
+            } else {
+                $siswa_data = DataPerkembanganSiswa::where('perkembangan_siswa_id', $perkembanganSiswa->id)->where('siswa_id', $data['siswa_id'])->get();
+                if ($siswa_data->count() < 1) {
+
+                    $dataNilai = DataPerkembanganSiswa::create([
+                        'perkembangan_siswa_id' => $perkembanganSiswa->id,
+                        'siswa_id' => $data['siswa_id'],
+                        'perkembangan' => $namaPDF,
+                    ]);
+                }else{
+            return redirect()->route('Perkembangan.index')->with('message', 'Laporan Perkembangan Siswa Telah Ada');
+
+                }
+            }
+
+            return redirect()->route('Perkembangan.index')->with('message', 'Data Perkembangan Siswa Berhasil Di Tambah');
+        } catch (\Throwable $th) {
+            return redirect()->route('Perkembangan.index')->with('message', $th->getMessage());
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */

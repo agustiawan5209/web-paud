@@ -35,7 +35,7 @@ onMounted(() => {
             title: 'Berhasil',
             text: page.props.message,
             showConfirmButton: true,
-            timer: 2000
+            timer: 10000
         });
     }
 })

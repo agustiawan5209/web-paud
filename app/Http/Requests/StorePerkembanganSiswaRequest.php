@@ -23,9 +23,9 @@ class StorePerkembanganSiswaRequest extends FormRequest
     {
         return [
             'kelas_id'=> 'required|exists:kelas,id',
-            'siswa'=> 'required|array',
+            'siswa_id'=> 'required|exists:siswas,id',
             'tanggal'=> 'required|date',
-            'siswa.*.perkembangan'=> 'required|string|max:1200'
+            // 'siswa.*.perkembangan'=> 'required|string|max:1200'
         ];
     }
 }

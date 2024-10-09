@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
@@ -169,13 +169,13 @@ function submit() {
                                 </select>
 
                             </div>
-                            <div class="col-span-full">
+                            <!-- <div class="col-span-full">
                                 <label for="tanggal" class="text-sm">Tanggal</label>
                                 <TextInput id="tanggal" type="date" placeholder="..............." v-model="TanggalKelas"
                                     class="w-full text-gray-900" />
                                 <InputError :message="Form.errors.tanggal" />
 
-                            </div>
+                            </div> -->
                             <div class="col-span-full">
 
 
@@ -204,9 +204,10 @@ function submit() {
                                                     {{ item.nama }}
                                                 </td>
                                                 <td class="px-6 py-4 border">
-                                                    <quill-editor id="deskripsi" contentType="html" theme="snow"
-                                                        v-model:content="item.perkembangan" placeholder="@deskripsi"
-                                                        class="w-full text-gray-900" />
+                                                    <Link
+                                                        :href="route('Perkembangan.form', { siswa: item.siswa_id, kelas: Form.kelas_id })">
+                                                    <PrimaryButton type="button">Buat Laporan</PrimaryButton>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         </tbody>
