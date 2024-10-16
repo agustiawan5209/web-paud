@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\DataNilaiSiswa;
 use App\Models\NilaiSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -44,5 +45,16 @@ class NilaiHarianController extends Controller
             'siswa' => Siswa::with(['dataperkembangansiswa', 'datanilaisiswa', 'dataabsensi', 'kelas', 'dataperkembangansiswa.perkembangansiswa', 'datanilaisiswa.nilaisiswa', 'dataabsensi.absensi', 'datanilaisiswa.nilaisiswa.galeriNilai'])->find(Request::input('slug')),
             // 'orangTua'=> OrangTua::all(),
         ]);
+    }
+    public function update(){
+        Request::validate([
+            'siswa_id'=> 'required|exists:siswas,id',
+            'slug'=> 'required|exists:data_nilai_siswas,id',
+        ]);
+        $request = Request::all();
+
+        DataNilaiSiswa::find(Request::input('slug'))->update(['respon'=> $request['respon']]);
+
+        return redirect()->route('Org.Nilai.show', ['slug'=> Request::input('siswa_id')])->with('message', 'Berhasil Disimpan!!');
     }
 }

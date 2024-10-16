@@ -15,6 +15,7 @@ class DataNilaiSiswa extends Model
         'nilai_siswa_id',
         'siswa_id',
         'nilai',
+        'respon',
     ];
 
     public function siswa(){

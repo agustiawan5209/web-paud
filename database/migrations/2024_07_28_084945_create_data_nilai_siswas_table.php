@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('nilai_siswa_id')->constrained('nilai_siswas')->cascadeOnDelete();
             $table->foreignId('siswa_id')->constrained('siswas')->cascadeOnDelete();
             $table->integer('nilai');
+            $table->text('respon')->nullable();
             $table->timestamps();
         });
     }

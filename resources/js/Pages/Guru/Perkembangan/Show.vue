@@ -63,9 +63,9 @@ const props = defineProps({
                                             <th scope="col" class="px-6 py-3">
                                                 Perkembangan
                                             </th>
-                                            <th scope="col" class="px-6 py-3">
+                                            <!-- <th scope="col" class="px-6 py-3">
                                                 Respon Orang Tua
-                                            </th>
+                                            </th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,8 +81,8 @@ const props = defineProps({
                                                 <a :href="'/storage/'+item.perkembangan" target="_blank">{{ item.perkembangan }}</a>
 
                                             </td>
-                                            <td class="px-6 py-4 border" v-html="item.respon">
-                                            </td>
+                                            <!-- <td class="px-6 py-4 border" v-html="item.respon">
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>

@@ -71,7 +71,10 @@ console.log(props.nilai)
                                                 Nama Siswa
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Kehadiran
+                                                Nilai
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Respon Orang Tua
                                             </th>
                                         </tr>
                                     </thead>
@@ -86,6 +89,8 @@ console.log(props.nilai)
                                             </td>
                                             <td class="px-6 py-4 border">
                                                 <span v-html="item.nilai"></span>
+                                            </td>
+                                            <td class="px-6 py-4 border" v-html="item.respon">
                                             </td>
                                         </tr>
                                     </tbody>

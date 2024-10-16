@@ -107,9 +107,9 @@ function submit() {
                                 <th scope="col" class="px-6 py-3 border">
                                     Keterangan
                                 </th>
-                                <th scope="col" class="px-6 py-3 border">
+                                <!-- <th scope="col" class="px-6 py-3 border">
                                     Respon
-                                </th>
+                                </th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -121,13 +121,15 @@ function submit() {
                                 <td class="px-6 py-4 border">
                                     <span> {{ item.perkembangansiswa.tanggal }} </span>
                                 </td>
-                                <td class="px-6 py-4 border" v-html="item.perkembangan">
+                                <td class="px-6 py-4 border" >
+                                    <a :href="'/storage/'+item.perkembangan" target="_blank">{{ item.perkembangan }}</a>
+
                                 </td>
 
-                                <td class="px-6 py-4 border">
+                                <!-- <td class="px-6 py-4 border">
                                     <PrimaryButton v-if="item.respon == null" type="button" @click="ShowModal(item.id)">Kirim Pesan Ke Guru</PrimaryButton>
                                     <span v-if="item.respon != null" v-html="item.respon"></span>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>

@@ -25,6 +25,8 @@ Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
         Route::controller(NilaiHarianController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/detail-data-nilai', 'show')->name('show');
+            Route::put('update-nilai', 'update')->name('update');
+
         });
     });
     Route::group(['prefix' => 'data-perkembangan', 'as' => "Org.Perkembangan."], function () {
