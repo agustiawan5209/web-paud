@@ -174,7 +174,7 @@ function submit() {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2>Form Nilai Siswa Kelas</h2>
+            <h2>Form Buku Penghubung Siswa Kelas</h2>
         </template>
 
         <div class="py-4 relative box-content">
@@ -182,7 +182,7 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Buat Nilai Siswa Kelas</p>
+                        <p class="font-medium">Buat Buku Penghubung Siswa Kelas</p>
                     </div>
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50 relative box-content">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -233,7 +233,7 @@ function submit() {
                                                     Nama Siswa
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
-                                                    Nilai Siswa
+                                                    Informasi Siswa
                                                 </th>
                                             </tr>
                                         </thead>

@@ -22,7 +22,7 @@ class NilaiHarianController extends Controller
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token','org_tua_id', 'kelas_id', 'guru_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id'])),
             'data' => Siswa::filter(Request::only('search', 'order'))
-                ->with(['dataperkembangansiswa', 'datanilaisiswa', 'dataabsensi', 'kelas'])
+                ->with(['dataperkembangansiswa', 'datanilaisiswa', 'datanilaisiswa.nilaisiswa' ,'datanilaisiswa.nilaisiswa.galeriNilai', 'dataabsensi', 'kelas'])
                 ->paginate(10),
             'can' => [
                 // 'form' => Auth::user()->can('form nilai'),

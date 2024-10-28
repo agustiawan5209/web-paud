@@ -24,11 +24,11 @@ console.log(props.nilai)
 
 <template>
 
-    <Head title="Detail Nilai" />
+    <Head title="Detail Buku Penghubung" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2> Detail Nilai</h2>
+            <h2> Detail Buku Penghubung</h2>
         </template>
 
         <div class="md:py-4 relative box-content">
@@ -38,7 +38,7 @@ console.log(props.nilai)
                         <div class="col-span-full  ">
                             <ul class="list-item space-y-2">
                                 <li class="border-b">
-                                    <span class="text-lg">Data Nilai Siswa </span>
+                                    <span class="text-lg">Data Buku Penghubung Siswa </span>
                                 </li>
                                 <li class="border-b">
                                     <span class="text-lg">Kelas ={{ nilai.kelas.kode }}</span>
@@ -71,7 +71,7 @@ console.log(props.nilai)
                                                 Nama Siswa
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Nilai
+                                                Informasi
                                             </th>
                                             <th scope="col" class="px-6 py-3">
                                                 Respon Orang Tua

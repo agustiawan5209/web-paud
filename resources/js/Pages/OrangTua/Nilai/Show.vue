@@ -71,9 +71,8 @@ function submit() {
         <form @submit.prevent="submit">
             <div class="p-4">
                 <label for="respon" class="text-sm">Masukkan Pesan Ke Guru</label>
-                <quill-editor id="respon" contentType="html" theme="snow"
-                                                        v-model:content="Form.respon" placeholder="@deskripsi"
-                                                        class="w-full text-gray-900" />
+                <quill-editor id="respon" contentType="html" theme="snow" v-model:content="Form.respon"
+                    placeholder="@deskripsi" class="w-full text-gray-900" />
                 <PrimaryButton type="submit" class="w-full mt-4 text-center">Kirim
                 </PrimaryButton>
             </div>
@@ -93,6 +92,7 @@ function submit() {
 
                 <div class="relative overflow-x-auto border shadow-md sm:rounded-lg mt-5">
 
+
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                         <colgroup>
                             <col class="w-10">
@@ -111,6 +111,9 @@ function submit() {
                                     Nilai
                                 </th>
                                 <th scope="col" class="px-6 py-3 border">
+                                    Galeri
+                                </th>
+                                <th scope="col" class="px-6 py-3 border">
                                     Respon
                                 </th>
                             </tr>
@@ -127,10 +130,21 @@ function submit() {
                                 <td class="px-6 py-4 border" v-html="item.nilai">
 
                                 </td>
+                                <td>
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 align-middle place-items-center py-4" >
+                        <div class="col-span-1 bg-white border border-gray-200 rounded-lg shadow " v-for="col in item.nilaisiswa.galeri_nilai">
+                            <img class="rounded-t-lg object-cover " :src="col.image_path" alt="" />
+                        </div>
+
+                    </div>
+                                </td>
                                 <td class="px-6 py-4 border">
-                                    <PrimaryButton v-if="item.respon == null" type="button" @click="ShowModal(item.id)">Kirim Pesan Ke Guru</PrimaryButton>
+                                    <PrimaryButton v-if="item.respon == null" type="button" @click="ShowModal(item.id)">
+                                        Kirim
+                                        Pesan Ke Guru</PrimaryButton>
                                     <span v-if="item.respon != null" v-html="item.respon"></span>
                                 </td>
+
                             </tr>
                         </tbody>
                     </table>

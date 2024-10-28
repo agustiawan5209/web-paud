@@ -159,11 +159,11 @@ function submit() {
 
 <template>
 
-    <Head title="Nilai" />
+    <Head title="Buku Penghubung" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2>Form Edit Nilai </h2>
+            <h2>Form Edit Buku Penghubung </h2>
         </template>
 
         <div class="py-4 relative box-content">
@@ -171,7 +171,7 @@ function submit() {
                 <form @submit.prevent="submit()" novalidate="" action=""
                     class="container flex flex-col mx-auto space-y-12">
                     <div class="space-y-2 col-span-full lg:col-span-1">
-                        <p class="font-medium">Edit Nilai Kelas (Tahun Ajaran ={{ nilai.tanggal }} || Kelas= {{
+                        <p class="font-medium">Edit Buku Penghubung Kelas (Tahun Ajaran ={{ nilai.tanggal }} || Kelas= {{
                             nilai.kelas.kode
                         }})</p>
                     </div>
