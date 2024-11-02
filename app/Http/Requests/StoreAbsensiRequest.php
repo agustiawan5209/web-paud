@@ -25,7 +25,7 @@ class StoreAbsensiRequest extends FormRequest
             'kelas_id'=> 'required|exists:kelas,id',
             'siswa'=> 'required|array',
             'tanggal'=> 'required|date',
-            'siswa.*.absen'=> 'required|in:Hadir,Tidak Hadir'
+            'siswa.*.absen'=> 'required|in:Hadir,Tidak Hadir,Izin,Sakit'
         ];
     }
 }
