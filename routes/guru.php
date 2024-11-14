@@ -63,4 +63,11 @@ Route::middleware(['auth', 'verified', 'role:Guru'])->group(function () {
             Route::post('/store-data/nilai-siswa', 'storeForm')->name('store.form');
         });
     });
+
+    // Route::group(['prefix' => 'data-kegiatan', 'as' => "Guru.Kegiatan."], function () {
+    //     Route::controller(JadwalKegiatanController::class)->group(function () {
+    //         Route::get('/', 'index')->name('index');
+    //         Route::get('/detail-data-kegiatan', 'show')->name('show');
+    //     });
+    // });
 });

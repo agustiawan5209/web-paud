@@ -24,9 +24,10 @@ class DashboardController extends Controller
             })->get()->count();
             $kelas = Kelas::all()->count();
         }
-        if (in_array('guru', Auth::user()->getRoleNames()->toArray())) {
-            $kelas = Kelas::when(Auth::check() ? in_array('guru', Auth::user()->getRoleNames()->toArray()) ?? null : null, function ($query) {
-                $query->where('guru_id', '=', Auth::user()->orangtua->id);
+
+        if (in_array('Guru', Auth::user()->getRoleNames()->toArray())) {
+            $kelas = Kelas::when(in_array('Guru', Auth::user()->getRoleNames()->toArray()) ?? null, function ($query) {
+                $query->where('guru_id', '=', Auth::user()->guru->id);
             })->get()->count();
         }
         return Inertia::render('Dashboard', [

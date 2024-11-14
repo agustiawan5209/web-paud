@@ -65,7 +65,7 @@ function submit() {
 
 <template>
 
-    <Head title="Nilai Harian" />
+    <Head title="Buku Penghubung" />
 
     <Modal :show="varModal">
         <form @submit.prevent="submit">
@@ -82,7 +82,7 @@ function submit() {
     </Modal>
     <AuthenticatedLayout>
         <template #header>
-            <h2>Nilai Harian Siswa {{ siswa.nama }}</h2>
+            <h2>Buku Penghubung Siswa {{ siswa.nama }}</h2>
         </template>
 
         <div class="md:py-4 relative box-content">
@@ -108,7 +108,7 @@ function submit() {
                                     Tanggal Laporan Harian
                                 </th>
                                 <th scope="col" class="px-6 py-3 border">
-                                    Nilai
+                                    Laporan
                                 </th>
                                 <th scope="col" class="px-6 py-3 border">
                                     Galeri

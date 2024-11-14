@@ -73,9 +73,9 @@ onMounted(() => {
                 <Link :href="route('login')"
                     class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-700 border-blue-600 hover:border-transparent hover:text-white hover:bg-blue-600 mt-4 lg:mt-0">
                 Masuk</Link>
-                <Link :href="route('register')"
+                <!-- <Link :href="route('register')"
                     class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-700 border-blue-600 hover:border-transparent hover:text-white hover:bg-blue-600 mt-4 lg:mt-0">
-                Daftar</Link>
+                Daftar</Link> -->
             </div>
         </div>
         <transition name="fade-left">
@@ -99,9 +99,9 @@ onMounted(() => {
                     <Link :href="route('login')"
                         class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-700 border-blue-600 hover:border-transparent hover:text-blue-600 hover:bg-blue-600 mt-4 lg:mt-0">
                     Masuk</Link>
-                    <Link :href="route('register')"
+                    <!-- <Link :href="route('register')"
                         class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-700 border-blue-600 hover:border-transparent hover:text-blue-600 hover:bg-blue-600 mt-4 lg:mt-0">
-                    Daftar</Link>
+                    Daftar</Link> -->
                 </div>
             </div>
         </transition>

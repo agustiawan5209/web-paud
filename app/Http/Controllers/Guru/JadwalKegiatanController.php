@@ -36,7 +36,7 @@ class JadwalKegiatanController extends Controller
             ->select('jadwal_kegiatans.id', 'start_date', 'penanggung_jawab', 'kelas.kode as kelass')
             ->paginate(10);
 
-        return Inertia::render('OrangTua/Jadwal/Index', [
+        return Inertia::render('Guru/Jadwal/Index', [
             'search' =>  Request::input('search'),
             'table_colums' => array_values(array_diff($columns, ['remember_token', 'kelas_id', 'password', 'email_verified_at', 'created_at', 'updated_at', 'user_id', 'deskripsi'])),
             'jadwal' => $jadwal,
@@ -54,7 +54,7 @@ class JadwalKegiatanController extends Controller
         Request::validate([
             'slug' => 'required|exists:jadwal_kegiatans,id',
         ]);
-        return Inertia::render('Admin/Jadwal/Show', [
+        return Inertia::render('Guru/Jadwal/Show', [
             'jadwal' => JadwalKegiatan::find(Request::input('slug'))
         ]);
     }

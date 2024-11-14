@@ -7,11 +7,14 @@ import { FwbCarousel } from 'flowbite-vue'
 
 const pictures = [
   {src: '/images/sk1.jpg', alt: 'Image 1'},
-  {src: '/images/sk2.jpg', alt: 'Image 1'},
+  {src: '/images/sk7.jpg', alt: 'Image 3'},
   {src: '/images/sk3.jpg', alt: 'Image 2'},
+  {src: '/images/sk9.jpg', alt: 'Image 3'},
   {src: '/images/sk4.jpg', alt: 'Image 2'},
-  {src: '/images/sk5.jpg', alt: 'Image 3'},
   {src: '/images/sk6.jpg', alt: 'Image 3'},
+  {src: '/images/sk5.jpg', alt: 'Image 3'},
+  {src: '/images/sk2.jpg', alt: 'Image 1'},
+  {src: '/images/sk8.jpg', alt: 'Image 3'},
 ]
 
 const Page = usePage().props.auth;
