@@ -24,7 +24,7 @@ class UpdateGuruRequest extends FormRequest
         return [
             'slug' => 'required|integer|exists:gurus,id',
             'name' => '|required|string|max:255',
-            'no_telpon' => '|required|string|max:255',
+            'no_telpon' => '|required|string|max:13',
             'alamat' => '|required|string',
         ];
     }

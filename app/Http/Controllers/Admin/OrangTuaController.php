@@ -94,6 +94,9 @@ class OrangTuaController extends Controller
             'nama' => $user->name,
             'no_telpon' => $request->no_telpon,
             'alamat' => $request->alamat,
+            'nama_ayah' => $request->nama_ayah,
+            'alamat_ayah' => $request->alamat_ayah,
+            'no_telpon_ayah' => $request->no_telpon_ayah,
         ]);
 
         return redirect()->route('OrangTua.index')->with('message', 'Data orang tua baru berhasil ditambahkan!');
@@ -151,6 +154,9 @@ class OrangTuaController extends Controller
             'nama' => $request->name,
             'no_telpon' => $request->no_telpon,
             'alamat' => $request->alamat,
+            'nama_ayah' => $request->nama_ayah,
+            'alamat_ayah' => $request->alamat_ayah,
+            'no_telpon_ayah' => $request->no_telpon_ayah,
         ]);
 
 

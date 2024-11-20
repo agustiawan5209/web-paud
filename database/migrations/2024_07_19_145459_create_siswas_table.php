@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('org_tua_id')->constrained('orang_tuas')->cascadeOnDelete();
-            $table->string('nisn', 50);
+            $table->string('nisn', 50)->unique();
             $table->string('nama', 50);
             $table->string('tempat_lahir', 50);
             $table->date('tgl_lahir');

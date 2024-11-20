@@ -25,6 +25,9 @@ const Form = useForm({
     email:props.orangTua.user.email,
     password:props.orangTua.user.password,
     no_telpon:props.orangTua.no_telpon,
+    nama_ayah:props.orangTua.nama_ayah,
+    alamat_ayah:props.orangTua.alamat_ayah,
+    no_telpon_ayah:props.orangTua.no_telpon_ayah,
 })
 
 function submit() {
@@ -57,9 +60,28 @@ function submit() {
                     <fieldset class="grid grid-cols-3 gap-6 p-6 rounded-md shadow-sm bg-gray-50">
                         <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div class="col-span-full sm:col-span-3">
-                                <label for="firstname" class="text-sm">Nama Lengkap</label>
+                                <label for="firstname" class="text-sm">Nama Lengkap Ibu</label>
                                 <TextInput id="firstname" type="text" placeholder="nama lengkap" v-model="Form.name"  class="w-full text-gray-900"  />
                                 <InputError :message="Form.errors.name"/>
+                            </div>
+
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="alamat" class="text-sm">Alamat Ibu</label>
+                                <TextInput id="alamat" type="text" v-model="Form.alamat" placeholder="alamat..." class="w-full text-gray-900"  />
+                                <InputError :message="Form.errors.alamat"/>
+
+                            </div>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="nama_ayah" class="text-sm">Nama Lengkap Ayah</label>
+                                <TextInput id="nama_ayah" type="text" placeholder="nama lengkap" v-model="Form.nama_ayah"  class="w-full text-gray-900"  />
+                                <InputError :message="Form.errors.nama_ayah"/>
+                            </div>
+
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="alamat_ayah" class="text-sm">Alamat Ayah</label>
+                                <TextInput id="alamat_ayah" type="text" v-model="Form.alamat_ayah" placeholder="alamat..." class="w-full text-gray-900"  />
+                                <InputError :message="Form.errors.alamat_ayah"/>
+
                             </div>
                             <div class="col-span-full sm:col-span-3">
                                 <label for="no_telpon" class="text-sm">No. Telepon</label>
@@ -67,10 +89,10 @@ function submit() {
                                 <InputError :message="Form.errors.no_telpon"/>
 
                             </div>
-                            <div class="col-span-full">
-                                <label for="alamat" class="text-sm">Alamat</label>
-                                <TextInput id="alamat" type="text" v-model="Form.alamat" placeholder="" class="w-full text-gray-900"  />
-                                <InputError :message="Form.errors.alamat"/>
+                            <div class="col-span-full sm:col-span-3">
+                                <label for="no_telpon_ayah" class="text-sm">No. Telepon Ayah</label>
+                                <TextInput id="no_telpon_ayah" type="text" v-model="Form.no_telpon_ayah" placeholder="No. telpon" class="w-full text-gray-900"  />
+                                <InputError :message="Form.errors.no_telpon_ayah"/>
 
                             </div>
                         </div>

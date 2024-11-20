@@ -26,6 +26,7 @@ class UpdateSiswaRequest extends FormRequest
             'nama' => 'required|string|max:50',
             'tempat_lahir' => 'required|string|max:50',
             'tgl_lahir' => 'required|date',
+            'nisn' => 'required|string|max:50|unique:siswas,nisn,'.$this->slug .',id',
             'jenkel' => 'required|string|in:Laki-Laki,Perempuan',
             'org_tua_id' => 'required|integer|exists:orang_tuas,id',
             'nama_orang_tua'=> 'required|string',

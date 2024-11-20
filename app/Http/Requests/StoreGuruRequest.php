@@ -24,7 +24,7 @@ class StoreGuruRequest extends FormRequest
     {
         return [
              'name' => 'required|string|max:255',
-             'no_telpon' => 'required|string|max:255',
+             'no_telpon' => 'required|string|max:13',
              'alamat' => 'required|string',
              'name' => 'required|string|max:255',
              'username' => 'required|string|max:255|unique:users,username',

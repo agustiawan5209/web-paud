@@ -16,6 +16,9 @@ class OrangTua extends Model
         'user_id',
         'alamat',
         'no_telpon',
+        'nama_ayah',
+        'alamat_ayah',
+        'no_telpon_ayah',
     ];
 
     public function siswa()

@@ -25,7 +25,7 @@ class StoreSiswaRequest extends FormRequest
             'nama' => 'required|string|max:50',
             'agama' => 'required|string|max:50',
             'alamat' => 'required|string|max:50',
-            'nisn' => 'required|string|max:50',
+            'nisn' => 'required|string|max:50|unique:siswas,nisn',
             'tempat_lahir' => 'required|string|max:50',
             'tgl_lahir' => 'required|date',
             'jenkel' => 'required|string|in:Laki-Laki,Perempuan',

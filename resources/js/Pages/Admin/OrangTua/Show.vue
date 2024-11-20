@@ -160,16 +160,28 @@ console.log(props.can)
 
                                 <table class="w-full table">
                                     <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold">Nama</td>
+                                        <td class="text-sm border-b py-2 font-bold">Nama Lengkap Ibu</td>
                                         <td class="text-sm border-b text-gray-600">: {{ orangTua.nama }} </td>
                                     </tr>
                                     <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold">No. Telpon</td>
+                                        <td class="text-sm border-b py-2 font-bold">No. Telpon Ibu</td>
                                         <td class="text-sm border-b text-gray-600">: {{ orangTua.no_telpon }} </td>
                                     </tr>
                                     <tr class="">
-                                        <td class="text-sm border-b py-2 font-bold">Alamat</td>
+                                        <td class="text-sm border-b py-2 font-bold">Alamat Ibu</td>
                                         <td class="text-sm border-b text-gray-600">: {{ orangTua.alamat }} </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="text-sm border-b py-2 font-bold">Nama Lengkap Ayah</td>
+                                        <td class="text-sm border-b text-gray-600">: {{ orangTua.nama_ayah }} </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="text-sm border-b py-2 font-bold">No. Telpon Ayah</td>
+                                        <td class="text-sm border-b text-gray-600">: {{ orangTua.no_telpon_ayah }} </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="text-sm border-b py-2 font-bold">Alamat Ayah</td>
+                                        <td class="text-sm border-b text-gray-600">: {{ orangTua.alamat_ayah }} </td>
                                     </tr>
                                 </table>
                             </div>

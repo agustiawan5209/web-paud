@@ -23,10 +23,12 @@ class StoreOrangTuaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'no_telpon' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'name' => 'required|string|max:255',
+            'name' => '|required|string|max:50',
+            'no_telpon' => '|required|string|max:13',
+            'alamat' => '|required|string|max:100',
+            'nama_ayah' => 'nullable|string|max:50',
+            'alamat_ayah' => 'nullable|string|max:100',
+            'no_telpon_ayah' => 'nullable|string|max:13',
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'string'],
