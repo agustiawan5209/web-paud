@@ -39,10 +39,10 @@ class AbsensiController extends Controller
                 ->paginate(10),
             'can' => [
                 // 'form' => Auth::user()->can('form absen'),
-                'add' => Auth::user()->can('add absen'),
-                'edit' => Auth::user()->can('edit absen'),
-                'show' => Auth::user()->can('show absen'),
-                'delete' => Auth::user()->can('delete absen'),
+                'add' => Auth::user()->can('add nilai'),
+                'edit' => Auth::user()->can('edit nilai'),
+                'show' => Auth::user()->can('show nilai'),
+                'delete' => Auth::user()->can('delete nilai'),
                 'reset' => Auth::user()->can('reset absen'),
             ],
             'relasi' => [
