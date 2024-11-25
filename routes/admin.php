@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\JadwalHarianController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\OrangTuaController;
 use App\Http\Controllers\Admin\JadwalKegiatanController;
@@ -105,6 +106,19 @@ Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
             Route::post('/store-data/jadwal-kegiatan', 'store')->name('store');
             Route::put('/update-data/jadwal-kegiatan', 'update')->name('update');
             Route::delete('/hapus-data/jadwal-kegiatan', 'destroy')->name('destroy');
+        });
+    });
+
+     // Router Jadwal Harian
+     Route::group(['prefix' => 'jadwal-harian', 'as' => "JadwalHarian."], function () {
+        Route::controller(JadwalHarianController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data/jadwal-harian', 'create')->name('create');
+            Route::get('/edit-data/jadwal-harian', 'edit')->name('edit');
+            Route::get('/detail-data/jadwal-harian', 'show')->name('show');
+            Route::post('/store-data/jadwal-harian', 'store')->name('store');
+            Route::put('/update-data/jadwal-harian', 'update')->name('update');
+            Route::delete('/hapus-data/jadwal-harian', 'destroy')->name('destroy');
         });
     });
 });

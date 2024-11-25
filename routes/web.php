@@ -44,6 +44,7 @@ require __DIR__ . '/orangtua.php';
 Route::group(['prefix' => 'laporan', 'as' => "Laporan."], function () {
     Route::controller(LaporanJadwalController::class)->group(function () {
         Route::get('/jadwal', 'cetak')->name('jadwal.cetak');
+        Route::get('/jadwal-harian', 'cetakharian')->name('jadwal.cetak-harian');
     });
 });
 
