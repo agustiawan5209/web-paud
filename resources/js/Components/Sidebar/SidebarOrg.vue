@@ -56,6 +56,13 @@ const isOpenDropdown = (menu) => openDropdown.value.includes(menu);
             </NavLink>
         </li>
         <li class="group">
+            <NavLink :href="route('Org.JadwalHarian.index')"
+                :active="route().current('Org.JadwalHarian.index') || route().current('Org.JadwalHarian.create') || route().current('Org.JadwalHarian.edit') || route().current('Org.JadwalHarian.show')"
+                :icon="['fas', 'calendar']">
+                <span class="capitalize text-sm">Kegiatan Harian</span>
+            </NavLink>
+        </li>
+        <li class="group">
             <NavLink :href="route('Org.Nilai.index')"
                 :active="route().current('Org.Nilai.index') || route().current('Org.Nilai.create') || route().current('Org.Nilai.edit') || route().current('Org.Nilai.show')"
                 :icon="['fas', 'box-archive']">

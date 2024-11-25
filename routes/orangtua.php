@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrangTua\JadwalHarianController;
 use App\Http\Controllers\OrangTua\JadwalKegiatanController;
 use App\Http\Controllers\OrangTua\LaporanPerkembanganController;
 use App\Http\Controllers\OrangTua\NilaiHarianController;
@@ -21,6 +22,14 @@ Route::middleware(['auth', 'verified', 'role:Orang Tua'])->group(function () {
             Route::get('/detail-data-kegiatan', 'show')->name('show');
         });
     });
+    Route::group(['prefix' => 'data-harian', 'as' => "Org.JadwalHarian."], function () {
+        Route::controller(JadwalHarianController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/detail-data-harian', 'show')->name('show');
+        });
+    });
+
+
     Route::group(['prefix' => 'data-nilai', 'as' => "Org.Nilai."], function () {
         Route::controller(NilaiHarianController::class)->group(function () {
             Route::get('/', 'index')->name('index');

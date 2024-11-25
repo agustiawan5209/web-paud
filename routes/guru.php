@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Guru\AbsensiController;
+use App\Http\Controllers\Guru\JadwalHarianController;
 use App\Http\Controllers\Guru\JadwalKegiatanController;
 use App\Http\Controllers\Guru\NilaiSiswaController;
 use App\Http\Controllers\Guru\PerkembanganSiswaController;
@@ -12,6 +13,18 @@ Route::middleware(['auth', 'verified', 'role:Guru'])->group(function () {
     // Router Jadwal Kegiatan
     Route::group(['prefix' => 'jadwal-guru', 'as' => "Guru.Jadwal."], function () {
         Route::controller(JadwalKegiatanController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah-data/jadwal', 'create')->name('create');
+            Route::get('/edit-data/jadwal', 'edit')->name('edit');
+            Route::get('/detail-data/jadwal', 'show')->name('show');
+            Route::post('/store-data/jadwal', 'store')->name('store');
+            Route::put('/update-data/jadwal', 'update')->name('update');
+            Route::delete('/hapus-data/jadwal', 'destroy')->name('destroy');
+        });
+    });
+    // Router Jadwal Kegiatan Harian
+    Route::group(['prefix' => 'jadwal-harian-guru', 'as' => "Guru.JadwalHarian."], function () {
+        Route::controller(JadwalHarianController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/tambah-data/jadwal', 'create')->name('create');
             Route::get('/edit-data/jadwal', 'edit')->name('edit');
