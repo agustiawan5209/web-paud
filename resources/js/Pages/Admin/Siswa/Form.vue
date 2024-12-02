@@ -52,16 +52,7 @@ const Form = useForm({
     kelas: '',
 
 })
-function submit() {
-    Form.post(route('Siswa.store'), {
-        onError: (err) => {
-            console.log(err)
-        },
-        onSuccess:()=>{
-            Form.reset();
-        }
-    });
-}
+
 
 const PJ = ref('');
 const changeSelect = ref(0);
@@ -131,6 +122,50 @@ onMounted(() => {
 
 })
 
+// State
+const tanggal = ref("");
+const errorMessage = ref("");
+
+// Menghitung tanggal maksimal (4 tahun dari hari ini)
+const getMaxDate = () => {
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 4);
+  return today.toISOString().split("T")[0];
+};
+const maxDate = getMaxDate();
+
+// Menghitung tanggal minimal (4 tahun lalu dari hari ini)
+const getMinDate = () => {
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 4);
+  return today.toISOString().split("T")[0];
+};
+const minDate = getMinDate();
+console.log(minDate)
+// Validasi tanggal
+const validateDate = () => {
+  if (tanggal.value > maxDate) {
+    errorMessage.value = "Tanggal tidak boleh lebih dari 4 tahun terakhir.";
+    tanggal.value = ""; // Reset input jika tidak valid
+  }if (tanggal.value < minDate) {
+    errorMessage.value = "Tanggal tidak boleh lebih dari 4 tahun lalu.";
+    tanggal.value = ""; // Reset input jika tidak valid
+  } else {
+    errorMessage.value = "";
+  }
+};
+
+function submit() {
+    Form.tgl_lahir = tanggal.value;
+    Form.post(route('Siswa.store'), {
+        onError: (err) => {
+            console.log(err)
+        },
+        onSuccess:()=>{
+            Form.reset();
+        }
+    });
+}
 </script>
 
 <template>
@@ -195,7 +230,7 @@ onMounted(() => {
                             </div>
                             <div class="col-span-full sm:col-span-3">
                                 <label for="tgl_lahir" class="text-sm">Tanggal Lahir</label>
-                                <TextInput id="tgl_lahir" type="date" v-model="Form.tgl_lahir"
+                                <TextInput id="tgl_lahir" type="date"  :min="minDate" v-model="tanggal" @change="validateDate()"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.tgl_lahir" />
 

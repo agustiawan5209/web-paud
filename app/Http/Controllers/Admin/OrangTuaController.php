@@ -148,7 +148,7 @@ class OrangTuaController extends Controller
         $user = User::find($orangTua->user_id);
         $user->update([
             'name' => $request->name,
-
+            'phone' => $request->no_telpon,
         ]);
         $orangTua->update([
             'nama' => $request->name,
