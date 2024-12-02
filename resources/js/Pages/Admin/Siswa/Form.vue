@@ -137,7 +137,7 @@ const maxDate = getMaxDate();
 // Menghitung tanggal minimal (4 tahun lalu dari hari ini)
 const getMinDate = () => {
   const today = new Date();
-  today.setFullYear(today.getFullYear() - 4);
+  today.setFullYear(today.getFullYear() - 2);
   return today.toISOString().split("T")[0];
 };
 const minDate = getMinDate();
