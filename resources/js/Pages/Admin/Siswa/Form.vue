@@ -129,7 +129,7 @@ const errorMessage = ref("");
 // Menghitung tanggal maksimal (4 tahun dari hari ini)
 const getMaxDate = () => {
   const today = new Date();
-  today.setFullYear(today.getFullYear() - 4);
+  today.setFullYear(today.getFullYear() + 2);
   return today.toISOString().split("T")[0];
 };
 const maxDate = getMaxDate();
@@ -144,15 +144,7 @@ const minDate = getMinDate();
 console.log(minDate)
 // Validasi tanggal
 const validateDate = () => {
-  if (tanggal.value > maxDate) {
-    errorMessage.value = "Tanggal tidak boleh lebih dari 4 tahun terakhir.";
-    tanggal.value = ""; // Reset input jika tidak valid
-  }if (tanggal.value < minDate) {
-    errorMessage.value = "Tanggal tidak boleh lebih dari 4 tahun lalu.";
-    tanggal.value = ""; // Reset input jika tidak valid
-  } else {
-    errorMessage.value = "";
-  }
+
 };
 
 function submit() {
@@ -230,7 +222,7 @@ function submit() {
                             </div>
                             <div class="col-span-full sm:col-span-3">
                                 <label for="tgl_lahir" class="text-sm">Tanggal Lahir</label>
-                                <TextInput id="tgl_lahir" type="date"  :min="minDate" v-model="tanggal" @change="validateDate()"
+                                <TextInput id="tgl_lahir" type="date"  :min="minDate" :max="maxDate" v-model="tanggal" @change="validateDate"
                                     class="w-full text-gray-900 text-sm" />
                                 <InputError :message="Form.errors.tgl_lahir" />
 
